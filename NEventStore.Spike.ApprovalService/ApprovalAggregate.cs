@@ -28,7 +28,7 @@ namespace NEventStore.Spike.ApprovalService
         {
             if (_isDescriptionLocked)
             {
-                throw new ModificationOfApprovalWhenLocked("Description can not be revised when the approval is locked");
+                throw new ApprovalModifiedWhenLocked("Description can not be revised when the approval is locked");
             }
 
             RaiseEvent(new ApprovalDescriptionRevised

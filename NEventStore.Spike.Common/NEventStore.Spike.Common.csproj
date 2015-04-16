@@ -83,7 +83,10 @@
     <Compile Include="ApprovalCommands\MarkApprovalCancelled.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalDenied.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalPartiallyAccepted.cs" />
-    <Compile Include="CheckpointTracker\BiggyFileCheckpointTracker.cs" />
+    <Compile Include="StreamCheckpointTracker\NullCheckpointToken.cs" />
+    <Compile Include="StreamCheckpointTracker\TenantScopedBiggyCheckpointTracker.cs" />
+    <Compile Include="EventSubscriptionBootstrapper.cs" />
+    <Compile Include="Factories\StreamCheckpointTokenBiggyListFactory.cs" />
     <Compile Include="Registries\CommonDomainRegistry.cs" />
     <Compile Include="ConnectionStringEnvelope.cs" />
     <Compile Include="ApprovalEvents\ApprovalAccepted.cs" />
@@ -92,8 +95,8 @@
     <Compile Include="ApprovalEvents\ApprovalDenied.cs" />
     <Compile Include="ApprovalEvents\ApprovalDescriptionRevised.cs" />
     <Compile Include="ApprovalEvents\ApprovalPartiallyAccepted.cs" />
-    <Compile Include="CheckpointTracker\IStreamCheckpointTracker.cs" />
-    <Compile Include="CheckpointTracker\TenantCheckpointToken.cs" />
+    <Compile Include="StreamCheckpointTracker\ICheckpointTracker.cs" />
+    <Compile Include="StreamCheckpointTracker\TenantCheckpointTokenDocument.cs" />
     <Compile Include="Factories\TenantCommitObserverFactory.cs" />
     <Compile Include="Factories\TenantEventStoreFactory.cs" />
     <Compile Include="ExtensionsForTypedKey.cs" />
@@ -102,7 +105,7 @@
     <Compile Include="Registries\NEventStoreRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Factories\TenantRepositoryFactory.cs" />
-    <Compile Include="StreamUpdated.cs" />
+    <Compile Include="EventStreamUpdated.cs" />
     <Compile Include="TenantProvider.cs" />
     <Compile Include="SystemHeaders.cs" />
   </ItemGroup>

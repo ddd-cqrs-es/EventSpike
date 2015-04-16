@@ -1,17 +1,21 @@
-﻿using NEventStore.Client;
-using NEventStore.Spike.Common.CheckpointTracker;
+﻿using System;
+using System.Collections.Generic;
+using NEventStore.Client;
+using NEventStore.Spike.Common.StreamCheckpointTracker;
 
 namespace NEventStore.Spike.Common.Factories
 {
     public class TenantCommitObserverFactory
     {
         private readonly TenantProvider<IStoreEvents> _eventStoreProvider;
-        private readonly TenantProvider<IStreamCheckpointTracker> _checkpointTrackerProvider;
+        private readonly TenantProvider<ICheckpointTracker> _checkpointTrackerProvider;
+        private readonly IEnumerable<IObserver<ICommit>> _commitObservers;
 
-        public TenantCommitObserverFactory(TenantProvider<IStoreEvents> eventStoreProvider, TenantProvider<IStreamCheckpointTracker> checkpointTrackerProvider)
+        public TenantCommitObserverFactory(TenantProvider<IStoreEvents> eventStoreProvider, TenantProvider<ICheckpointTracker> checkpointTrackerProvider, IEnumerable<IObserver<ICommit>> commitObservers)
         {
             _eventStoreProvider = eventStoreProvider;
             _checkpointTrackerProvider = checkpointTrackerProvider;
+            _commitObservers = commitObservers;
         }
 
         public IObserveCommits Construct(string tenantId)
@@ -21,7 +25,21 @@ namespace NEventStore.Spike.Common.Factories
 
             var pollingClient = new PollingClient(eventStore.Advanced);
 
-            return pollingClient.ObserveFrom(checkpointTracker.GetLastCheckpoint());
+            var checkpoint = checkpointTracker.GetLastCheckpoint();
+
+            var subscription = pollingClient.ObserveFrom(checkpoint);
+
+            foreach (var commitObserver in _commitObservers)
+            {
+                subscription.Subscribe(commitObserver);
+            }
+
+            if (checkpoint == NullCheckpointToken.Value)
+            {
+                subscription.Start();
+            }
+
+            return subscription;
         }
     }
 }

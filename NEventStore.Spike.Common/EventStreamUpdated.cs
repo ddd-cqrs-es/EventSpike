@@ -2,7 +2,7 @@
 
 namespace NEventStore.Spike.Common
 {
-    public class StreamUpdated
+    public class EventStreamUpdated
     {
         public string StreamId { get; set; }
         public Guid CausationId { get; set; }

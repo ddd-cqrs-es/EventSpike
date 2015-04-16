@@ -21,11 +21,11 @@ namespace NEventStore.Spike.ApprovalService
                 configure.AddRegistry(new CommonDomainRegistry(conflcits => { }));
 
                 configure
-                    .For<Func<ApprovalCommandConsumer>>()
-                    .Add<Func<ApprovalCommandConsumer>>(context => () => context.GetInstance<ApprovalCommandConsumer>());
+                    .For<Func<ApprovalCommandMassTransitConsumer>>()
+                    .Add<Func<ApprovalCommandMassTransitConsumer>>(context => () => context.GetInstance<ApprovalCommandMassTransitConsumer>());
 
                 configure
-                    .ForConcreteType<ApprovalCommandConsumer>()
+                    .ForConcreteType<ApprovalCommandMassTransitConsumer>()
                     .Configure
                     .Singleton();
             });

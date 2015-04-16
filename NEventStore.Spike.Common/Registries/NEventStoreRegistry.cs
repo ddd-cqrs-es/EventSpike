@@ -19,6 +19,10 @@ namespace NEventStore.Spike.Common.Registries
             For<TenantProvider<IStoreEvents>>()
                 .Use(context => new TenantProvider<IStoreEvents>(tenantId => EventStoreCache.GetOrAdd(tenantId, context.GetInstance<TenantEventStoreFactory>().Construct)))
                 .Singleton();
+
+            ForConcreteType<TenantEventStoreFactory>()
+                .Configure
+                .Singleton();
         }
     }
 }

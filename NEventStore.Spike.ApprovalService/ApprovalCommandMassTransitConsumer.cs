@@ -5,7 +5,7 @@ using NEventStore.Spike.Common.ApprovalCommands;
 
 namespace NEventStore.Spike.ApprovalService
 {
-    internal class ApprovalCommandConsumer :
+    internal class ApprovalCommandMassTransitConsumer :
         Consumes<InitiateApproval>.All,
         Consumes<MarkApprovalAccepted>.All,
         Consumes<MarkApprovalPartiallyAccepted>.All,
@@ -14,7 +14,7 @@ namespace NEventStore.Spike.ApprovalService
     {
         private readonly TenantProvider<IRepository> _repositoryProvider;
 
-        public ApprovalCommandConsumer(TenantProvider<IRepository> repositoryProvider)
+        public ApprovalCommandMassTransitConsumer(TenantProvider<IRepository> repositoryProvider)
         {
             _repositoryProvider = repositoryProvider;
         }

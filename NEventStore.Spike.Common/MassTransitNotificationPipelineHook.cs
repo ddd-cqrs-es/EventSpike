@@ -16,7 +16,7 @@ namespace NEventStore.Spike.Common
         {
             var systemHeaders = committed.Headers.Retrieve<SystemHeaders>();
 
-            _bus.Publish(new StreamUpdated
+            _bus.Publish(new EventStreamUpdated
             {
                 StreamId = committed.StreamId,
                 CausationId = committed.CommitId,
