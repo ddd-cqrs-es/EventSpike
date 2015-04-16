@@ -7,7 +7,10 @@ namespace NEventStore.Spike.ApprovalService
 {
     internal class ApprovalCommandConsumer :
         Consumes<InitiateApproval>.All,
-        Consumes<MarkApprovalAccepted>.All
+        Consumes<MarkApprovalAccepted>.All,
+        Consumes<MarkApprovalPartiallyAccepted>.All,
+        Consumes<MarkApprovalDenied>.All,
+        Consumes<MarkApprovalCancelled>.All
     {
         private readonly TenantProvider<IRepository> _repositoryProvider;
 
