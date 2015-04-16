@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEventStore.Spike.Common", "NEventStore.Spike.Common\NEventStore.Spike.Common.csproj", "{A295A8F8-054F-4D71-8D1C-9A51193807F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEventStore.Spike.BusDriverConsole", "NEventStore.Spike.BusDriverConsole\NEventStore.Spike.BusDriverConsole.csproj", "{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEventStore.Spike.ProjectionService", "NEventStore.Spike.ProjectionService\NEventStore.Spike.ProjectionService.csproj", "{B4BA82F5-7D46-46C7-8CEB-030288891960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEventStore.Spike.ApprovalService", "NEventStore.Spike.ApprovalService\NEventStore.Spike.ApprovalService.csproj", "{1CE642F2-136E-4958-82D0-F84E80DA86ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEventStore.Spike.ApprovalProcessorService", "NEventStore.Spike.ApprovalProcessorService\NEventStore.Spike.ApprovalProcessorService.csproj", "{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B866D6F7-16F1-48DA-BC8D-FB608D1D3422}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A295A8F8-054F-4D71-8D1C-9A51193807F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A295A8F8-054F-4D71-8D1C-9A51193807F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A295A8F8-054F-4D71-8D1C-9A51193807F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A295A8F8-054F-4D71-8D1C-9A51193807F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
