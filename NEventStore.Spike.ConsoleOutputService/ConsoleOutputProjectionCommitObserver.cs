@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 
 namespace NEventStore.Spike.ConsoleOutputService
 {
-    internal class ConsoleOutputProjection : IObserver<ICommit>
+    internal class ConsoleOutputProjectionCommitObserver : IObserver<ICommit>
     {
         private readonly ITenantProvider<IStreamCheckpointTracker> _streamTrackerProvider;
 
-        public ConsoleOutputProjection(ITenantProvider<IStreamCheckpointTracker> streamTrackerProvider)
+        public ConsoleOutputProjectionCommitObserver(ITenantProvider<IStreamCheckpointTracker> streamTrackerProvider)
         {
             _streamTrackerProvider = streamTrackerProvider;
         }

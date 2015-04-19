@@ -2,11 +2,12 @@
 {
     public class ConnectionStringEnvelope
     {
-        public ConnectionStringEnvelope(string value)
+        public ConnectionStringEnvelope(string connectionName, string connectionString)
         {
-            Value = value;
+            ConnectionString = connectionString;
         }
 
-        public string Value { get; private set; }
+        public string ConnectionString { get; private set; }
+        public string ConnectionName { get; set; }
     }
 }

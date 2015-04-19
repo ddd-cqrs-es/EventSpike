@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NEventStore.Spike.Common
 {
-    // Based from Magnum.Context.TypedKey, but uses Type.Name instead of Type.FullName, and has extensions against IDictionary<TKey, TValue> instead of just non-generic IDictionary
+    // Based from Magnum.Context.TypedKey, but uses Type.ConnectionName instead of Type.FullName, and has extensions against IDictionary<TKey, TValue> instead of just non-generic IDictionary
     public class TypedKey<T>
     {
         public bool Equals(TypedKey<T> obj)
@@ -44,9 +45,11 @@ namespace NEventStore.Spike.Common
             return items.ContainsKey(TypedKey<T>.UniqueKey);
         }
 
-        public static T Retrieve<T>(this IDictionary<string, object> items)
+        public static T Retrieve<T>(this IDictionary<string, object> items, Func<T> missingValueProvider = null)
         {
-            return (T)items[TypedKey<T>.UniqueKey];
+            return items.Exists<T>()
+                ? (T) items[TypedKey<T>.UniqueKey]
+                : (missingValueProvider ?? (() => default(T)))();
         }
     }
 }

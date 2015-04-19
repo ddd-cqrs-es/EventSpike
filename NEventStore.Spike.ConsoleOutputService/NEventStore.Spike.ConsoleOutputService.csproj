@@ -76,7 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleOutputProjection.cs" />
+    <Compile Include="ConsoleOutputProjectionCommitObserver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ConsoleServiceControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

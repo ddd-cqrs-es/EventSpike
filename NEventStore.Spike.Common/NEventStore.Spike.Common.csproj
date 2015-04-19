@@ -86,6 +86,10 @@
     <Compile Include="ApprovalCommands\MarkApprovalCancelled.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalDenied.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalPartiallyAccepted.cs" />
+    <Compile Include="CommonDomain\ContextHeaders.cs" />
+    <Compile Include="DeterministicGuid.cs" />
+    <Compile Include="Envelope.cs" />
+    <Compile Include="GuidNamespaces.cs" />
     <Compile Include="TypedKey.cs" />
     <Compile Include="ConnectionStringEnvelope.cs" />
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />

@@ -28,7 +28,7 @@ namespace NEventStore.Spike.ConsoleOutputService
 
                 configure
                     .For<IObserver<ICommit>>()
-                    .Add<ConsoleOutputProjection>();
+                    .Add<ConsoleOutputProjectionCommitObserver>();
             });
 
             HostFactory.Run(host =>

@@ -18,12 +18,10 @@ namespace NEventStore.Spike.Common.NEventStore
 
         public IStoreEvents Construct(string tenantId)
         {
-            var connectionName = string.Format("NEventStore-{0}", tenantId);
-            var connectionString = _connectionStringProvider.Get(tenantId).Value;
+            var connectionStringEnvelope = _connectionStringProvider.Get(tenantId);
 
             return Wireup.Init()
-                .UsingSqlPersistence(new ConfigurationConnectionFactory(connectionName, "System.Data.SqlClient",
-                    connectionString))
+                .UsingSqlPersistence(new ConfigurationConnectionFactory(connectionStringEnvelope.ConnectionName, "System.Data.SqlClient", connectionStringEnvelope.ConnectionString))
                 .WithDialect(new MsSqlDialect())
                 .InitializeStorageEngine()
                 .UsingJsonSerialization()

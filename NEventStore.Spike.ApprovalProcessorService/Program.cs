@@ -1,4 +1,5 @@
-﻿using NEventStore.Spike.Common;
+﻿using System;
+using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.EventSubscription;
 using NEventStore.Spike.Common.MassTransit;
 using NEventStore.Spike.Common.NEventStore;
@@ -25,11 +26,14 @@ namespace NEventStore.Spike.ApprovalProcessorService
                     .Add(endpointName)
                     .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
 
-                //configure
-                //    .For<IObserver<ICommit>>()
-                //    .Add<TObserver>();
+                configure
+                    .For<IApprovalProcessorRepository>()
+                    .Singleton()
+                    .MissingNamedInstanceIs.ConstructedBy(context => context.GetInstance<InMemoryApprovalProcessorRepository>());
 
-                // ...
+                configure
+                    .For<IObserver<ICommit>>()
+                    .Add<ApprovalProcessorCommitObserver>();
             });
 
             HostFactory.Run(host =>
