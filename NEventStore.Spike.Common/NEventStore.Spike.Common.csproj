@@ -86,6 +86,7 @@
     <Compile Include="ApprovalCommands\MarkApprovalCancelled.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalDenied.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalPartiallyAccepted.cs" />
+    <Compile Include="TypedKey.cs" />
     <Compile Include="ConnectionStringEnvelope.cs" />
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
     <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />
@@ -109,7 +110,6 @@
     <Compile Include="EventSubscription\TenantCheckpointTokenDocument.cs" />
     <Compile Include="NEventStore\TenantEventSubscriptionFactory.cs" />
     <Compile Include="NEventStore\TenantEventStoreFactory.cs" />
-    <Compile Include="CommonDomain\ExtensionsForTypedKey.cs" />
     <Compile Include="EventSubscription\MassTransitNotificationPipelineHook.cs" />
     <Compile Include="MassTransit\MassTransitRegistry.cs" />
     <Compile Include="NEventStore\NEventStoreRegistry.cs" />

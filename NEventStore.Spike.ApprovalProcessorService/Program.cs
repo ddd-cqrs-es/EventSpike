@@ -1,5 +1,4 @@
-﻿using System;
-using NEventStore.Spike.Common;
+﻿using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.EventSubscription;
 using NEventStore.Spike.Common.MassTransit;
 using NEventStore.Spike.Common.NEventStore;
