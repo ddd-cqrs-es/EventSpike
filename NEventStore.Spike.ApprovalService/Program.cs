@@ -1,24 +1,31 @@
-﻿using System;
-using MassTransit;
+﻿using MassTransit;
 using NEventStore.Spike.Common;
-using NEventStore.Spike.Common.Registries;
+using NEventStore.Spike.Common.CommonDomain;
+using NEventStore.Spike.Common.MassTransit;
+using NEventStore.Spike.Common.NEventStore;
 using StructureMap;
 using Topshelf;
 
 namespace NEventStore.Spike.ApprovalService
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var endpointName = typeof (Program).ToEndpointName();
+            var dataEndpointName = typeof (Program).ToEndpointName();
             var serviceName = typeof (Program).ToServiceName();
 
             var container = new Container(configure =>
             {
-                configure.AddRegistry(new MassTransitRegistry(endpointName));
-                configure.AddRegistry(new NEventStoreRegistry());
-                configure.AddRegistry(new CommonDomainRegistry(conflcits => { }));
+                configure.AddRegistry<TenantProviderRegistry>();
+                configure.AddRegistry<MassTransitRegistry>();
+                configure.AddRegistry<NEventStoreRegistry>();
+                configure.AddRegistry<CommonDomainRegistry>();
+
+                configure
+                    .For<string>()
+                    .Add(dataEndpointName)
+                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
 
                 configure
                     .For<IConsumer>()

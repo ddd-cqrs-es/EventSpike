@@ -2,6 +2,7 @@
 using MassTransit;
 using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.ApprovalCommands;
+using NEventStore.Spike.Common.CommonDomain;
 
 namespace NEventStore.Spike.ApprovalService
 {
@@ -12,16 +13,16 @@ namespace NEventStore.Spike.ApprovalService
         Consumes<MarkApprovalDenied>.All,
         Consumes<MarkApprovalCancelled>.All
     {
-        private readonly TenantProvider<IRepository> _repositoryProvider;
+        private readonly ITenantProvider<IRepository> _repositoryProvider;
 
-        public ApprovalCommandMassTransitConsumer(TenantProvider<IRepository> repositoryProvider)
+        public ApprovalCommandMassTransitConsumer(ITenantProvider<IRepository> repositoryProvider)
         {
             _repositoryProvider = repositoryProvider;
         }
 
         public void Consume(InitiateApproval message)
         {
-            var repository = _repositoryProvider(message.TenantId);
+            var repository = _repositoryProvider.Get(message.TenantId);
             var approval = new ApprovalAggregate(message.Id, message.Title, message.Description);
 
             repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
@@ -29,7 +30,7 @@ namespace NEventStore.Spike.ApprovalService
 
         public void Consume(MarkApprovalAccepted message)
         {
-            var repository = _repositoryProvider(message.TenantId);
+            var repository = _repositoryProvider.Get(message.TenantId);
             var approval = repository.GetById<ApprovalAggregate>(message.Id);
 
             approval.MarkAccepted(message.ReferenceNumber);
@@ -37,19 +38,19 @@ namespace NEventStore.Spike.ApprovalService
             repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
         }
 
-        public void Consume(MarkApprovalPartiallyAccepted message)
+        public void Consume(MarkApprovalCancelled message)
         {
-            var repository = _repositoryProvider(message.TenantId);
+            var repository = _repositoryProvider.Get(message.TenantId);
             var approval = repository.GetById<ApprovalAggregate>(message.Id);
 
-            approval.MarkPartiallyAccepted(message.ReferenceNumber);
+            approval.Cancel(message.CancellationReason);
 
-            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
+            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {UserId = message.UserId}));
         }
 
         public void Consume(MarkApprovalDenied message)
         {
-            var repository = _repositoryProvider(message.TenantId);
+            var repository = _repositoryProvider.Get(message.TenantId);
             var approval = repository.GetById<ApprovalAggregate>(message.Id);
 
             approval.MarkDenied(message.ReferenceNumber, message.DenialReason);
@@ -57,14 +58,14 @@ namespace NEventStore.Spike.ApprovalService
             repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {UserId = message.UserId}));
         }
 
-        public void Consume(MarkApprovalCancelled message)
+        public void Consume(MarkApprovalPartiallyAccepted message)
         {
-            var repository = _repositoryProvider(message.TenantId);
+            var repository = _repositoryProvider.Get(message.TenantId);
             var approval = repository.GetById<ApprovalAggregate>(message.Id);
 
-            approval.Cancel(message.CancellationReason);
+            approval.MarkPartiallyAccepted(message.ReferenceNumber);
 
-            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {UserId = message.UserId}));
+            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
         }
     }
 }

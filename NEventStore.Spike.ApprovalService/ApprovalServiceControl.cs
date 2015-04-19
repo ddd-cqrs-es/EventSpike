@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using NEventStore.Spike.Common.ApprovalCommands;
 using Topshelf;
 
 namespace NEventStore.Spike.ApprovalService
