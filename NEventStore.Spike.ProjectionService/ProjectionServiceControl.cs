@@ -1,14 +1,17 @@
-﻿using NEventStore.Spike.Common;
+﻿using MassTransit;
+using NEventStore.Spike.Common;
 using Topshelf;
 
 namespace NEventStore.Spike.ProjectionService
 {
     public class ProjectionServiceControl : ServiceControl
     {
+        private readonly IServiceBus _bus;
         private readonly EventSubscriptionBootstrapper _subscriptionBootstrapper;
 
-        public ProjectionServiceControl(EventSubscriptionBootstrapper subscriptionBootstrapper)
+        public ProjectionServiceControl(IServiceBus bus, EventSubscriptionBootstrapper subscriptionBootstrapper)
         {
+            _bus = bus;
             _subscriptionBootstrapper = subscriptionBootstrapper;
         }
 

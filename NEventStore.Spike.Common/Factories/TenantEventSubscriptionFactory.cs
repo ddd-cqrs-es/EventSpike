@@ -5,13 +5,13 @@ using NEventStore.Spike.Common.StreamCheckpointTracker;
 
 namespace NEventStore.Spike.Common.Factories
 {
-    public class TenantCommitObserverFactory
+    public class TenantEventSubscriptionFactory
     {
         private readonly TenantProvider<IStoreEvents> _eventStoreProvider;
         private readonly TenantProvider<ICheckpointTracker> _checkpointTrackerProvider;
         private readonly IEnumerable<IObserver<ICommit>> _commitObservers;
 
-        public TenantCommitObserverFactory(TenantProvider<IStoreEvents> eventStoreProvider, TenantProvider<ICheckpointTracker> checkpointTrackerProvider, IEnumerable<IObserver<ICommit>> commitObservers)
+        public TenantEventSubscriptionFactory(TenantProvider<IStoreEvents> eventStoreProvider, TenantProvider<ICheckpointTracker> checkpointTrackerProvider, IEnumerable<IObserver<ICommit>> commitObservers)
         {
             _eventStoreProvider = eventStoreProvider;
             _checkpointTrackerProvider = checkpointTrackerProvider;

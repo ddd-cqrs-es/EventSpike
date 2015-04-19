@@ -1,4 +1,5 @@
 ﻿using System;
+using MassTransit;
 using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.Registries;
 using StructureMap;
@@ -10,19 +11,18 @@ namespace NEventStore.Spike.ApprovalService
     {
         static void Main(string[] args)
         {
-            var @namespace = typeof (Program).Namespace ?? Guid.NewGuid().ToString();
-
-            var endpointName = @namespace.Replace(".", "_").ToLowerInvariant();
+            var endpointName = typeof (Program).ToEndpointName();
+            var serviceName = typeof (Program).ToServiceName();
 
             var container = new Container(configure =>
             {
                 configure.AddRegistry(new MassTransitRegistry(endpointName));
-                configure.AddRegistry<NEventStoreRegistry>();
+                configure.AddRegistry(new NEventStoreRegistry());
                 configure.AddRegistry(new CommonDomainRegistry(conflcits => { }));
 
                 configure
-                    .For<Func<ApprovalCommandMassTransitConsumer>>()
-                    .Add<Func<ApprovalCommandMassTransitConsumer>>(context => () => context.GetInstance<ApprovalCommandMassTransitConsumer>());
+                    .For<IConsumer>()
+                    .Add<ApprovalCommandMassTransitConsumer>();
 
                 configure
                     .ForConcreteType<ApprovalCommandMassTransitConsumer>()
@@ -32,7 +32,7 @@ namespace NEventStore.Spike.ApprovalService
 
             HostFactory.Run(host =>
             {
-                host.SetServiceName(@namespace);
+                host.SetServiceName(serviceName);
                 host.DependsOnMsmq();
 
                 host.Service(container.GetInstance<ApprovalServiceControl>);

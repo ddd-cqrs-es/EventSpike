@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEventStore.Spike.Common", "NEventStore.Spike.Common\NEventStore.Spike.Common.csproj", "{A295A8F8-054F-4D71-8D1C-9A51193807F4}"
 EndProject
@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B866D6
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEventStore.Spike.RuntimeServices", "NEventStore.Spike.RuntimeServices\NEventStore.Spike.RuntimeServices.csproj", "{50869D07-5CB3-4B7A-9C68-F2897BEC8D17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +48,10 @@ Global
 		{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50869D07-5CB3-4B7A-9C68-F2897BEC8D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50869D07-5CB3-4B7A-9C68-F2897BEC8D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50869D07-5CB3-4B7A-9C68-F2897BEC8D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50869D07-5CB3-4B7A-9C68-F2897BEC8D17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

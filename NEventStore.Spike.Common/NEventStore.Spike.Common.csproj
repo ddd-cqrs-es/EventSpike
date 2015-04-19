@@ -50,6 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MassTransit.2.9.9\lib\net40\MassTransit.dll</HintPath>
     </Reference>
+    <Reference Include="MassTransit.StructureMapIntegration">
+      <HintPath>..\packages\MassTransit.StructureMap.2.9.9\lib\net40\MassTransit.StructureMapIntegration.dll</HintPath>
+    </Reference>
     <Reference Include="MassTransit.Transports.MSMQ, Version=2.9.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MassTransit.MSMQ.2.9.9\lib\net40\MassTransit.Transports.MSMQ.dll</HintPath>
@@ -83,6 +86,7 @@
     <Compile Include="ApprovalCommands\MarkApprovalCancelled.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalDenied.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalPartiallyAccepted.cs" />
+    <Compile Include="ExtensionsForConventionNames.cs" />
     <Compile Include="StreamCheckpointTracker\NullCheckpointToken.cs" />
     <Compile Include="StreamCheckpointTracker\TenantScopedBiggyCheckpointTracker.cs" />
     <Compile Include="EventSubscriptionBootstrapper.cs" />
@@ -97,7 +101,7 @@
     <Compile Include="ApprovalEvents\ApprovalPartiallyAccepted.cs" />
     <Compile Include="StreamCheckpointTracker\ICheckpointTracker.cs" />
     <Compile Include="StreamCheckpointTracker\TenantCheckpointTokenDocument.cs" />
-    <Compile Include="Factories\TenantCommitObserverFactory.cs" />
+    <Compile Include="Factories\TenantEventSubscriptionFactory.cs" />
     <Compile Include="Factories\TenantEventStoreFactory.cs" />
     <Compile Include="ExtensionsForTypedKey.cs" />
     <Compile Include="MassTransitNotificationPipelineHook.cs" />

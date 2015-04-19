@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Biggy.Core;
-using MassTransit;
 using NEventStore.Client;
 using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.Factories;
@@ -21,14 +19,13 @@ namespace NEventStore.Spike.ProjectionService
 
         static void Main(string[] args)
         {
-            var @namespace = typeof(Program).Namespace ?? Guid.NewGuid().ToString();
-
-            var endpointName = @namespace.Replace(".", "_").ToLowerInvariant();
+            var endpointName = typeof(Program).ToEndpointName();
+            var serviceName = typeof(Program).ToServiceName();
 
             var container = new Container(configure =>
             {
                 configure.AddRegistry(new MassTransitRegistry(endpointName));
-                configure.AddRegistry<NEventStoreRegistry>();
+                configure.AddRegistry(new NEventStoreRegistry());
 
                 configure
                     .For<BiggyList<TenantCheckpointTokenDocument>>()
@@ -46,17 +43,13 @@ namespace NEventStore.Spike.ProjectionService
                     .Use(context => new TenantProvider<ICheckpointTracker>(tenantId => new TenantScopedBiggyCheckpointTracker(tenantId, context.GetInstance<BiggyList<TenantCheckpointTokenDocument>>())));
 
                 configure
-                    .ForConcreteType<TenantCommitObserverFactory>()
+                    .ForConcreteType<TenantEventSubscriptionFactory>()
                     .Configure
                     .Singleton();
                 
                 configure
                     .For<TenantProvider<IObserveCommits>>()
-                    .Use(context => new TenantProvider<IObserveCommits>(tenantId => EventStoreSubscriptionCache.GetOrAdd(tenantId, context.GetInstance<TenantCommitObserverFactory>().Construct(tenantId))));
-
-                configure
-                    .For<Func<IConsumer>>()
-                    .Add<Func<ProjectionNotificationMassTransitConsumer>>(context => () => context.GetInstance<ProjectionNotificationMassTransitConsumer>());
+                    .Use(context => new TenantProvider<IObserveCommits>(tenantId => EventStoreSubscriptionCache.GetOrAdd(tenantId, context.GetInstance<TenantEventSubscriptionFactory>().Construct(tenantId))));
 
                 configure
                     .ForConcreteType<ProjectionNotificationMassTransitConsumer>()
@@ -70,7 +63,7 @@ namespace NEventStore.Spike.ProjectionService
 
             HostFactory.Run(host =>
             {
-                host.SetServiceName(@namespace);
+                host.SetServiceName(serviceName);
                 host.DependsOnMsmq();
 
                 host.Service(container.GetInstance<ProjectionServiceControl>);
