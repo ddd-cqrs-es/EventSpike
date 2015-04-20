@@ -14,6 +14,7 @@ namespace EventSpike.Common
         new TBody Body { get; }
     }
 
+    // TODO Consider using an immutable dict/map (eg. Funq?)
     public class Envelope<TBody>
         : IEnvelope<TBody>
     {
@@ -43,7 +44,7 @@ namespace EventSpike.Common
             Headers.Store(header);
 
             return this;
-        } 
+        }
 
         public IDictionary<string, object> Headers { get; private set; }
 
