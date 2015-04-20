@@ -1,4 +1,4 @@
-# NEventStore.Spike
+# EventSpike
 
 Reference:
 
