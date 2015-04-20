@@ -1,7 +1,10 @@
-﻿namespace NEventStore.Spike.ApprovalProcessorService
+﻿using System;
+using Automatonymous;
+
+namespace NEventStore.Spike.ApprovalProcessorService
 {
-    internal interface IApprovalProcessorRepository
+    public interface IApprovalProcessorRepository
     {
-        ApprovalProcessor GetProcessorById(string id);
+        InstanceLift<ApprovalProcessor> GetProcessorById(Guid id);
     }
 }

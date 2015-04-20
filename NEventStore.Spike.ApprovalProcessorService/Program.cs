@@ -1,4 +1,6 @@
 ﻿using System;
+using MemBus;
+using MemBus.Configurators;
 using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.EventSubscription;
 using NEventStore.Spike.Common.MassTransit;
@@ -15,6 +17,8 @@ namespace NEventStore.Spike.ApprovalProcessorService
             var endpointName = typeof(Program).ToEndpointName();
             var serviceName = typeof(Program).ToServiceName();
 
+            var memBusIocSupport = new MemBusStructureMapAdapter();
+
             var container = new Container(configure =>
             {
                 configure.AddRegistry<TenantProviderRegistry>();
@@ -22,7 +26,8 @@ namespace NEventStore.Spike.ApprovalProcessorService
                 configure.AddRegistry<NEventStoreRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
 
-                configure.For<string>()
+                configure
+                    .For<string>()
                     .Add(endpointName)
                     .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
 
@@ -34,6 +39,20 @@ namespace NEventStore.Spike.ApprovalProcessorService
                 configure
                     .For<IObserver<ICommit>>()
                     .Add<ApprovalProcessorCommitObserver>();
+
+                configure
+                    .For<IBus>()
+                    .Singleton()
+                    .Use(context => BusSetup.StartWith<Conservative>()
+                        .Apply<IoCSupport>(s => s.SetAdapter(context.GetInstance<MemBusStructureMapAdapter>()).SetHandlerInterface(typeof (IHandle<>)))
+                        .Construct());
+
+                configure
+                    .For(typeof(IHandle<>))
+                    .Singleton();
+
+                configure
+                    .Scan(scan => scan.AddAllTypesOf(typeof(IHandle<>)));
             });
 
             HostFactory.Run(host =>

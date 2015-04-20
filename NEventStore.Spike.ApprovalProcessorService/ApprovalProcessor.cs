@@ -8,19 +8,14 @@ using NEventStore.Spike.Common.CommonDomain;
 
 namespace NEventStore.Spike.ApprovalProcessorService
 {
-    internal class ApprovalProcessor :
-        AutomatonymousStateMachine<ApprovalProcessor>
+    public class ApprovalProcessor :
+        AutomatonymousStateMachine<ApprovalProcessorInstance>
     {
         private static readonly DeterministicGuid DeterministicGuid = new DeterministicGuid(GuidNamespaces.ApprovalProcessor);
 
         public static readonly string UserId = string.Format("#{0}#", typeof (ApprovalProcessor).Name);
 
         public IServiceBus Bus { get; set; }
-
-        public Guid ApprovalId { get; set; }
-        public Guid CausationId { get; set; }
-        public string TenantId { get; set; }
-        public State CurrentState { get; set; }
 
         public ApprovalProcessor()
         {
@@ -50,7 +45,6 @@ namespace NEventStore.Spike.ApprovalProcessorService
                     })));
         }
 
-        // TODO will fields work?
         public Event<IEnvelope<ApprovalInitiated>> Initiated { get; private set; }
 
         public State WaitingForApproval { get; private set; }
