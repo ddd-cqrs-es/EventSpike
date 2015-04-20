@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using Automatonymous;
-using MassTransit;
 
 namespace NEventStore.Spike.ApprovalProcessorService
 {
     internal class InMemoryApprovalProcessorRepository :
         IApprovalProcessorRepository
     {
-        private readonly IServiceBus _bus;
-        private readonly ConcurrentDictionary<Guid, InstanceLift<ApprovalProcessor>> _processorStates = new ConcurrentDictionary<Guid, InstanceLift<ApprovalProcessor>>();
-
-        public InMemoryApprovalProcessorRepository(IServiceBus bus)
+        private readonly ConcurrentDictionary<Guid, ApprovalProcessorInstance> _processorStates = new ConcurrentDictionary<Guid, ApprovalProcessorInstance>();
+        
+        public ApprovalProcessorInstance GetProcessorById(Guid id)
         {
-            _bus = bus;
-        }
-
-        public InstanceLift<ApprovalProcessor> GetProcessorById(Guid id)
-        {
-            return _processorStates.GetOrAdd(id, newId => new ApprovalProcessor {Bus = _bus}.CreateInstanceLift(new ApprovalProcessorInstance()));
+            return _processorStates.GetOrAdd(id, newId => new ApprovalProcessorInstance());
         }
     }
 }

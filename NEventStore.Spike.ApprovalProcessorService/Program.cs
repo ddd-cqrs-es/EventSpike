@@ -1,6 +1,7 @@
 ﻿using System;
 using MemBus;
 using MemBus.Configurators;
+using MemBus.Subscribing;
 using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.EventSubscription;
 using NEventStore.Spike.Common.MassTransit;
@@ -16,8 +17,6 @@ namespace NEventStore.Spike.ApprovalProcessorService
         {
             var endpointName = typeof(Program).ToEndpointName();
             var serviceName = typeof(Program).ToServiceName();
-
-            var memBusIocSupport = new MemBusStructureMapAdapter();
 
             var container = new Container(configure =>
             {
@@ -44,15 +43,20 @@ namespace NEventStore.Spike.ApprovalProcessorService
                     .For<IBus>()
                     .Singleton()
                     .Use(context => BusSetup.StartWith<Conservative>()
-                        .Apply<IoCSupport>(s => s.SetAdapter(context.GetInstance<MemBusStructureMapAdapter>()).SetHandlerInterface(typeof (IHandle<>)))
-                        .Construct());
+                        .Apply<FlexibleSubscribeAdapter>(a => a.RegisterMethods("Handle"))
+                        .Construct())
+                    .OnCreation((context, bus) => WireUpMemBus(context, bus));
 
                 configure
-                    .For(typeof(IHandle<>))
+                    .For<IHandler>()
                     .Singleton();
 
                 configure
-                    .Scan(scan => scan.AddAllTypesOf(typeof(IHandle<>)));
+                    .Scan(scan =>
+                    {
+                        scan.AssemblyContainingType<Program>();
+                        scan.AddAllTypesOf<IHandler>();
+                    });
             });
 
             HostFactory.Run(host =>
@@ -62,6 +66,16 @@ namespace NEventStore.Spike.ApprovalProcessorService
 
                 host.Service(container.GetInstance<ApprovalProcessorServiceControl>);
             });
+        }
+
+        private static void WireUpMemBus(IContext context, IBus bus)
+        {
+            var handlers = context.GetAllInstances<IHandler>();
+
+            foreach (var handler in handlers)
+            {
+                bus.Subscribe(handler);
+            }
         }
     }
 }

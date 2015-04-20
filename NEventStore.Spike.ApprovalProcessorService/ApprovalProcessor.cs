@@ -8,7 +8,7 @@ using NEventStore.Spike.Common.CommonDomain;
 
 namespace NEventStore.Spike.ApprovalProcessorService
 {
-    public class ApprovalProcessor :
+    internal class ApprovalProcessor :
         AutomatonymousStateMachine<ApprovalProcessorInstance>
     {
         private static readonly DeterministicGuid DeterministicGuid = new DeterministicGuid(GuidNamespaces.ApprovalProcessor);
@@ -33,7 +33,9 @@ namespace NEventStore.Spike.ApprovalProcessorService
                         state.CausationId = @event.Headers.Retrieve<ContextHeaders>().CausationId;
                         state.TenantId = @event.Headers.Retrieve<SystemHeaders>().TenantId;
                     })
-                    .TransitionTo(WaitingForApproval),
+                    .TransitionTo(WaitingForApproval));
+
+            During(WaitingForApproval,
                 When(WaitingForApproval.Enter)
                     .Then(state => Bus.Publish(new MarkApprovalAccepted
                     {
@@ -42,11 +44,15 @@ namespace NEventStore.Spike.ApprovalProcessorService
                         ReferenceNumber = Guid.NewGuid().ToString(),
                         TenantId = state.TenantId,
                         UserId = UserId
-                    })));
+                    })),
+                When(Accepted)
+                    .Finalize());
         }
 
-        public Event<IEnvelope<ApprovalInitiated>> Initiated { get; private set; }
+        public Event<IEnvelope<ApprovalInitiated>> Initiated { get; set; }
 
-        public State WaitingForApproval { get; private set; }
+        public Event<IEnvelope<ApprovalAccepted>> Accepted { get; set; }
+
+        public State WaitingForApproval { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace NEventStore.Spike.ApprovalProcessorService
         {
             foreach (var @event in commit.Events)
             {
-                this.FastInvoke(new[] {@event.GetType()}, x => x.Publish(default(ICommit), default(object)), commit, @event);
+                this.FastInvoke(new[] {@event.Body.GetType()}, x => x.Publish(default(ICommit), default(object)), commit, @event.Body);
             }
             
             var tenantId = commit.Headers.Retrieve<SystemHeaders>().TenantId;
@@ -36,7 +36,7 @@ namespace NEventStore.Spike.ApprovalProcessorService
         {
             var envelope = Envelope<TEvent>
                 .Create(commit.Headers, @event)
-                .AddHeader(new ContextHeaders { CausationId = commit.CommitId });
+                .AddHeader(new ContextHeaders {CausationId = commit.CommitId});
 
             _bus.Publish(envelope);
         }

@@ -1,4 +1,5 @@
 ﻿using Automatonymous;
+using MassTransit;
 using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.ApprovalEvents;
 using NEventStore.Spike.Common.CommonDomain;
@@ -6,12 +7,14 @@ using NEventStore.Spike.Common.CommonDomain;
 namespace NEventStore.Spike.ApprovalProcessorService
 {
     public class ApprovalProcessEventHandler :
-        IHandle<IEnvelope<ApprovalInitiated>>
+        IHandler
     {
+        private readonly IServiceBus _bus;
         private readonly ITenantProvider<IApprovalProcessorRepository> _repositoryProvider;
 
-        public ApprovalProcessEventHandler(ITenantProvider<IApprovalProcessorRepository> repositoryProvider)
+        public ApprovalProcessEventHandler(IServiceBus bus, ITenantProvider<IApprovalProcessorRepository> repositoryProvider)
         {
+            _bus = bus;
             _repositoryProvider = repositoryProvider;
         }
 
@@ -19,11 +22,13 @@ namespace NEventStore.Spike.ApprovalProcessorService
         {
             var tenantId = message.Headers.Retrieve<SystemHeaders>().TenantId;
 
-            var processor = _repositoryProvider
+            var processorInstance = _repositoryProvider
                 .Get(tenantId)
                 .GetProcessorById(message.Body.Id);
 
-            processor.Raise(processor.
+            var processor = new ApprovalProcessor {Bus = _bus};
+
+            processor.RaiseEvent(processorInstance, eventIs => eventIs.Initiated, message);
         }
     }
 }

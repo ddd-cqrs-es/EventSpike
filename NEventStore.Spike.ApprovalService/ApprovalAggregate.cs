@@ -77,6 +77,11 @@ namespace NEventStore.Spike.ApprovalService
 
         private void Apply(ApprovalInitiated @event)
         {
+            _isDescriptionLocked = false;
+        }
+
+        private void Apply(ApprovalAccepted @event)
+        {
             _isDescriptionLocked = true;
         }
 

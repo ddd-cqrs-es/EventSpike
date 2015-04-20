@@ -13,7 +13,7 @@ namespace NEventStore.Spike.Common.EventSubscription
         public EventSubscriptionRegistry()
         {
             For<BiggyList<TenantCheckpointTokenDocument>>()
-                .Use(new StreamCheckpointTokenBiggyListFactory().Construct())
+                .Use(() => new StreamCheckpointTokenBiggyListFactory().Construct())
                 .Singleton();
 
             ForConcreteType<EventSubscriptionBootstrapper>()

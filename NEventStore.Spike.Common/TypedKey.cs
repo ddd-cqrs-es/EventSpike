@@ -24,7 +24,7 @@ namespace NEventStore.Spike.Common
             return GetType().GetHashCode();
         }
 
-        public static string UniqueKey = typeof(TypedKey<T>).Name;
+        public static string UniqueKey = typeof(T).Name;
     }
 
     public static class ExtensionsForTypedKey

@@ -1,7 +1,6 @@
 ﻿namespace NEventStore.Spike.Common
 {
-    public interface IHandle<in T>
+    public interface IHandler
     {
-        void Handle(T message);
     }
 }
