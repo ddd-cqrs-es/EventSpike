@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventSpike.Common
 {
-    // Based from Magnum.Context.TypedKey, but uses Type.ConnectionName instead of Type.FullName, and has extensions against IDictionary<TKey, TValue> instead of just non-generic IDictionary
+    // Based from Magnum.Context.TypedKey, but uses typeof(T).Name instead of typeof(TypedKey<T>).FullName, and has extensions against IDictionary<TKey, TValue> instead of just non-generic IDictionary
     public class TypedKey<T>
     {
         public bool Equals(TypedKey<T> obj)

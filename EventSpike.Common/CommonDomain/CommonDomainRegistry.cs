@@ -36,8 +36,7 @@ namespace EventSpike.Common.CommonDomain
 
             foreach (var registration in registrations)
             {
-                conflictDetector.FastInvoke(registration.GetType().GenericTypeArguments,
-                    x => x.Register<object, object>(null), registration);
+                conflictDetector.FastInvoke(registration.GetType().GenericTypeArguments, x => x.Register<object, object>(null), registration);
             }
         }
     }
