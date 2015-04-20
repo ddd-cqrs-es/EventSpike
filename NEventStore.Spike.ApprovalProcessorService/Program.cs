@@ -37,7 +37,7 @@ namespace NEventStore.Spike.ApprovalProcessorService
 
                 configure
                     .For<IObserver<ICommit>>()
-                    .Add<ApprovalProcessorCommitObserver>();
+                    .Add<MemBusPublisherCommitObserver>();
 
                 configure
                     .For<IBus>()

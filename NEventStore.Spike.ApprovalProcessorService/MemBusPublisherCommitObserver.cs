@@ -7,12 +7,12 @@ using NEventStore.Spike.Common.EventSubscription;
 
 namespace NEventStore.Spike.ApprovalProcessorService
 {
-    internal class ApprovalProcessorCommitObserver : IObserver<ICommit>
+    internal class MemBusPublisherCommitObserver : IObserver<ICommit>
     {
         private readonly ITenantProvider<IStreamCheckpointTracker> _streamTrackerProvider;
         private readonly IBus _bus;
 
-        public ApprovalProcessorCommitObserver(ITenantProvider<IStreamCheckpointTracker> streamTrackerProvider, IBus bus)
+        public MemBusPublisherCommitObserver(ITenantProvider<IStreamCheckpointTracker> streamTrackerProvider, IBus bus)
         {
             _streamTrackerProvider = streamTrackerProvider;
             _bus = bus;
