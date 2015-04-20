@@ -7,8 +7,8 @@ namespace EventSpike.Common.NEventStore
         Registry
     {
         private const string
-            TenantConnectionName = "NEventStoreSpike-{0}",
-            SingleTenantConnectionString = "Database=NEventStoreSpike;Server=(local);Integrated Security=SSPI;";
+            TenantConnectionName = "EventSpike-{0}",
+            SingleTenantConnectionString = "Database=EventSpike;Server=(local);Integrated Security=SSPI;";
 
         public NEventStoreRegistry()
         {
