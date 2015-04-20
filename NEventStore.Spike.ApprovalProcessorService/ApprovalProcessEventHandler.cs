@@ -30,5 +30,18 @@ namespace NEventStore.Spike.ApprovalProcessorService
 
             processor.RaiseEvent(processorInstance, eventIs => eventIs.Initiated, message);
         }
+
+        public void Handle(IEnvelope<ApprovalAccepted> message)
+        {
+            var tenantId = message.Headers.Retrieve<SystemHeaders>().TenantId;
+
+            var processorInstance = _repositoryProvider
+                .Get(tenantId)
+                .GetProcessorById(message.Body.Id);
+
+            var processor = new ApprovalProcessor { Bus = _bus };
+
+            processor.RaiseEvent(processorInstance, eventIs => eventIs.Accepted, message);
+        }
     }
 }
