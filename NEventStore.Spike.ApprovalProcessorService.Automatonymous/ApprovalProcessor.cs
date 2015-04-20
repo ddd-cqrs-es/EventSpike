@@ -6,7 +6,7 @@ using NEventStore.Spike.Common.ApprovalCommands;
 using NEventStore.Spike.Common.ApprovalEvents;
 using NEventStore.Spike.Common.CommonDomain;
 
-namespace NEventStore.Spike.ApprovalProcessorService
+namespace NEventStore.Spike.ApprovalProcessorService.Automatonymous
 {
     internal class ApprovalProcessor :
         AutomatonymousStateMachine<ApprovalProcessorInstance>

@@ -4,7 +4,7 @@ using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.ApprovalEvents;
 using NEventStore.Spike.Common.CommonDomain;
 
-namespace NEventStore.Spike.ApprovalProcessorService
+namespace NEventStore.Spike.ApprovalProcessorService.Automatonymous
 {
     public class ApprovalProcessEventHandler :
         IHandler

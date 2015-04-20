@@ -7,8 +7,8 @@
     <ProjectGuid>{B8D6F16F-44B8-4FBB-A9AB-3FFE8D1355ED}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NEventStore.Spike.ApprovalProcessorService</RootNamespace>
-    <AssemblyName>NEventStore.Spike.ApprovalProcessorService</AssemblyName>
+    <RootNamespace>NEventStore.Spike.ApprovalProcessorService.Automatonymous</RootNamespace>
+    <AssemblyName>NEventStore.Spike.ApprovalProcessorService.Automatonymous</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -95,7 +95,7 @@
   <ItemGroup>
     <Compile Include="ApprovalProcessEventHandler.cs" />
     <Compile Include="ApprovalProcessor.cs" />
-    <Compile Include="ApprovalProcessorCommitObserver.cs" />
+    <Compile Include="MemBusPublisherCommitObserver.cs" />
     <Compile Include="ApprovalProcessorServiceControl.cs" />
     <Compile Include="ApprovalProcessorInstance.cs" />
     <Compile Include="IApprovalProcessorRepository.cs" />

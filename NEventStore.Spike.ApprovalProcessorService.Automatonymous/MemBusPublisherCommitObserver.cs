@@ -5,7 +5,7 @@ using NEventStore.Spike.Common;
 using NEventStore.Spike.Common.CommonDomain;
 using NEventStore.Spike.Common.EventSubscription;
 
-namespace NEventStore.Spike.ApprovalProcessorService
+namespace NEventStore.Spike.ApprovalProcessorService.Automatonymous
 {
     internal class MemBusPublisherCommitObserver : IObserver<ICommit>
     {

@@ -1,7 +1,7 @@
 using System;
 using Automatonymous;
 
-namespace NEventStore.Spike.ApprovalProcessorService
+namespace NEventStore.Spike.ApprovalProcessorService.Automatonymous
 {
     public class ApprovalProcessorInstance
     {

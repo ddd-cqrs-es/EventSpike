@@ -9,7 +9,7 @@ using NEventStore.Spike.Common.NEventStore;
 using StructureMap;
 using Topshelf;
 
-namespace NEventStore.Spike.ApprovalProcessorService
+namespace NEventStore.Spike.ApprovalProcessorService.Automatonymous
 {
     internal class Program
     {

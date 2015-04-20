@@ -2,7 +2,7 @@
 using NEventStore.Spike.Common.EventSubscription;
 using Topshelf;
 
-namespace NEventStore.Spike.ApprovalProcessorService
+namespace NEventStore.Spike.ApprovalProcessorService.Automatonymous
 {
     public class ApprovalProcessorServiceControl :
         ServiceControl

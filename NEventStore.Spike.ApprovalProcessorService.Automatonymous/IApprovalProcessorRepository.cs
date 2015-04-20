@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NEventStore.Spike.ApprovalProcessorService
+namespace NEventStore.Spike.ApprovalProcessorService.Automatonymous
 {
     public interface IApprovalProcessorRepository
     {
