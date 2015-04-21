@@ -23,6 +23,8 @@ namespace EventSpike.ApprovalProcessorService.Automatonymous
 
             Event(() => Initiated);
 
+            Event(() => Accepted);
+
             State(() => WaitingForApproval);
 
             Initially(
@@ -54,5 +56,7 @@ namespace EventSpike.ApprovalProcessorService.Automatonymous
         public Event<IEnvelope<ApprovalAccepted>> Accepted { get; set; }
 
         public State WaitingForApproval { get; set; }
+
+        public State Completed { get; set; }
     }
 }

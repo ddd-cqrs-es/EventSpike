@@ -20,6 +20,7 @@ namespace EventSpike.ApprovalProcessorService.Automatonymous
 
         public void Handle(IEnvelope<ApprovalInitiated> message)
         {
+            
             var tenantId = message.Headers.Retrieve<SystemHeaders>().TenantId;
 
             var processorInstance = _repositoryProvider

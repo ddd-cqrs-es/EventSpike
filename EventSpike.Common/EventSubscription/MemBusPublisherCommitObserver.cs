@@ -1,14 +1,12 @@
 ﻿using System;
-using EventSpike.Common;
 using EventSpike.Common.CommonDomain;
-using EventSpike.Common.EventSubscription;
 using Magnum.Reflection;
 using MemBus;
 using NEventStore;
 
-namespace EventSpike.ApprovalProcessorService.Automatonymous
+namespace EventSpike.Common.EventSubscription
 {
-    internal class MemBusPublisherCommitObserver : IObserver<ICommit>
+    public class MemBusPublisherCommitObserver : IObserver<ICommit>
     {
         private readonly ITenantProvider<IStreamCheckpointTracker> _streamTrackerProvider;
         private readonly IBus _bus;
