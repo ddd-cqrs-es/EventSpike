@@ -30,6 +30,15 @@ namespace EventSpike.ApprovalProcessorService.CommonDomain
                 configure
                     .For<IObserver<ICommit>>()
                     .Add<MemBusPublisherCommitObserver>();
+
+                configure.Scan(scan =>
+                {
+                    scan.AssemblyContainingType<Program>();
+                    scan.AddAllTypesOf<IHandler>();
+                });
+
+                configure.For<IHandler>()
+                    .Singleton();
             });
         }
     }

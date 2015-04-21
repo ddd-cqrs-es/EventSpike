@@ -41,6 +41,9 @@ namespace EventSpike.ApprovalProcessorService.Automatonymous
                     scan.AssemblyContainingType<Program>();
                     scan.AddAllTypesOf<IHandler>();
                 });
+
+                configure.For<IHandler>()
+                    .Singleton();
             });
 
             HostFactory.Run(host =>

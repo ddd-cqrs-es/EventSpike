@@ -1,6 +1,7 @@
 using CommonDomain;
 using CommonDomain.Core;
 using CommonDomain.Persistence;
+using CommonDomain.Persistence.EventStore;
 using EventSpike.Common.EventSubscription;
 using Magnum.Reflection;
 using NEventStore;
@@ -18,6 +19,11 @@ namespace EventSpike.Common.CommonDomain
                 .Singleton()
                 .MissingNamedInstanceIs
                 .ConstructedBy(context => context.GetInstance<TenantRepositoryFactory>().Construct(context.RequestedName));
+
+            For<ISagaRepository>()
+                .Singleton()
+                .MissingNamedInstanceIs
+                .ConstructedBy(context => context.GetInstance<SagaEventStoreRepository>(context.RequestedName));
 
             For<IDetectConflicts>()
                 .Use<ConflictDetector>()
