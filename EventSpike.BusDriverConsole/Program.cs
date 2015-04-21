@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.MassTransit;
+using EventSpike.Common.Registries;
 using Magnum.Reflection;
 using MassTransit;
 using StructureMap;
@@ -18,12 +19,12 @@ namespace EventSpike.BusDriverConsole
 
             var container = new Container(configure =>
             {
-                configure.AddRegistry<MassTransitRegistry>();
+                configure.AddRegistry<MassTransitCommonRegistry>();
 
                 configure
                     .For<string>()
                     .Add(endpointName)
-                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
+                    .Named(MassTransitCommonRegistry.InstanceNames.DataEndpointName);
             });
 
             var bus = container.GetInstance<IServiceBus>();

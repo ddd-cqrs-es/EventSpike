@@ -1,12 +1,6 @@
-﻿using System;
-using EventSpike.Common;
-using EventSpike.Common.EventSubscription;
+﻿using EventSpike.Common;
 using EventSpike.Common.MassTransit;
-using EventSpike.Common.NEventStore;
-using MemBus;
-using MemBus.Configurators;
-using MemBus.Subscribing;
-using NEventStore;
+using EventSpike.Common.Registries;
 using StructureMap;
 using Topshelf;
 
@@ -21,20 +15,19 @@ namespace EventSpike.ApprovalProcessorService.Automatonymous
 
             var container = new Container(configure =>
             {
-                configure.AddRegistry<TenantProviderRegistry>();
-                configure.AddRegistry<MassTransitRegistry>();
-                configure.AddRegistry<NEventStoreRegistry>();
-                configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry(new TenantProviderRegistry(tenantConfigure =>
+                {
+                    tenantConfigure.AddRegistry<NEventStoreTenantRegistry>();
+                    tenantConfigure.AddRegistry<EventSubscriptionTenantRegistry>();
+                }));
+
+                configure.AddRegistry<MassTransitCommonRegistry>();
+                configure.AddRegistry<EventSubscriptionCommonRegistry>();
 
                 configure
                     .For<string>()
                     .Add(endpointName)
-                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
-
-                configure
-                    .For<IApprovalProcessorRepository>()
-                    .Singleton()
-                    .MissingNamedInstanceIs.ConstructedBy(context => context.GetInstance<InMemoryApprovalProcessorRepository>());
+                    .Named(MassTransitCommonRegistry.InstanceNames.DataEndpointName);
                 
                 configure.Scan(scan =>
                 {

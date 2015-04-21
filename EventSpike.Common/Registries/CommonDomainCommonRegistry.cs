@@ -1,40 +1,22 @@
 using CommonDomain;
 using CommonDomain.Core;
 using CommonDomain.Persistence;
-using CommonDomain.Persistence.EventStore;
+using EventSpike.Common.CommonDomain;
 using EventSpike.Common.EventSubscription;
 using Magnum.Reflection;
 using NEventStore;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
-namespace EventSpike.Common.CommonDomain
+namespace EventSpike.Common.Registries
 {
-    public class CommonDomainRegistry :
+    public class CommonDomainCommonRegistry :
         Registry
     {
-        public CommonDomainRegistry()
+        public CommonDomainCommonRegistry()
         {
-            For<IRepository>()
-                .Singleton()
-                .MissingNamedInstanceIs
-                .ConstructedBy(context => context.GetInstance<IRepository>());
-
-            For<IRepository>()
-                .Use<EventStoreRepository>()
-                .Ctor<IStoreEvents>().Is(context => context.GetInstance<IStoreEvents>(context.RequestedName));
-
             For<IConstructAggregates>()
                 .Use<AggregateFactory>();
-
-            For<ISagaRepository>()
-                .Singleton()
-                .MissingNamedInstanceIs
-                .ConstructedBy(context => context.GetInstance<ISagaRepository>());
-
-            For<ISagaRepository>()
-                .Use<SagaEventStoreRepository>()
-                .Ctor<IStoreEvents>().Is(context => context.GetInstance<IStoreEvents>(context.RequestedName));
 
             For<IConstructSagas>()
                 .Use<SagaFactory>();
@@ -49,7 +31,7 @@ namespace EventSpike.Common.CommonDomain
 
         private static void ConfigureConflictDetector(IContext context, ConflictDetector conflictDetector)
         {
-            var registrations = context.GetAllInstances(typeof (ConflictDelegate<,>));
+            var registrations = context.GetAllInstances(typeof(ConflictDelegate<,>));
 
             foreach (var registration in registrations)
             {

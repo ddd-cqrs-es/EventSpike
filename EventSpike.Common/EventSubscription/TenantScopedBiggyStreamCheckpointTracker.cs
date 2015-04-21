@@ -11,8 +11,7 @@ namespace EventSpike.Common.EventSubscription
         private readonly BiggyList<TenantCheckpointTokenDocument> _tenantCheckpoints;
         private readonly string _tenantId;
 
-        public TenantScopedBiggyStreamCheckpointTracker(string tenantId,
-            BiggyList<TenantCheckpointTokenDocument> tenantCheckpoints)
+        public TenantScopedBiggyStreamCheckpointTracker(string tenantId, BiggyList<TenantCheckpointTokenDocument> tenantCheckpoints)
         {
             _tenantId = tenantId;
             _tenantCheckpoints = tenantCheckpoints;

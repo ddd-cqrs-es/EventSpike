@@ -1,13 +1,14 @@
+using EventSpike.Common.MassTransit;
 using MassTransit;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
-namespace EventSpike.Common.MassTransit
+namespace EventSpike.Common.Registries
 {
-    public class MassTransitRegistry :
+    public class MassTransitCommonRegistry :
         Registry
     {
-        public MassTransitRegistry()
+        public MassTransitCommonRegistry()
         {
             For<ServiceBusConfiguration>()
                 .Add(context => DefaultConfiguration(context));

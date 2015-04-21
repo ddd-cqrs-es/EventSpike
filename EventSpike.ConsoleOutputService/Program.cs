@@ -1,8 +1,6 @@
 ﻿using System;
-using EventSpike.Common;
-using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
-using EventSpike.Common.NEventStore;
+using EventSpike.Common.Registries;
 using NEventStore;
 using StructureMap;
 using Topshelf;
@@ -18,14 +16,18 @@ namespace EventSpike.ConsoleOutputService
 
             var container = new Container(configure =>
             {
-                configure.AddRegistry<TenantProviderRegistry>();
-                configure.AddRegistry<MassTransitRegistry>();
-                configure.AddRegistry<NEventStoreRegistry>();
-                configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry(new TenantProviderRegistry(tenantConfigure =>
+                {
+                    tenantConfigure.AddRegistry<NEventStoreTenantRegistry>();
+                    tenantConfigure.AddRegistry<EventSubscriptionTenantRegistry>();
+                }));
+
+                configure.AddRegistry<MassTransitCommonRegistry>();
+                configure.AddRegistry<EventSubscriptionCommonRegistry>();
 
                 configure.For<string>()
                     .Add(endpointName)
-                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
+                    .Named(MassTransitCommonRegistry.InstanceNames.DataEndpointName);
 
                 configure
                     .For<IObserver<ICommit>>()

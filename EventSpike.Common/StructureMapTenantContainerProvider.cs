@@ -2,19 +2,19 @@
 
 namespace EventSpike.Common
 {
-    public class StructureMapTenantProvider<TValue> :
+    public class StructureMapTenantContainerProvider<TValue> :
         ITenantProvider<TValue>
     {
         private readonly IContainer _container;
 
-        public StructureMapTenantProvider(IContainer container)
+        public StructureMapTenantContainerProvider(IContainer container)
         {
             _container = container;
         }
 
         public TValue Get(string tenantId)
         {
-            return _container.GetInstance<TValue>(tenantId);
+            return _container.GetInstance<IContainer>(tenantId).GetInstance<TValue>();
         }
     }
 }

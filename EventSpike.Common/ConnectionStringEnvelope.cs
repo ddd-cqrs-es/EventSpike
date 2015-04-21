@@ -4,6 +4,7 @@
     {
         public ConnectionStringEnvelope(string connectionName, string connectionString)
         {
+            ConnectionName = connectionName;
             ConnectionString = connectionString;
         }
 

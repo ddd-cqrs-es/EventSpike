@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Windows.Input;
 using EventSpike.Common;
-using EventSpike.Common.CommonDomain;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
-using EventSpike.Common.NEventStore;
+using EventSpike.Common.Registries;
 using NEventStore;
 using StructureMap;
 using Topshelf;
@@ -20,16 +18,21 @@ namespace EventSpike.ApprovalProcessorService.CommonDomain
 
             var container = new Container(configure =>
             {
-                configure.AddRegistry<TenantProviderRegistry>();
-                configure.AddRegistry<MassTransitRegistry>();
-                configure.AddRegistry<CommonDomainRegistry>();
-                configure.AddRegistry<NEventStoreRegistry>();
-                configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry(new TenantProviderRegistry(tenantConfigure =>
+                {
+                    tenantConfigure.AddRegistry<NEventStoreTenantRegistry>();
+                    tenantConfigure.AddRegistry<EventSubscriptionTenantRegistry>();
+                    tenantConfigure.AddRegistry<CommonDomainTenantRegistry>();
+                }));
+
+                configure.AddRegistry<MassTransitCommonRegistry>();
+                configure.AddRegistry<CommonDomainCommonRegistry>();
+                configure.AddRegistry<EventSubscriptionCommonRegistry>();
 
                 configure
                     .For<string>()
                     .Add(endpointName)
-                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
+                    .Named(MassTransitCommonRegistry.InstanceNames.DataEndpointName);
                 
                 configure
                     .For<IObserver<ICommit>>()

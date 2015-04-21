@@ -4,30 +4,36 @@ using NEventStore.Persistence.Sql.SqlDialects;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
-namespace EventSpike.Common.NEventStore
+namespace EventSpike.Common.Registries
 {
-    public class NEventStoreRegistry :
+    public class NEventStoreTenantRegistry :
         Registry
     {
         private const string
             TenantConnectionName = "EventSpike-{0}",
             SingleTenantConnectionString = "Database=EventSpike;Server=(local);Integrated Security=SSPI;MultipleActiveResultSets=true;";
 
-        public NEventStoreRegistry()
+        public NEventStoreTenantRegistry()
         {
             For<ConnectionStringEnvelope>()
-                .MissingNamedInstanceIs
-                .ConstructedBy(context => new ConnectionStringEnvelope(string.Format(TenantConnectionName, context.RequestedName), SingleTenantConnectionString));
+                .Singleton()
+                .Use(context => GetConnectionStringEnvelope(context));
 
             For<IStoreEvents>()
                 .Singleton()
-                .MissingNamedInstanceIs
-                .ConstructedBy(context => WireUpEventStore(context));
+                .Use(context => WireUpEventStore(context));
+        }
+
+        private static ConnectionStringEnvelope GetConnectionStringEnvelope(IContext context)
+        {
+            var tenantId = context.GetInstance<string>("tenantId");
+
+            return new ConnectionStringEnvelope(string.Format(TenantConnectionName, tenantId), SingleTenantConnectionString);
         }
 
         private static IStoreEvents WireUpEventStore(IContext context)
         {
-            var connectionStringEnvelope = context.GetInstance<ConnectionStringEnvelope>(context.RequestedName);
+            var connectionStringEnvelope = context.GetInstance<ConnectionStringEnvelope>();
             var pipelineHooks = context.GetAllInstances<IPipelineHook>();
 
             return Wireup.Init()
