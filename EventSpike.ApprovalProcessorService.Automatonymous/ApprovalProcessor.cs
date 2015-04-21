@@ -8,6 +8,7 @@ using MassTransit;
 
 namespace EventSpike.ApprovalProcessorService.Automatonymous
 {
+    // TODO this could benefit from having the publishing / command envelope wrapping done elsewhere
     internal class ApprovalProcessor :
         AutomatonymousStateMachine<ApprovalProcessorInstance>
     {
@@ -39,13 +40,16 @@ namespace EventSpike.ApprovalProcessorService.Automatonymous
 
             During(WaitingForApproval,
                 When(WaitingForApproval.Enter)
-                    .Then(state => Bus.Publish(new MarkApprovalAccepted
+                    .Then(state => Bus.Publish(new CommandEnvelope<MarkApprovalAccepted>
                     {
-                        Id = state.ApprovalId,
                         CausationId = DeterministicGuid.Create(state.CausationId.ToByteArray()),
-                        ReferenceNumber = Guid.NewGuid().ToString(),
                         TenantId = state.TenantId,
-                        UserId = UserId
+                        UserId = UserId,
+                        Body = new MarkApprovalAccepted
+                        {
+                            Id = state.ApprovalId,
+                            ReferenceNumber = Guid.NewGuid().ToString()
+                        }
                     })),
                 When(Accepted)
                     .Finalize());

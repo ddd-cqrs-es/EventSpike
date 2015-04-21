@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandEnvelope.cs" />
     <Compile Include="CommonDomain\AggregateFactory.cs" />
     <Compile Include="ApprovalCommands\InitiateApproval.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalAccepted.cs" />

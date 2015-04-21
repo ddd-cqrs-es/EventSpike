@@ -19,9 +19,9 @@ namespace EventSpike.Common.EventSubscription
 
         public void OnNext(ICommit commit)
         {
-            foreach (var @event in commit.Events)
+            if (!commit.Headers.ContainsKey("SagaType"))
             {
-                this.FastInvoke(new[] {@event.Body.GetType()}, x => x.Publish(default(ICommit), default(object)), commit, @event.Body);
+                DispatchEvents(commit);
             }
             
             var tenantId = commit.Headers.Retrieve<SystemHeaders>().TenantId;
@@ -29,6 +29,14 @@ namespace EventSpike.Common.EventSubscription
             _streamTrackerProvider
                 .Get(tenantId)
                 .UpdateCheckpoint(commit.CheckpointToken);
+        }
+
+        private void DispatchEvents(ICommit commit)
+        {
+            foreach (var @event in commit.Events)
+            {
+                this.FastInvoke(new[] { @event.Body.GetType() }, x => x.Publish(default(ICommit), default(object)), commit, @event.Body);
+            }
         }
 
         private void Publish<TEvent>(ICommit commit, TEvent @event)

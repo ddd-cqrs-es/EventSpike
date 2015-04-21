@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Windows.Input;
 using EventSpike.Common;
+using EventSpike.Common.CommonDomain;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.NEventStore;
 using NEventStore;
 using StructureMap;
+using Topshelf;
 
 namespace EventSpike.ApprovalProcessorService.CommonDomain
 {
@@ -19,6 +22,7 @@ namespace EventSpike.ApprovalProcessorService.CommonDomain
             {
                 configure.AddRegistry<TenantProviderRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
+                configure.AddRegistry<CommonDomainRegistry>();
                 configure.AddRegistry<NEventStoreRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
 
@@ -34,11 +38,25 @@ namespace EventSpike.ApprovalProcessorService.CommonDomain
                 configure.Scan(scan =>
                 {
                     scan.AssemblyContainingType<Program>();
-                    scan.AddAllTypesOf<IHandler>();
+                    scan.AddAllTypesOf<IEventHandler>();
                 });
 
-                configure.For<IHandler>()
+                configure
+                    .For<IEventHandler>()
                     .Singleton();
+
+                configure
+                    .For<IPipelineHook>()
+                    .Singleton()
+                    .Add<MassTransitCommandDispatcherPipelineHook>();
+            });
+
+            HostFactory.Run(host =>
+            {
+                host.SetServiceName(serviceName);
+                host.DependsOnMsmq();
+
+                host.Service(container.GetInstance<ApprovalProcessorServiceControl>);
             });
         }
     }

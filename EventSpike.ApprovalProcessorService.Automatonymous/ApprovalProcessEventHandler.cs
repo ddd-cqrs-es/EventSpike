@@ -7,7 +7,7 @@ using MassTransit;
 namespace EventSpike.ApprovalProcessorService.Automatonymous
 {
     public class ApprovalProcessEventHandler :
-        IHandler
+        IEventHandler
     {
         private readonly IServiceBus _bus;
         private readonly ITenantProvider<IApprovalProcessorRepository> _repositoryProvider;
@@ -20,7 +20,6 @@ namespace EventSpike.ApprovalProcessorService.Automatonymous
 
         public void Handle(IEnvelope<ApprovalInitiated> message)
         {
-            
             var tenantId = message.Headers.Retrieve<SystemHeaders>().TenantId;
 
             var processorInstance = _repositoryProvider

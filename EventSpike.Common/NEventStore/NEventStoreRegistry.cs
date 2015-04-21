@@ -11,7 +11,7 @@ namespace EventSpike.Common.NEventStore
     {
         private const string
             TenantConnectionName = "EventSpike-{0}",
-            SingleTenantConnectionString = "Database=EventSpike;Server=(local);Integrated Security=SSPI;";
+            SingleTenantConnectionString = "Database=EventSpike;Server=(local);Integrated Security=SSPI;MultipleActiveResultSets=true;";
 
         public NEventStoreRegistry()
         {

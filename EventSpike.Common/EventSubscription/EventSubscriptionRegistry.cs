@@ -60,7 +60,7 @@ namespace EventSpike.Common.EventSubscription
 
         private static void WireUpMemBus(IContext context, IBus bus)
         {
-            var handlers = context.GetAllInstances<IHandler>();
+            var handlers = context.GetAllInstances<IEventHandler>();
 
             foreach (var handler in handlers)
             {

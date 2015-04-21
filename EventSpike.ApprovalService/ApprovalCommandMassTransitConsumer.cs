@@ -7,11 +7,11 @@ using MassTransit;
 namespace EventSpike.ApprovalService
 {
     internal class ApprovalCommandMassTransitConsumer :
-        Consumes<InitiateApproval>.All,
-        Consumes<MarkApprovalAccepted>.All,
-        Consumes<MarkApprovalPartiallyAccepted>.All,
-        Consumes<MarkApprovalDenied>.All,
-        Consumes<MarkApprovalCancelled>.All
+        Consumes<CommandEnvelope<InitiateApproval>>.All,
+        Consumes<CommandEnvelope<MarkApprovalAccepted>>.All,
+        Consumes<CommandEnvelope<MarkApprovalPartiallyAccepted>>.All,
+        Consumes<CommandEnvelope<MarkApprovalDenied>>.All,
+        Consumes<CommandEnvelope<MarkApprovalCancelled>>.All
     {
         private readonly ITenantProvider<IRepository> _repositoryProvider;
 
@@ -20,50 +20,50 @@ namespace EventSpike.ApprovalService
             _repositoryProvider = repositoryProvider;
         }
 
-        public void Consume(InitiateApproval message)
+        public void Consume(CommandEnvelope<InitiateApproval> message)
         {
             var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = new ApprovalAggregate(message.Id, message.Title, message.Description);
+            var approval = new ApprovalAggregate(message.Body.Id, message.Body.Title, message.Body.Description);
 
             repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
         }
 
-        public void Consume(MarkApprovalAccepted message)
+        public void Consume(CommandEnvelope<MarkApprovalAccepted> message)
         {
             var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = repository.GetById<ApprovalAggregate>(message.Id);
+            var approval = repository.GetById<ApprovalAggregate>(message.Body.Id);
 
-            approval.MarkAccepted(message.ReferenceNumber);
+            approval.MarkAccepted(message.Body.ReferenceNumber);
 
             repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
         }
 
-        public void Consume(MarkApprovalCancelled message)
+        public void Consume(CommandEnvelope<MarkApprovalCancelled> message)
         {
             var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = repository.GetById<ApprovalAggregate>(message.Id);
+            var approval = repository.GetById<ApprovalAggregate>(message.Body.Id);
 
-            approval.Cancel(message.CancellationReason);
+            approval.Cancel(message.Body.CancellationReason);
 
             repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {UserId = message.UserId}));
         }
 
-        public void Consume(MarkApprovalDenied message)
+        public void Consume(CommandEnvelope<MarkApprovalDenied> message)
         {
             var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = repository.GetById<ApprovalAggregate>(message.Id);
+            var approval = repository.GetById<ApprovalAggregate>(message.Body.Id);
 
-            approval.MarkDenied(message.ReferenceNumber, message.DenialReason);
+            approval.MarkDenied(message.Body.ReferenceNumber, message.Body.DenialReason);
 
             repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {UserId = message.UserId}));
         }
 
-        public void Consume(MarkApprovalPartiallyAccepted message)
+        public void Consume(CommandEnvelope<MarkApprovalPartiallyAccepted> message)
         {
             var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = repository.GetById<ApprovalAggregate>(message.Id);
+            var approval = repository.GetById<ApprovalAggregate>(message.Body.Id);
 
-            approval.MarkPartiallyAccepted(message.ReferenceNumber);
+            approval.MarkPartiallyAccepted(message.Body.ReferenceNumber);
 
             repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
         }

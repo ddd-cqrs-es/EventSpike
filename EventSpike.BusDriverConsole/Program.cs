@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.MassTransit;
 using Magnum.Reflection;
@@ -37,14 +38,17 @@ namespace EventSpike.BusDriverConsole
             const string tenantId = "tenant-1";
             const string userId = "user-1";
 
-            var commands = Enumerable.Repeat<Func<object>>(() => new InitiateApproval
+            var commands = Enumerable.Repeat<Func<object>>(() => new CommandEnvelope<InitiateApproval>
             {
-                Id = Guid.NewGuid(),
                 CausationId = Guid.NewGuid(),
-                Title = "I need dis",
-                Description = "Pretty plz, with sugar on top",
                 TenantId = tenantId,
-                UserId = userId
+                UserId = userId,
+                Body = new InitiateApproval
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "I need dis",
+                    Description = "Pretty plz, with sugar on top",
+                }
             }, Int32.MaxValue);
 
             foreach (var commandFactory in commands)

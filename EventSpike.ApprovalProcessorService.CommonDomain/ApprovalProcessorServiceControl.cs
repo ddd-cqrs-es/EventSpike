@@ -1,8 +1,8 @@
-﻿using EventSpike.Common.EventSubscription;
+using EventSpike.Common.EventSubscription;
 using MassTransit;
 using Topshelf;
 
-namespace EventSpike.ApprovalProcessorService.Automatonymous
+namespace EventSpike.ApprovalProcessorService.CommonDomain
 {
     internal class ApprovalProcessorServiceControl :
         ServiceControl

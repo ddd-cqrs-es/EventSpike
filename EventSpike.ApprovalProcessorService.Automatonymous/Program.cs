@@ -39,10 +39,11 @@ namespace EventSpike.ApprovalProcessorService.Automatonymous
                 configure.Scan(scan =>
                 {
                     scan.AssemblyContainingType<Program>();
-                    scan.AddAllTypesOf<IHandler>();
+                    scan.AddAllTypesOf<IEventHandler>();
                 });
 
-                configure.For<IHandler>()
+                configure
+                    .For<IEventHandler>()
                     .Singleton();
             });
 
