@@ -15,14 +15,11 @@ namespace EventSpike.Common.CommonDomain
                 ? new object[] {snapshot}
                 : new object[] {id};
 
-            var constructor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
-                new[] {typeParam}, null);
+            var constructor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeParam}, null);
 
             if (constructor == null)
             {
-                throw new InvalidOperationException(
-                    string.Format("Aggregate {0} cannot be created: constructor with proper parameter not provided",
-                        type.Name));
+                throw new InvalidOperationException(string.Format("Aggregate {0} cannot be created: constructor with proper parameter not provided", type.Name));
             }
 
             return constructor.Invoke(paramArray) as IAggregate;

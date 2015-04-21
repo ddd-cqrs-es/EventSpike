@@ -18,19 +18,30 @@ namespace EventSpike.Common.CommonDomain
             For<IRepository>()
                 .Singleton()
                 .MissingNamedInstanceIs
-                .ConstructedBy(context => context.GetInstance<TenantRepositoryFactory>().Construct(context.RequestedName));
+                .ConstructedBy(context => context.GetInstance<IRepository>());
+
+            For<IRepository>()
+                .Use<EventStoreRepository>()
+                .Ctor<IStoreEvents>().Is(context => context.GetInstance<IStoreEvents>(context.RequestedName));
+
+            For<IConstructAggregates>()
+                .Use<AggregateFactory>();
 
             For<ISagaRepository>()
                 .Singleton()
                 .MissingNamedInstanceIs
-                .ConstructedBy(context => context.GetInstance<SagaEventStoreRepository>(context.RequestedName));
+                .ConstructedBy(context => context.GetInstance<ISagaRepository>());
+
+            For<ISagaRepository>()
+                .Use<SagaEventStoreRepository>()
+                .Ctor<IStoreEvents>().Is(context => context.GetInstance<IStoreEvents>(context.RequestedName));
+
+            For<IConstructSagas>()
+                .Use<SagaFactory>();
 
             For<IDetectConflicts>()
                 .Use<ConflictDetector>()
                 .OnCreation((context, conflictDetector) => ConfigureConflictDetector(context, conflictDetector));
-
-            For<IConstructAggregates>()
-                .Use<AggregateFactory>();
 
             For<IPipelineHook>()
                 .Add<MassTransitNotificationPipelineHook>();

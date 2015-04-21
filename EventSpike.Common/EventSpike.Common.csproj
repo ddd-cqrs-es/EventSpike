@@ -90,11 +90,13 @@
     <Compile Include="ApprovalCommands\MarkApprovalDenied.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalPartiallyAccepted.cs" />
     <Compile Include="CommonDomain\ContextHeaders.cs" />
+    <Compile Include="CommonDomain\SagaFactory.cs" />
     <Compile Include="DeterministicGuid.cs" />
     <Compile Include="Envelope.cs" />
     <Compile Include="EventSubscription\MemBusPublisherCommitObserver.cs" />
     <Compile Include="GuidNamespaces.cs" />
     <Compile Include="IEventHandler.cs" />
+    <Compile Include="NEventStore\EventSubscriptionFactory.cs" />
     <Compile Include="TypedKey.cs" />
     <Compile Include="ConnectionStringEnvelope.cs" />
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
@@ -117,13 +119,10 @@
     <Compile Include="ApprovalEvents\ApprovalPartiallyAccepted.cs" />
     <Compile Include="EventSubscription\IStreamCheckpointTracker.cs" />
     <Compile Include="EventSubscription\TenantCheckpointTokenDocument.cs" />
-    <Compile Include="NEventStore\TenantEventSubscriptionFactory.cs" />
-    <Compile Include="NEventStore\TenantEventStoreFactory.cs" />
     <Compile Include="EventSubscription\MassTransitNotificationPipelineHook.cs" />
     <Compile Include="MassTransit\MassTransitRegistry.cs" />
     <Compile Include="NEventStore\NEventStoreRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CommonDomain\TenantRepositoryFactory.cs" />
     <Compile Include="EventSubscription\EventStreamUpdated.cs" />
     <Compile Include="ITenantProvider.cs" />
     <Compile Include="CommonDomain\SystemHeaders.cs" />

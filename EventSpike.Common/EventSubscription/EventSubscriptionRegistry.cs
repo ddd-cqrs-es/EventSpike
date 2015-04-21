@@ -35,11 +35,12 @@ namespace EventSpike.Common.EventSubscription
             For<IObserveCommits>()
                 .Singleton()
                 .MissingNamedInstanceIs
-                .ConstructedBy(context => context.GetInstance<TenantEventSubscriptionFactory>().Construct(context.RequestedName));
-            
-            ForConcreteType<TenantEventSubscriptionFactory>()
+                .ConstructedBy(context => context.GetInstance<EventSubscriptionFactory>().Construct());
+
+            ForConcreteType<EventSubscriptionFactory>()
                 .Configure
-                .Singleton();
+                .Ctor<IStoreEvents>().Is(context => context.GetInstance<IStoreEvents>(context.RequestedName))
+                .Ctor<IStreamCheckpointTracker>().Is(context => context.GetInstance<IStreamCheckpointTracker>(context.RequestedName));
 
             ForConcreteType<EventSubscriptionMassTransitConsumer>()
                 .Configure

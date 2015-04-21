@@ -1,4 +1,7 @@
 using NEventStore;
+using NEventStore.Persistence.Sql;
+using NEventStore.Persistence.Sql.SqlDialects;
+using StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace EventSpike.Common.NEventStore
@@ -19,11 +22,21 @@ namespace EventSpike.Common.NEventStore
             For<IStoreEvents>()
                 .Singleton()
                 .MissingNamedInstanceIs
-                .ConstructedBy(context => context.GetInstance<TenantEventStoreFactory>().Construct(context.RequestedName));
+                .ConstructedBy(context => WireUpEventStore(context));
+        }
 
-            ForConcreteType<TenantEventStoreFactory>()
-                .Configure
-                .Singleton();
+        private static IStoreEvents WireUpEventStore(IContext context)
+        {
+            var connectionStringEnvelope = context.GetInstance<ConnectionStringEnvelope>(context.RequestedName);
+            var pipelineHooks = context.GetAllInstances<IPipelineHook>();
+
+            return Wireup.Init()
+                .UsingSqlPersistence(new ConfigurationConnectionFactory(connectionStringEnvelope.ConnectionName, "System.Data.SqlClient", connectionStringEnvelope.ConnectionString))
+                .WithDialect(new MsSqlDialect())
+                .InitializeStorageEngine()
+                .UsingJsonSerialization()
+                .HookIntoPipelineUsing(pipelineHooks)
+                .Build();
         }
     }
 }
