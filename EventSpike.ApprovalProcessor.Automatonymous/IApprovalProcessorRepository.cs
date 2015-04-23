@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventSpike.ApprovalProcessorService.Automatonymous
+namespace EventSpike.ApprovalProcessor.Automatonymous
 {
     public interface IApprovalProcessorRepository
     {

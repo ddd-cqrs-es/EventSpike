@@ -3,7 +3,7 @@ using CommonDomain.Core;
 using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.ApprovalEvents;
 
-namespace EventSpike.ApprovalProcessorService.CommonDomain
+namespace EventSpike.ApprovalProcessor.CommonDomain
 {
     // This could also make use of Automatonymous or Stateless
     public class ApprovalProcessor :

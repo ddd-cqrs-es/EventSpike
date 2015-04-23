@@ -4,7 +4,7 @@ using EventSpike.Common.ApprovalEvents;
 using EventSpike.Common.CommonDomain;
 using MassTransit;
 
-namespace EventSpike.ApprovalProcessorService.Automatonymous
+namespace EventSpike.ApprovalProcessor.Automatonymous
 {
     public class ApprovalProcessEventHandler :
         IEventHandler

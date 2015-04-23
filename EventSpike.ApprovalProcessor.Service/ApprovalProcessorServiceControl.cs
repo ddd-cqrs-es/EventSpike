@@ -2,7 +2,7 @@
 using MassTransit;
 using Topshelf;
 
-namespace EventSpike.ApprovalProcessorService.Automatonymous
+namespace EventSpike.ApprovalProcessor.Service
 {
     internal class ApprovalProcessorServiceControl :
         ServiceControl

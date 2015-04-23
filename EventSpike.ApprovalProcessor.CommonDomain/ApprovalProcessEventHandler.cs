@@ -3,7 +3,7 @@ using EventSpike.Common;
 using EventSpike.Common.ApprovalEvents;
 using EventSpike.Common.CommonDomain;
 
-namespace EventSpike.ApprovalProcessorService.CommonDomain
+namespace EventSpike.ApprovalProcessor.CommonDomain
 {
     public class ApprovalProcessEventHandler :
         IEventHandler

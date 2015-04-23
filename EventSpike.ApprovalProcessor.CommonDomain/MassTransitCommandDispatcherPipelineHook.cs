@@ -5,9 +5,9 @@ using Magnum.Reflection;
 using MassTransit;
 using NEventStore;
 
-namespace EventSpike.ApprovalProcessorService.CommonDomain
+namespace EventSpike.ApprovalProcessor.CommonDomain
 {
-    internal class MassTransitCommandDispatcherPipelineHook :
+    public class MassTransitCommandDispatcherPipelineHook :
         PipelineHookBase
     {
         // This could also be dispatched via a PollingConsumer

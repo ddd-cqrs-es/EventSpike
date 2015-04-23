@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace EventSpike.ApprovalProcessorService.Automatonymous
+namespace EventSpike.ApprovalProcessor.Automatonymous
 {
     internal class InMemoryApprovalProcessorRepository :
         IApprovalProcessorRepository

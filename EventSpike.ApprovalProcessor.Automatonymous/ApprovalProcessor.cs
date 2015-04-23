@@ -6,7 +6,7 @@ using EventSpike.Common.ApprovalEvents;
 using EventSpike.Common.CommonDomain;
 using MassTransit;
 
-namespace EventSpike.ApprovalProcessorService.Automatonymous
+namespace EventSpike.ApprovalProcessor.Automatonymous
 {
     // TODO this could benefit from having the publishing / command envelope wrapping done elsewhere
     internal class ApprovalProcessor :
