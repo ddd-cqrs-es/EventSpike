@@ -6,13 +6,13 @@ using MassTransit;
 
 namespace EventSpike.ApprovalProcessor.Automatonymous
 {
-    public class ApprovalProcessEventHandler :
+    public class AutomatonymousApprovalProcessEventHandler :
         IEventHandler
     {
         private readonly IServiceBus _bus;
         private readonly ITenantProvider<IApprovalProcessorRepository> _repositoryProvider;
 
-        public ApprovalProcessEventHandler(IServiceBus bus, ITenantProvider<IApprovalProcessorRepository> repositoryProvider)
+        public AutomatonymousApprovalProcessEventHandler(IServiceBus bus, ITenantProvider<IApprovalProcessorRepository> repositoryProvider)
         {
             _bus = bus;
             _repositoryProvider = repositoryProvider;

@@ -1,12 +1,11 @@
-﻿using EventSpike.ApprovalProcessor.CommonDomain;
+﻿using EventSpike.ApprovalProcessor.Automatonymous;
+using EventSpike.ApprovalProcessor.CommonDomain;
 using EventSpike.Common;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
 using NEventStore;
 using StructureMap;
-using StructureMap.Configuration.DSL;
 using Topshelf;
-using ApprovalProcessEventHandler = EventSpike.ApprovalProcessor.Automatonymous.ApprovalProcessEventHandler;
 
 namespace EventSpike.ApprovalProcessor.Service
 {
@@ -19,20 +18,17 @@ namespace EventSpike.ApprovalProcessor.Service
 
             var rootContainer = new Container(root =>
             {
-                root.Profile("automatonymous", profile =>
-                {
-                    profile
-                        .For<IEventHandler>()
-                        .Singleton()
-                        .Use<Automatonymous.ApprovalProcessEventHandler>();
-                });
+                root.Profile("automatonymous", profile => profile
+                    .For<IEventHandler>()
+                    .Singleton()
+                    .Use<AutomatonymousApprovalProcessEventHandler>());
 
                 root.Profile("commonDomain", profile =>
                 {
                     profile
                         .For<IEventHandler>()
                         .Singleton()
-                        .Use<CommonDomain.ApprovalProcessEventHandler>();
+                        .Use<CommonDomainApprovalProcessEventHandler>();
 
                     profile
                         .For<IPipelineHook>()
@@ -43,9 +39,7 @@ namespace EventSpike.ApprovalProcessor.Service
                 root.AddRegistry(new TenantProviderRegistry(tenantConfigure =>
                 {
                     tenantConfigure.AddRegistry<EventSubscriptionTenantRegistry>();
-
                     tenantConfigure.AddRegistry<NEventStoreTenantRegistry>();
-
                     tenantConfigure.AddRegistry<CommonDomainTenantRegistry>();
                 }));
 
@@ -58,14 +52,14 @@ namespace EventSpike.ApprovalProcessor.Service
                     .Named(MassTransitCommonRegistry.InstanceNames.DataEndpointName);
             });
 
-            var profileContainer = rootContainer.GetProfile("automatonymous");
+            var container = rootContainer.GetProfile("automatonymous");
 
             HostFactory.Run(host =>
             {
                 host.SetServiceName(serviceName);
                 host.DependsOnMsmq();
 
-                host.Service(profileContainer.GetInstance<ApprovalProcessorServiceControl>);
+                host.Service(container.GetInstance<ApprovalProcessorServiceControl>);
             });
         }
     }

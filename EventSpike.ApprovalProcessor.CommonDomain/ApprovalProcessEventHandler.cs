@@ -5,14 +5,14 @@ using EventSpike.Common.CommonDomain;
 
 namespace EventSpike.ApprovalProcessor.CommonDomain
 {
-    public class ApprovalProcessEventHandler :
+    public class CommonDomainApprovalProcessEventHandler :
         IEventHandler
     {
         private readonly ITenantProvider<ISagaRepository> _sagaRepositoryProvider;
         
         public static readonly string UserId = string.Format("#{0}#", typeof(ApprovalProcessor).Name);
 
-        public ApprovalProcessEventHandler(ITenantProvider<ISagaRepository> sagaRepositoryProvider)
+        public CommonDomainApprovalProcessEventHandler(ITenantProvider<ISagaRepository> sagaRepositoryProvider)
         {
             _sagaRepositoryProvider = sagaRepositoryProvider;
         }
