@@ -1,9 +1,10 @@
 ﻿using System;
+using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
+using MassTransit;
 using NEventStore;
 using StructureMap;
-using Topshelf;
 
 namespace EventSpike.ConsoleOutputService
 {
@@ -31,13 +32,12 @@ namespace EventSpike.ConsoleOutputService
                     .Add<ConsoleOutputProjectionCommitObserver>();
             });
 
-            HostFactory.Run(host =>
-            {
-                host.SetServiceName(serviceName);
-                host.DependsOnMsmq();
+            var subscriptionBootstrapper = container.GetInstance<EventSubscriptionBootstrapper>();
+            subscriptionBootstrapper.ResumeSubscriptions();
 
-                host.Service(container.GetInstance<ConsoleServiceControl>);
-            });
+            var bus = container.GetInstance<IServiceBus>();
+
+            Console.ReadLine();
         }
     }
 }
