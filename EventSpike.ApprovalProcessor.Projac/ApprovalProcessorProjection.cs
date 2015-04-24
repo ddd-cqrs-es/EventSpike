@@ -34,6 +34,10 @@ namespace EventSpike.ApprovalProcessor.Projac
                 TSql.NonQueryStatement(
                     @"DELETE FROM [ApprovalProcess] WHERE [Id] = @P1",
                     new {P1 = TSql.UniqueIdentifier(@event.Body.Id)}))
+            .When<IEnvelope<ApprovalDescriptionRevised>>(@event =>
+                TSql.NonQueryStatement(
+                    @"UPDATE [ApprovalProcess] SET [Description] = @P2 WHERE [Id] = @P1",
+                    new {P1 = TSql.UniqueIdentifier(@event.Body.Id), P2 = @event.Body.Description}))
             .Build();
     }
 }
