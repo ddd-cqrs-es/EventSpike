@@ -1,6 +1,7 @@
 using CommonDomain;
 using CommonDomain.Core;
 using CommonDomain.Persistence;
+using CommonDomain.Persistence.EventStore;
 using EventSpike.Common.CommonDomain;
 using EventSpike.Common.EventSubscription;
 using Magnum.Reflection;
@@ -10,23 +11,33 @@ using StructureMap.Configuration.DSL;
 
 namespace EventSpike.Common.Registries
 {
-    public class CommonDomainCommonRegistry :
+    public class CommonDomainRegistry :
         Registry
     {
-        public CommonDomainCommonRegistry()
+        public CommonDomainRegistry()
         {
             For<IConstructAggregates>()
+                .Singleton()
                 .Use<AggregateFactory>();
 
             For<IConstructSagas>()
+                .Singleton()
                 .Use<SagaFactory>();
 
             For<IDetectConflicts>()
+                .Singleton()
                 .Use<ConflictDetector>()
                 .OnCreation((context, conflictDetector) => ConfigureConflictDetector(context, conflictDetector));
 
             For<IPipelineHook>()
+                .Singleton()
                 .Add<MassTransitNotificationPipelineHook>();
+
+            For<IRepository>()
+                .Use<EventStoreRepository>();
+
+            For<ISagaRepository>()
+                .Use<SagaEventStoreRepository>();
         }
 
         private static void ConfigureConflictDetector(IContext context, ConflictDetector conflictDetector)

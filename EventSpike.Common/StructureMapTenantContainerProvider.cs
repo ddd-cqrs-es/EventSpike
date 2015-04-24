@@ -1,4 +1,6 @@
-﻿using StructureMap;
+﻿using System.Collections.Concurrent;
+using EventSpike.Common.Registries;
+using StructureMap;
 
 namespace EventSpike.Common
 {
@@ -6,6 +8,7 @@ namespace EventSpike.Common
         ITenantProvider<TValue>
     {
         private readonly IContainer _container;
+        private readonly ConcurrentDictionary<string, IContainer> _tenantContainers = new ConcurrentDictionary<string, IContainer>();
 
         public StructureMapTenantContainerProvider(IContainer container)
         {
@@ -14,7 +17,25 @@ namespace EventSpike.Common
 
         public TValue Get(string tenantId)
         {
-            return _container.GetInstance<IContainer>(tenantId).GetInstance<TValue>();
+            var container = _tenantContainers.GetOrAdd(tenantId, _ => CreateTenantContainer(tenantId));
+
+            return container
+                .GetInstance<TValue>();
+        }
+
+        private IContainer CreateTenantContainer(string tenantId)
+        {
+            var profileProvider = _container.GetInstance<TenantProfileProvider>();
+
+            var nested = profileProvider != TenantProviderConstants.NullProfileProvider
+                ? _container.GetNestedContainer(profileProvider(tenantId))
+                : _container.GetNestedContainer();
+
+            nested.Configure(configure => configure.For<string>()
+                .Add(tenantId)
+                .Named(TenantProviderConstants.TenantIdInstanceKey));
+
+            return nested;
         }
     }
 }

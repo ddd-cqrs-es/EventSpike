@@ -16,18 +16,15 @@ namespace EventSpike.ConsoleOutputService
 
             var container = new Container(configure =>
             {
-                configure.AddRegistry(new TenantProviderRegistry(tenantConfigure =>
-                {
-                    tenantConfigure.AddRegistry<NEventStoreTenantRegistry>();
-                    tenantConfigure.AddRegistry<EventSubscriptionTenantRegistry>();
-                }));
-
-                configure.AddRegistry<MassTransitCommonRegistry>();
-                configure.AddRegistry<EventSubscriptionCommonRegistry>();
+                configure.AddRegistry<TenantProviderRegistry>();
+                configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry<NEventStoreRegistry>();
+                configure.AddRegistry<MassTransitRegistry>();
+                configure.AddRegistry<EventSubscriptionRegistry>();
 
                 configure.For<string>()
                     .Add(endpointName)
-                    .Named(MassTransitCommonRegistry.InstanceNames.DataEndpointName);
+                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
 
                 configure
                     .For<IObserver<ICommit>>()

@@ -19,12 +19,12 @@ namespace EventSpike.BusDriverConsole
 
             var container = new Container(configure =>
             {
-                configure.AddRegistry<MassTransitCommonRegistry>();
+                configure.AddRegistry<MassTransitRegistry>();
 
                 configure
                     .For<string>()
                     .Add(endpointName)
-                    .Named(MassTransitCommonRegistry.InstanceNames.DataEndpointName);
+                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
             });
 
             var bus = container.GetInstance<IServiceBus>();

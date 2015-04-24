@@ -1,31 +1,11 @@
-﻿using EventSpike.Common.ApprovalEvents;
+﻿using EventSpike.ApprovalProcessor.Projac.DataDefinition;
+using EventSpike.Common;
+using EventSpike.Common.ApprovalEvents;
 using Paramol.SqlClient;
 using Projac;
 
 namespace EventSpike.ApprovalProcessor.Projac
 {
-    internal class CreateSchema
-    {
-    }
-
-    public class DeleteData
-    {
-    }
-
-    public class DropSchema
-    {
-    }
-    
-    public class SetCheckpoint
-    {
-        public readonly long Checkpoint;
-
-        public SetCheckpoint(long checkpoint)
-        {
-            Checkpoint = checkpoint;
-        }
-    }
-
     class ApprovalProcessorProjection
     {
         private static readonly SqlProjection Instance = new SqlProjectionBuilder()
@@ -46,10 +26,14 @@ namespace EventSpike.ApprovalProcessor.Projac
                 TSql.NonQueryStatement(
                     @"IF EXISTS (SELECT * FROM SYSOBJECTS WHERE NAME='ApprovalProcess' AND XTYPE='U'
                         DELETE FROM [ApprovalProcess]"))
-            .When<ApprovalInitiated>(@event =>
+            .When<IEnvelope<ApprovalInitiated>>(@event =>
                 TSql.NonQueryStatement(
                     @"INSERT INTO [ApprovalProcess] ([Id], [Description], [State]) VALUES (@P1, @P2, 0)",
-                    new {P1 = @event.Id, P2 = @event.Description}))
+                    new {P1 = TSql.UniqueIdentifier(@event.Body.Id), P2 = TSql.NVarCharMax(@event.Body.Description)}))
+            .When<IEnvelope<ApprovalAccepted>>(@event =>
+                TSql.NonQueryStatement(
+                    @"DELETE FROM [ApprovalProcess] WHERE [Id] = @P1",
+                    new {P1 = TSql.UniqueIdentifier(@event.Body.Id)}))
             .Build();
     }
 }

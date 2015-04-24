@@ -5,10 +5,10 @@ using StructureMap.Configuration.DSL;
 
 namespace EventSpike.Common.Registries
 {
-    public class MassTransitCommonRegistry :
+    public class MassTransitRegistry :
         Registry
     {
-        public MassTransitCommonRegistry()
+        public MassTransitRegistry()
         {
             For<ServiceBusConfiguration>()
                 .Add(context => DefaultConfiguration(context));
@@ -35,8 +35,6 @@ namespace EventSpike.Common.Registries
                     var subscriptionEndpointName = context.GetInstance<string>(InstanceNames.SubscriptionEndpointName);
 
                     msmq.UseSubscriptionService(subscriptionEndpointName.AsEndpointUri());
-
-                    msmq.VerifyMsmqConfiguration();
                 });
 
                 configure.UseControlBus();
