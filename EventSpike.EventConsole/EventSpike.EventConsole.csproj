@@ -7,8 +7,8 @@
     <ProjectGuid>{B4BA82F5-7D46-46C7-8CEB-030288891960}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EventSpike.ConsoleOutputService</RootNamespace>
-    <AssemblyName>EventSpike.ConsoleOutputService</AssemblyName>
+    <RootNamespace>EventSpike.EventConsole</RootNamespace>
+    <AssemblyName>EventSpike.EventConsole</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

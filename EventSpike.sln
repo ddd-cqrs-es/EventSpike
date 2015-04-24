@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B866D6
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ConsoleOutputService", "EventSpike.ConsoleOutputService\EventSpike.ConsoleOutputService.csproj", "{B4BA82F5-7D46-46C7-8CEB-030288891960}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.Common", "EventSpike.Common\EventSpike.Common.csproj", "{A295A8F8-054F-4D71-8D1C-9A51193807F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.BusDriverConsole", "EventSpike.BusDriverConsole\EventSpike.BusDriverConsole.csproj", "{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}"
@@ -26,16 +24,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcesso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcessor.Projac", "EventSpike.ApprovalProcessor.Projac\EventSpike.ApprovalProcessor.Projac.csproj", "{D6A7726F-44D9-48B5-B219-33F02FDB3912}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.EventConsole", "EventSpike.EventConsole\EventSpike.EventConsole.csproj", "{B4BA82F5-7D46-46C7-8CEB-030288891960}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A295A8F8-054F-4D71-8D1C-9A51193807F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A295A8F8-054F-4D71-8D1C-9A51193807F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A295A8F8-054F-4D71-8D1C-9A51193807F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -64,6 +60,10 @@ Global
 		{D6A7726F-44D9-48B5-B219-33F02FDB3912}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6A7726F-44D9-48B5-B219-33F02FDB3912}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6A7726F-44D9-48B5-B219-33F02FDB3912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

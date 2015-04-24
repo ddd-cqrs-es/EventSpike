@@ -6,7 +6,7 @@ using MassTransit;
 using NEventStore;
 using StructureMap;
 
-namespace EventSpike.ConsoleOutputService
+namespace EventSpike.EventConsole
 {
     internal class Program
     {

@@ -5,7 +5,7 @@ using EventSpike.Common.EventSubscription;
 using NEventStore;
 using Newtonsoft.Json;
 
-namespace EventSpike.ConsoleOutputService
+namespace EventSpike.EventConsole
 {
     internal class ConsoleOutputProjectionCommitObserver : IObserver<ICommit>
     {
