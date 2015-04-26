@@ -19,7 +19,10 @@ namespace EventSpike.ApprovalProcessor.Projac
             .When<DeleteData>(_ => TSql.NonQueryStatement(
                 @"IF EXISTS (SELECT * FROM SYSOBJECTS WHERE NAME='StoreCheckpoint' AND XTYPE='U') DELETE FROM [StoreCheckpoint]"))
             .When<SetCheckpoint>(@event => TSql.NonQueryStatement(
-                @"UPDATE [StoreCheckpoint] SET [CheckpointToken] = @P2 WHERE [StoreId] = @P1", new
+                @"MERGE [StoreCheckpoint] WITH (HOLDLOCK) AS Target
+                USING (SELECT @P1 AS [StoreId]) AS Source ON (Source.[StoreId] = Target.[StoreId])
+                WHEN MATCHED THEN UPDATE SET [CheckpointToken] = @P2
+                WHEN NOT MATCHED THEN INSERT ([StoreId], [CheckpointToken]) VALUES (@P1, @P2);", new
                 {
                     P1 = TSql.NVarChar(@event.StoreId, 100),
                     P2 = TSql.NVarCharMax(@event.CheckpointToken)
