@@ -1,6 +1,5 @@
 using System.Linq;
 using EventSpike.Common;
-using Magnum.Reflection;
 using NEventStore;
 
 namespace EventSpike.ApprovalProcessor.CommonDomain
@@ -27,14 +26,8 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
             foreach (var command in commands)
             {
-                this.FastInvoke(new[] { command.GetType() }, x => x.Publish(default(ICommit), default(object)), committed, command);
+                _publisher.Publish(command);
             }
-        }
-
-        private void Publish<TCommand>(ICommit commit, TCommand command)
-        {
-
-            _publisher.Publish(command);
         }
     }
 }
