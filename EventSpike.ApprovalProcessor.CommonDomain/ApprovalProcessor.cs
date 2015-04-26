@@ -1,5 +1,6 @@
 using System;
 using CommonDomain.Core;
+using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.ApprovalEvents;
 
@@ -25,7 +26,7 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
         {
             Id = ApprovalProcessorConstants.DeterministicGuid.Create(@event.Id.ToByteArray()).ToString();
 
-            Dispatch(new MarkApprovalAccepted {Id = @event.Id, ReferenceNumber = Guid.NewGuid().ToString()});
+            Dispatch(new MarkApprovalAccepted {Id = @event.Id, ReferenceNumber = GuidEncoder.Encode(Guid.NewGuid())});
         }
 
         public void Apply(ApprovalAccepted @event)

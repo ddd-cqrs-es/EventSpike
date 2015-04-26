@@ -1,4 +1,5 @@
 ﻿using System;
+using EventSpike.Common;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
@@ -13,15 +14,16 @@ namespace EventSpike.EventConsole
         private static void Main(string[] args)
         {
             var endpointName = typeof (Program).ToEndpointName();
-            var serviceName = typeof (Program).ToServiceName();
 
             var container = new Container(configure =>
             {
+                configure.AddRegistry<SingleDbSqlRegistry>();
                 configure.AddRegistry<TenantProviderRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
                 configure.AddRegistry<NEventStoreRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry<BiggyStreamCheckpointRegistry>();
 
                 configure.For<string>()
                     .Add(endpointName)
@@ -30,10 +32,19 @@ namespace EventSpike.EventConsole
                 configure
                     .For<IObserver<ICommit>>()
                     .Add<ConsoleOutputProjectionCommitObserver>();
+
+                configure
+                    .For<INeedInitialization>()
+                    .Add<EventSubscriptionInitializer>();
             });
 
-            var subscriptionBootstrapper = container.GetInstance<EventSubscriptionBootstrapper>();
-            subscriptionBootstrapper.ResumeSubscriptions();
+            var initializers = container.GetAllInstances<INeedInitialization>();
+
+            foreach (var initializer in initializers)
+            {
+                initializer.Initialize();
+            }
+
 
             var bus = container.GetInstance<IServiceBus>();
 

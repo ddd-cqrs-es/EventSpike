@@ -3,20 +3,15 @@ using Automatonymous;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.ApprovalEvents;
-using EventSpike.Common.CommonDomain;
-using MassTransit;
 
 namespace EventSpike.ApprovalProcessor.Automatonymous
 {
-    // TODO this could benefit from having the publishing / command envelope wrapping done elsewhere
     internal class ApprovalProcessor :
         AutomatonymousStateMachine<ApprovalProcessorInstance>
     {
-        private static readonly DeterministicGuid DeterministicGuid = new DeterministicGuid(GuidNamespaces.ApprovalProcessor);
-
         public static readonly string UserId = string.Format("#{0}#", typeof (ApprovalProcessor).Name);
 
-        public IServiceBus Bus { get; set; }
+        public IPublisher Publisher { get; set; }
 
         public ApprovalProcessor()
         {
@@ -33,31 +28,28 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
                     .Then((state, @event) =>
                     {
                         state.ApprovalId = @event.Body.Id;
-                        state.CausationId = @event.Headers.Retrieve<ContextHeaders>().CausationId;
-                        state.TenantId = @event.Headers.Retrieve<SystemHeaders>().TenantId;
+                        state.CausationId = (Guid)@event.Headers[Constants.CausationIdKey];
                     })
                     .TransitionTo(WaitingForApproval));
 
             During(WaitingForApproval,
                 When(WaitingForApproval.Enter)
-                    .Then(state => Bus.Publish(new CommandEnvelope<MarkApprovalAccepted>
+                    .Then(state => Publisher.Publish(new MarkApprovalAccepted
                     {
-                        CausationId = DeterministicGuid.Create(state.CausationId.ToByteArray()),
-                        TenantId = state.TenantId,
-                        UserId = UserId,
-                        Body = new MarkApprovalAccepted
-                        {
-                            Id = state.ApprovalId,
-                            ReferenceNumber = Guid.NewGuid().ToString()
-                        }
+                        Id = state.ApprovalId,
+                        ReferenceNumber = GuidEncoder.Encode(state.CausationId)
+                    }, headers =>
+                    {
+                        headers.Add(Constants.CausationIdKey, ApprovalProcessorConstants.DeterministicGuid.Create(state.CausationId.ToByteArray()).ToString());
+                        headers.Add(Constants.UserIdKey, UserId);
                     })),
                 When(Accepted)
                     .Finalize());
         }
 
-        public Event<IEnvelope<ApprovalInitiated>> Initiated { get; set; }
+        public Event<Envelope<ApprovalInitiated>> Initiated { get; set; }
 
-        public Event<IEnvelope<ApprovalAccepted>> Accepted { get; set; }
+        public Event<Envelope<ApprovalAccepted>> Accepted { get; set; }
 
         public State WaitingForApproval { get; set; }
 

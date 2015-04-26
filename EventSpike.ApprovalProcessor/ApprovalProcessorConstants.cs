@@ -1,6 +1,6 @@
 using EventSpike.Common;
 
-namespace EventSpike.ApprovalProcessor.CommonDomain
+namespace EventSpike.ApprovalProcessor
 {
     public class ApprovalProcessorConstants
     {

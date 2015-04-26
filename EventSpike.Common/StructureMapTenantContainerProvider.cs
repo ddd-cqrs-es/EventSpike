@@ -31,9 +31,8 @@ namespace EventSpike.Common
                 ? _container.GetNestedContainer(profileProvider(tenantId))
                 : _container.GetNestedContainer();
 
-            nested.Configure(configure => configure.For<string>()
-                .Add(tenantId)
-                .Named(TenantProviderConstants.TenantIdInstanceKey));
+            nested.Configure(configure => configure.For<TenantIdProvider>()
+                .Use(new TenantIdProvider(() => tenantId)));
 
             return nested;
         }

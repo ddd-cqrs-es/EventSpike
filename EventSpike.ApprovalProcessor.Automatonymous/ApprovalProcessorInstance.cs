@@ -7,7 +7,6 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
     {
         public Guid ApprovalId { get; set; }
         public Guid CausationId { get; set; }
-        public string TenantId { get; set; }
         public State CurrentState { get; set; }
     }
 }

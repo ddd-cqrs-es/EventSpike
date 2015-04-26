@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Biggy.Core;
+using EventSpike.Common.Biggy;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.NEventStore;
 using MemBus;
@@ -19,33 +20,23 @@ namespace EventSpike.Common.Registries
     {
         public EventSubscriptionRegistry()
         {
-            For<BiggyList<TenantCheckpointTokenDocument>>()
-                .Use(() => new StreamCheckpointTokenBiggyListFactory().Construct())
-                .Singleton();
-
             ForConcreteType<EventSubscriptionMassTransitConsumer>()
                 .Configure
                 .Singleton();
 
-            ForConcreteType<EventSubscriptionBootstrapper>()
+            ForConcreteType<EventSubscriptionInitializer>()
                 .Configure
                 .Ctor<IEnumerable<string>>()
                 .Is(context => context.GetInstance<BiggyList<TenantCheckpointTokenDocument>>().Select(x => x.TenantId));
 
             For<IObserver<ICommit>>()
-                .Singleton()
                 .Add<MemBusPublisherCommitObserver>();
 
             For<IBus>()
-                .Singleton()
                 .Use(context => BusSetup.StartWith<Conservative>()
                     .Apply<FlexibleSubscribeAdapter>(a => a.RegisterMethods("Handle"))
                     .Construct())
                 .OnCreation((context, bus) => WireUpMemBus(context, bus));
-
-            For<IStreamCheckpointTracker>()
-                .Use<TenantScopedBiggyStreamCheckpointTracker>()
-                .Ctor<string>().Is(context => context.GetInstance<string>(TenantProviderConstants.TenantIdInstanceKey));
 
             For<IObserveCommits>()
                 .Use(context => context.GetInstance<EventSubscriptionFactory>().Construct());

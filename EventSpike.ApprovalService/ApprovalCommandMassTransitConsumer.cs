@@ -1,17 +1,17 @@
-﻿using CommonDomain.Persistence;
+﻿using System;
+using CommonDomain.Persistence;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
-using EventSpike.Common.CommonDomain;
 using MassTransit;
 
 namespace EventSpike.ApprovalService
 {
     internal class ApprovalCommandMassTransitConsumer :
-        Consumes<CommandEnvelope<InitiateApproval>>.All,
-        Consumes<CommandEnvelope<MarkApprovalAccepted>>.All,
-        Consumes<CommandEnvelope<MarkApprovalPartiallyAccepted>>.All,
-        Consumes<CommandEnvelope<MarkApprovalDenied>>.All,
-        Consumes<CommandEnvelope<MarkApprovalCancelled>>.All
+        Consumes<InitiateApproval>.Context,
+        Consumes<MarkApprovalAccepted>.Context,
+        Consumes<MarkApprovalPartiallyAccepted>.Context,
+        Consumes<MarkApprovalDenied>.Context,
+        Consumes<MarkApprovalCancelled>.Context
     {
         private readonly ITenantProvider<IRepository> _repositoryProvider;
 
@@ -20,52 +20,67 @@ namespace EventSpike.ApprovalService
             _repositoryProvider = repositoryProvider;
         }
 
-        public void Consume(CommandEnvelope<InitiateApproval> message)
+        public void Consume(IConsumeContext<InitiateApproval> context)
         {
-            var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = new ApprovalAggregate(message.Body.Id, message.Body.Title, message.Body.Description);
+            var tenantId = context.Headers[Constants.TenantIdKey];
+            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
 
-            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
+            var repository = _repositoryProvider.Get(tenantId);
+            var approval = new ApprovalAggregate(context.Message.Id, context.Message.Title, context.Message.Description);
+
+            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
         }
 
-        public void Consume(CommandEnvelope<MarkApprovalAccepted> message)
+        public void Consume(IConsumeContext<MarkApprovalAccepted> context)
         {
-            var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = repository.GetById<ApprovalAggregate>(message.Body.Id);
+            var tenantId = context.Headers[Constants.TenantIdKey];
+            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
 
-            approval.MarkAccepted(message.Body.ReferenceNumber);
+            var repository = _repositoryProvider.Get(tenantId);
+            var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
 
-            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
+            approval.MarkAccepted(context.Message.ReferenceNumber);
+
+            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
         }
 
-        public void Consume(CommandEnvelope<MarkApprovalCancelled> message)
+        public void Consume(IConsumeContext<MarkApprovalCancelled> context)
         {
-            var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = repository.GetById<ApprovalAggregate>(message.Body.Id);
+            var tenantId = context.Headers[Constants.TenantIdKey];
+            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
 
-            approval.Cancel(message.Body.CancellationReason);
+            var repository = _repositoryProvider.Get(tenantId);
+            var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
 
-            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {UserId = message.UserId}));
+            approval.Cancel(context.Message.CancellationReason);
+
+            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
         }
 
-        public void Consume(CommandEnvelope<MarkApprovalDenied> message)
+        public void Consume(IConsumeContext<MarkApprovalDenied> context)
         {
-            var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = repository.GetById<ApprovalAggregate>(message.Body.Id);
+            var tenantId = context.Headers[Constants.TenantIdKey];
+            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
 
-            approval.MarkDenied(message.Body.ReferenceNumber, message.Body.DenialReason);
+            var repository = _repositoryProvider.Get(tenantId);
+            var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
 
-            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {UserId = message.UserId}));
+            approval.MarkDenied(context.Message.ReferenceNumber, context.Message.DenialReason);
+
+            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
         }
 
-        public void Consume(CommandEnvelope<MarkApprovalPartiallyAccepted> message)
+        public void Consume(IConsumeContext<MarkApprovalPartiallyAccepted> context)
         {
-            var repository = _repositoryProvider.Get(message.TenantId);
-            var approval = repository.GetById<ApprovalAggregate>(message.Body.Id);
+            var tenantId = context.Headers[Constants.TenantIdKey];
+            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
 
-            approval.MarkPartiallyAccepted(message.Body.ReferenceNumber);
+            var repository = _repositoryProvider.Get(tenantId);
+            var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
 
-            repository.Save(approval, message.CausationId, headers => headers.Store(new SystemHeaders {TenantId = message.TenantId, UserId = message.UserId}));
+            approval.MarkPartiallyAccepted(context.Message.ReferenceNumber);
+
+            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
         }
     }
 }

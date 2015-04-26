@@ -1,10 +1,12 @@
 using System.Linq;
 using Biggy.Core;
+using EventSpike.Common.EventSubscription;
 
-namespace EventSpike.Common.EventSubscription
+namespace EventSpike.Common.Biggy
 {
     public class TenantScopedBiggyStreamCheckpointTracker :
-        IStreamCheckpointTracker
+        IStreamCheckpointTracker,
+        IStoreCheckpointProvider
     {
         private readonly TenantCheckpointTokenDocument _nullTenantCheckpointTokenDocument;
 

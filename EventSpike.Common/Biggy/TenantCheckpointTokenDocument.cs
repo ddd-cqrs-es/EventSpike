@@ -1,4 +1,4 @@
-﻿namespace EventSpike.Common.EventSubscription
+﻿namespace EventSpike.Common.Biggy
 {
     public class TenantCheckpointTokenDocument
     {

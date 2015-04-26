@@ -1,54 +1,42 @@
+using System;
 using CommonDomain.Persistence;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalEvents;
-using EventSpike.Common.CommonDomain;
 
 namespace EventSpike.ApprovalProcessor.CommonDomain
 {
     public class CommonDomainApprovalProcessEventHandler :
         IEventHandler
     {
-        private readonly ITenantProvider<ISagaRepository> _sagaRepositoryProvider;
+        private readonly ISagaRepository _repository;
         
         public static readonly string UserId = string.Format("#{0}#", typeof(ApprovalProcessor).Name);
 
-        public CommonDomainApprovalProcessEventHandler(ITenantProvider<ISagaRepository> sagaRepositoryProvider)
+        public CommonDomainApprovalProcessEventHandler(ISagaRepository repository)
         {
-            _sagaRepositoryProvider = sagaRepositoryProvider;
+            _repository = repository;
         }
 
-        public void Handle(IEnvelope<ApprovalInitiated> message)
+        public void Handle(Envelope<ApprovalInitiated> message)
         {
-            var tenantId = message.Headers.Retrieve<SystemHeaders>().TenantId;
-
-            var repository = _sagaRepositoryProvider.Get(tenantId);
-
-            var sagaId = ApprovalProcessorConstants.DeterministicGuid.Create(message.Body.Id.ToByteArray()).ToString();
-
-            var saga = repository.GetById<ApprovalProcessor>(sagaId);
+            var saga = _repository.GetById<ApprovalProcessor>(message.Body.Id);
 
             saga.Transition(message.Body);
 
-            var causationId = message.Headers.Retrieve<ContextHeaders>().CausationId;
-            var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(causationId.ToByteArray());
+            var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(((Guid)message.Headers[Constants.CausationIdKey]).ToByteArray());
 
-            repository.Save(saga, commitId, headers => headers.Store(new SystemHeaders {TenantId = tenantId, UserId = UserId}));
+            _repository.Save(saga, commitId, headers => headers.CopyFrom(message.Headers));
         }
 
-        public void Handle(IEnvelope<ApprovalAccepted> message)
+        public void Handle(Envelope<ApprovalAccepted> message)
         {
-            var tenantId = message.Headers.Retrieve<SystemHeaders>().TenantId;
-
-            var repository = _sagaRepositoryProvider.Get(tenantId);
-
-            var saga = repository.GetById<ApprovalProcessor>(message.Body.Id);
+            var saga = _repository.GetById<ApprovalProcessor>(message.Body.Id);
 
             saga.Transition(message.Body);
 
-            var causationId = message.Headers.Retrieve<ContextHeaders>().CausationId;
-            var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(causationId.ToByteArray());
+            var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(((Guid)message.Headers[Constants.CausationIdKey]).ToByteArray());
 
-            repository.Save(saga, commitId, headers => headers.Store(new SystemHeaders { TenantId = tenantId, UserId = UserId }));
+            _repository.Save(saga, commitId, headers => headers.CopyFrom(message.Headers));
         }
     }
 }

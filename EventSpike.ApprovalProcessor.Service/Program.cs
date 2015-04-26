@@ -1,7 +1,7 @@
-﻿using System.Collections.Concurrent;
-using EventSpike.ApprovalProcessor.Automatonymous;
-using EventSpike.ApprovalProcessor.CommonDomain;
+﻿using EventSpike.ApprovalProcessor.CommonDomain;
+using EventSpike.ApprovalProcessor.Projac;
 using EventSpike.Common;
+using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
 using NEventStore;
@@ -17,25 +17,41 @@ namespace EventSpike.ApprovalProcessor.Service
             var endpointName = typeof(Program).ToEndpointName();
             var serviceName = typeof(Program).ToServiceName();
 
-            var container = new Container(root =>
+            var container = new Container(configure =>
             {
-                root
+                configure.AddRegistry<TenantProviderRegistry>();
+                configure.AddRegistry<SingleDbSqlRegistry>();
+                configure.AddRegistry<NEventStoreRegistry>();
+                configure.AddRegistry<MassTransitRegistry>();
+                configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry<CommonDomainRegistry>();
+                configure.AddRegistry<BiggyStreamCheckpointRegistry>();
+
+                configure
+                    .For<IStoreCheckpointProvider>()
+                    .Use<ProjacStoreCheckpointProvider>();
+
+                configure
+                    .For<ITenantListingProvider>()
+                    .Use<ProjacTenantListingProvider>();
+
+                configure
                     .For<IEventHandler>()
-                    .Singleton()
-                    .Add<CommonDomainApprovalProcessEventHandler>();
+                    .Add<ProjacApprovalProcessorEventHandler>();
 
-                root
+                configure
                     .For<IPipelineHook>()
-                    .Singleton()
-                    .Add<MassTransitCommandDispatcherPipelineHook>();
+                    .Add<CommandPublisherPipelineHook>();
 
-                root.AddRegistry<TenantProviderRegistry>();
-                root.AddRegistry<NEventStoreRegistry>();
-                root.AddRegistry<MassTransitRegistry>();
-                root.AddRegistry<EventSubscriptionRegistry>();
-                root.AddRegistry<CommonDomainRegistry>();
+                configure
+                    .For<INeedInitialization>()
+                    .AddInstances(add =>
+                    {
+                        add.Type<ProjacInitializer>();
+                        add.Type<EventSubscriptionInitializer>();
+                    });
 
-                root
+                configure
                     .For<string>()
                     .Add(endpointName)
                     .Named(MassTransitRegistry.InstanceNames.DataEndpointName);

@@ -1,21 +1,19 @@
 using System.Linq;
 using EventSpike.Common;
-using EventSpike.Common.CommonDomain;
 using Magnum.Reflection;
-using MassTransit;
 using NEventStore;
 
 namespace EventSpike.ApprovalProcessor.CommonDomain
 {
-    public class MassTransitCommandDispatcherPipelineHook :
+    public class CommandPublisherPipelineHook :
         PipelineHookBase
     {
+        private readonly IPublisher _publisher;
         // This could also be dispatched via a PollingConsumer
-        private readonly IServiceBus _bus;
 
-        public MassTransitCommandDispatcherPipelineHook(IServiceBus bus)
+        public CommandPublisherPipelineHook(IPublisher publisher)
         {
-            _bus = bus;
+            _publisher = publisher;
         }
 
         public override void PostCommit(ICommit committed)
@@ -35,17 +33,8 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
         private void Publish<TCommand>(ICommit commit, TCommand command)
         {
-            var systemHeaders = commit.Headers.Retrieve<SystemHeaders>();
 
-            var envelope = new CommandEnvelope<TCommand>
-            {
-                TenantId = systemHeaders.TenantId,
-                CausationId = commit.CommitId,
-                UserId = systemHeaders.UserId,
-                Body = command
-            };
-
-            _bus.Publish(envelope);
+            _publisher.Publish(command);
         }
     }
 }

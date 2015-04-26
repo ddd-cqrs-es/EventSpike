@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcesso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.EventConsole", "EventSpike.EventConsole\EventSpike.EventConsole.csproj", "{B4BA82F5-7D46-46C7-8CEB-030288891960}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcessor", "EventSpike.ApprovalProcessor\EventSpike.ApprovalProcessor.csproj", "{27316DE3-99C0-4ADF-95AE-1D150D831A69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4BA82F5-7D46-46C7-8CEB-030288891960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27316DE3-99C0-4ADF-95AE-1D150D831A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27316DE3-99C0-4ADF-95AE-1D150D831A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27316DE3-99C0-4ADF-95AE-1D150D831A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27316DE3-99C0-4ADF-95AE-1D150D831A69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

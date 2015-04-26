@@ -16,10 +16,12 @@ namespace EventSpike.ApprovalService
             var container = new Container(configure =>
             {
                 configure.AddRegistry<TenantProviderRegistry>();
+                configure.AddRegistry<SingleDbSqlRegistry>();
                 configure.AddRegistry<NEventStoreRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<CommonDomainRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry<BiggyStreamCheckpointRegistry>();
 
                 configure
                     .For<string>()

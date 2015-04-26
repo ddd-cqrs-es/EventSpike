@@ -85,6 +85,10 @@
       <Project>{412F7C1C-AAEA-4BDE-964D-6352BDD07BB6}</Project>
       <Name>EventSpike.ApprovalProcessor.CommonDomain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EventSpike.ApprovalProcessor.Projac\EventSpike.ApprovalProcessor.Projac.csproj">
+      <Project>{D6A7726F-44D9-48B5-B219-33F02FDB3912}</Project>
+      <Name>EventSpike.ApprovalProcessor.Projac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
       <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
       <Name>EventSpike.Common</Name>

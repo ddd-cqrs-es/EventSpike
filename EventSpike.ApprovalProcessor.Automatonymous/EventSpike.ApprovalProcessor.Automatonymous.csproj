@@ -65,6 +65,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventSpike.ApprovalProcessor\EventSpike.ApprovalProcessor.csproj">
+      <Project>{27316DE3-99C0-4ADF-95AE-1D150D831A69}</Project>
+      <Name>EventSpike.ApprovalProcessor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
       <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
       <Name>EventSpike.Common</Name>

@@ -4,7 +4,7 @@ using NEventStore.Client;
 namespace EventSpike.Common.EventSubscription
 {
     public class EventSubscriptionMassTransitConsumer :
-        Consumes<EventStreamUpdated>.All
+        Consumes<EventStreamUpdated>.Context
     {
         private readonly ITenantProvider<IObserveCommits> _commitObserverProvider;
 
@@ -13,9 +13,9 @@ namespace EventSpike.Common.EventSubscription
             _commitObserverProvider = commitObserverProvider;
         }
 
-        public void Consume(EventStreamUpdated message)
+        public void Consume(IConsumeContext<EventStreamUpdated> message)
         {
-            _commitObserverProvider.Get(message.TenantId).PollNow();
+            _commitObserverProvider.Get(message.Headers[Constants.TenantIdKey]).PollNow();
         }
     }
 }

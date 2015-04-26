@@ -1,3 +1,4 @@
+using System.Configuration;
 using NEventStore;
 using NEventStore.Persistence.Sql;
 using NEventStore.Persistence.Sql.SqlDialects;
@@ -9,10 +10,6 @@ namespace EventSpike.Common.Registries
     public class NEventStoreRegistry :
         Registry
     {
-        private const string
-            TenantConnectionName = "EventSpike-{0}",
-            SingleTenantConnectionString = "Database=EventSpike;Server=(local);Integrated Security=SSPI;MultipleActiveResultSets=true;";
-
         public NEventStoreRegistry()
         {
             For<IStoreEvents>()
@@ -21,14 +18,12 @@ namespace EventSpike.Common.Registries
 
         private static IStoreEvents WireUpEventStore(IContext context)
         {
-            var tenantId = context.GetInstance<string>(TenantProviderConstants.TenantIdInstanceKey);
-
-            var connectionName = string.Format(TenantConnectionName, tenantId);
+            var settings = context.GetInstance<ConnectionStringSettings>();
 
             var pipelineHooks = context.GetAllInstances<IPipelineHook>();
 
             return Wireup.Init()
-                .UsingSqlPersistence(new ConfigurationConnectionFactory(connectionName, "System.Data.SqlClient", SingleTenantConnectionString))
+                .UsingSqlPersistence(new ConfigurationConnectionFactory(settings.Name, settings.ProviderName, settings.ConnectionString))
                 .WithDialect(new MsSqlDialect())
                 .InitializeStorageEngine()
                 .UsingJsonSerialization()

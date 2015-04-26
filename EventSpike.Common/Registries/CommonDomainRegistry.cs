@@ -30,7 +30,6 @@ namespace EventSpike.Common.Registries
                 .OnCreation((context, conflictDetector) => ConfigureConflictDetector(context, conflictDetector));
 
             For<IPipelineHook>()
-                .Singleton()
                 .Add<MassTransitNotificationPipelineHook>();
 
             For<IRepository>()

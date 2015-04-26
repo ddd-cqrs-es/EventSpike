@@ -2,11 +2,13 @@ namespace EventSpike.ApprovalProcessor.Projac.DataDefinition
 {
     public class SetCheckpoint
     {
-        public readonly long Checkpoint;
+        public readonly string CheckpointToken;
+        public readonly string StoreId;
 
-        public SetCheckpoint(long checkpoint)
+        public SetCheckpoint(string storeId, string checkpointToken)
         {
-            Checkpoint = checkpoint;
+            StoreId = storeId;
+            CheckpointToken = checkpointToken;
         }
     }
 }

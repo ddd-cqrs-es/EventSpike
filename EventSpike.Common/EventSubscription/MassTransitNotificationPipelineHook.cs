@@ -1,29 +1,24 @@
-﻿using EventSpike.Common.CommonDomain;
-using MassTransit;
-using NEventStore;
+﻿using NEventStore;
 
 namespace EventSpike.Common.EventSubscription
 {
     public class MassTransitNotificationPipelineHook :
         PipelineHookBase
     {
-        private readonly IServiceBus _bus;
+        private readonly IPublisher _publisher;
 
-        public MassTransitNotificationPipelineHook(IServiceBus bus)
+        public MassTransitNotificationPipelineHook(IPublisher publisher)
         {
-            _bus = bus;
+            _publisher = publisher;
         }
 
         public override void PostCommit(ICommit committed)
         {
-            var systemHeaders = committed.Headers.Retrieve<SystemHeaders>();
-
-            _bus.Publish(new EventStreamUpdated
+            _publisher.Publish(new EventStreamUpdated
             {
                 StreamId = committed.StreamId,
                 CausationId = committed.CommitId,
-                CheckpointToken = committed.CheckpointToken,
-                TenantId = systemHeaders.TenantId
+                CheckpointToken = committed.CheckpointToken
             });
         }
     }

@@ -39,17 +39,11 @@ namespace EventSpike.BusDriverConsole
             const string tenantId = "tenant-1";
             const string userId = "user-1";
 
-            var commands = Enumerable.Repeat<Func<object>>(() => new CommandEnvelope<InitiateApproval>
+            var commands = Enumerable.Repeat<Func<object>>(() => new InitiateApproval
             {
-                CausationId = Guid.NewGuid(),
-                TenantId = tenantId,
-                UserId = userId,
-                Body = new InitiateApproval
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "I need dis",
-                    Description = "Pretty plz, with sugar on top",
-                }
+                Id = Guid.NewGuid(),
+                Title = "I need dis",
+                Description = "Pretty plz, with sugar on top",
             }, Int32.MaxValue);
 
             foreach (var commandFactory in commands)
@@ -57,7 +51,12 @@ namespace EventSpike.BusDriverConsole
                 Console.WriteLine("Press [enter] to send next command...");
                 Console.ReadLine();
 
-                bus.FastInvoke(x => x.Publish(null), commandFactory());
+                bus.FastInvoke(x => x.Publish(null, default(Action<IPublishContext>)), commandFactory(), new Action<IPublishContext>(context =>
+                {
+                    context.SetHeader(Constants.CausationIdKey, Guid.NewGuid().ToString());
+                    context.SetHeader(Constants.TenantIdKey, tenantId);
+                    context.SetHeader(Constants.UserIdKey, userId);
+                }));
             }
 
             Console.WriteLine("Press [enter] to exit");

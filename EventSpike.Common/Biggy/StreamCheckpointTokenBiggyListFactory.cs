@@ -1,7 +1,7 @@
 ﻿using Biggy.Core;
 using Biggy.Data.Json;
 
-namespace EventSpike.Common.EventSubscription
+namespace EventSpike.Common.Biggy
 {
     public class StreamCheckpointTokenBiggyListFactory
     {

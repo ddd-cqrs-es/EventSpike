@@ -1,45 +1,39 @@
 ﻿using Automatonymous;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalEvents;
-using EventSpike.Common.CommonDomain;
-using MassTransit;
 
 namespace EventSpike.ApprovalProcessor.Automatonymous
 {
     public class AutomatonymousApprovalProcessEventHandler :
         IEventHandler
     {
-        private readonly IServiceBus _bus;
-        private readonly ITenantProvider<IApprovalProcessorRepository> _repositoryProvider;
+        private readonly IPublisher _publisher;
+        private readonly IApprovalProcessorRepository _repository;
 
-        public AutomatonymousApprovalProcessEventHandler(IServiceBus bus, ITenantProvider<IApprovalProcessorRepository> repositoryProvider)
+        public AutomatonymousApprovalProcessEventHandler(IPublisher publisher, IApprovalProcessorRepository repository)
         {
-            _bus = bus;
-            _repositoryProvider = repositoryProvider;
+            _publisher = publisher;
+            _repository = repository;
         }
 
-        public void Handle(IEnvelope<ApprovalInitiated> message)
+        public void Handle(Envelope<ApprovalInitiated> message)
         {
-            var tenantId = message.Headers.Retrieve<SystemHeaders>().TenantId;
+            var tenantId = message.Headers[Constants.TenantIdKey];
 
-            var processorInstance = _repositoryProvider
-                .Get(tenantId)
+            var processorInstance = _repository
                 .GetProcessorById(message.Body.Id);
 
-            var processor = new ApprovalProcessor {Bus = _bus};
+            var processor = new ApprovalProcessor {Publisher = _publisher};
 
             processor.RaiseEvent(processorInstance, eventIs => eventIs.Initiated, message);
         }
 
-        public void Handle(IEnvelope<ApprovalAccepted> message)
+        public void Handle(Envelope<ApprovalAccepted> message)
         {
-            var tenantId = message.Headers.Retrieve<SystemHeaders>().TenantId;
-
-            var processorInstance = _repositoryProvider
-                .Get(tenantId)
+            var processorInstance = _repository
                 .GetProcessorById(message.Body.Id);
 
-            var processor = new ApprovalProcessor { Bus = _bus };
+            var processor = new ApprovalProcessor {Publisher = _publisher};
 
             processor.RaiseEvent(processorInstance, eventIs => eventIs.Accepted, message);
         }

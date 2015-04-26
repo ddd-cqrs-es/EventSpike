@@ -1,23 +1,22 @@
-﻿using System.Collections.Generic;
-using NEventStore.Client;
+﻿using NEventStore.Client;
 
 namespace EventSpike.Common.EventSubscription
 {
-    public class EventSubscriptionBootstrapper
+    public class EventSubscriptionInitializer :
+        INeedInitialization
     {
         private readonly ITenantProvider<IObserveCommits> _commitObserverFactory;
-        private readonly IEnumerable<string> _tenantIds;
+        private readonly ITenantListingProvider _tenantListingProvider;
 
-        public EventSubscriptionBootstrapper(ITenantProvider<IObserveCommits> commitObserverFactory,
-            IEnumerable<string> tenantIds)
+        public EventSubscriptionInitializer(ITenantProvider<IObserveCommits> commitObserverFactory, ITenantListingProvider tenantListingProvider)
         {
-            _tenantIds = tenantIds;
             _commitObserverFactory = commitObserverFactory;
+            _tenantListingProvider = tenantListingProvider;
         }
 
-        public void ResumeSubscriptions()
+        public void Initialize()
         {
-            foreach (var tenantId in _tenantIds)
+            foreach (var tenantId in _tenantListingProvider.GetTenantIds())
             {
                 _commitObserverFactory.Get(tenantId).Start();
             }

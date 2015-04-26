@@ -10,6 +10,10 @@ namespace EventSpike.Common.Registries
                 .Singleton()
                 .Use(typeof (StructureMapTenantContainerProvider<>));
 
+            For<TenantIdProvider>()
+                .Singleton()
+                .Use(TenantProviderConstants.NullTenantIdProvider);
+
             For<TenantProfileProvider>()
                 .Singleton()
                 .Use(TenantProviderConstants.NullProfileProvider);

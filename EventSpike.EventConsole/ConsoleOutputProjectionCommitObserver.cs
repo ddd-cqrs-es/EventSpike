@@ -1,6 +1,4 @@
 using System;
-using EventSpike.Common;
-using EventSpike.Common.CommonDomain;
 using EventSpike.Common.EventSubscription;
 using NEventStore;
 using Newtonsoft.Json;
@@ -9,9 +7,9 @@ namespace EventSpike.EventConsole
 {
     internal class ConsoleOutputProjectionCommitObserver : IObserver<ICommit>
     {
-        private readonly ITenantProvider<IStreamCheckpointTracker> _streamTrackerProvider;
+        private readonly IStreamCheckpointTracker _streamTrackerProvider;
 
-        public ConsoleOutputProjectionCommitObserver(ITenantProvider<IStreamCheckpointTracker> streamTrackerProvider)
+        public ConsoleOutputProjectionCommitObserver(IStreamCheckpointTracker streamTrackerProvider)
         {
             _streamTrackerProvider = streamTrackerProvider;
         }
@@ -21,7 +19,6 @@ namespace EventSpike.EventConsole
             Console.WriteLine(JsonConvert.SerializeObject(commit));
 
             _streamTrackerProvider
-                .Get(commit.Headers.Retrieve<SystemHeaders>().TenantId)
                 .UpdateCheckpoint(commit.CheckpointToken);
         }
 

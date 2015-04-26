@@ -20,6 +20,9 @@ namespace EventSpike.Common.Registries
             For<string>()
                 .Add("mt_subscriptions")
                 .Named(InstanceNames.SubscriptionEndpointName);
+
+            For<IPublisher>()
+                .Use<MassTransitTenantPublisher>();
         }
 
         private static ServiceBusConfiguration DefaultConfiguration(IContext context)
@@ -45,7 +48,7 @@ namespace EventSpike.Common.Registries
 
         public static IServiceBus GetBus(IContext context)
         {
-            return ServiceBusFactory.New(configure =>
+            var bus = ServiceBusFactory.New(configure =>
             {
                 var configurations = context.GetAllInstances<ServiceBusConfiguration>();
 
@@ -54,6 +57,8 @@ namespace EventSpike.Common.Registries
                     configuration(configure);
                 }
             });
+
+            return bus;
         }
 
         public static class InstanceNames
