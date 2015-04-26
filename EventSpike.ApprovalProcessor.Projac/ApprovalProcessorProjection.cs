@@ -16,7 +16,8 @@ namespace EventSpike.ApprovalProcessor.Projac
                     CREATE TABLE [ApprovalProcess] (
                         [Id] UNIQUEIDENTIFIER NOT NULL CONSTRAINT PK_ApprovalProcess PRIMARY KEY,
                         [CausationId] UNIQUEIDENTIFIER NOT NULL,
-                        [Dispatched] DATETIME NULL)
+                        [Dispatched] DATETIME NULL,
+                        [DispatchAcknowledged] BIT NOT NULL DEFAULT 0)
                 END"))
             .When<DropSchema>(_ => TSql.NonQueryStatement(@"IF EXISTS (SELECT * FROM SYSOBJECTS WHERE NAME='ApprovalProcess' AND XTYPE='U') DROP TABLE [ApprovalProcess]"))
             .When<DeleteData>(_ => TSql.NonQueryStatement(@"IF EXISTS (SELECT * FROM SYSOBJECTS WHERE NAME='ApprovalProcess' AND XTYPE='U') DELETE FROM [ApprovalProcess]"))
@@ -27,7 +28,7 @@ namespace EventSpike.ApprovalProcessor.Projac
                     P1 = TSql.UniqueIdentifier(@event.Body.Id),
                     P2 = TSql.UniqueIdentifier(Guid.Parse((string)@event.Headers[Constants.CausationIdKey]))
                 }))
-            .When<Envelope<ApprovalAccepted>>(@event => TSql.NonQueryStatement(@"DELETE FROM [ApprovalProcess] WHERE [Id] = @P1", new {P1 = TSql.UniqueIdentifier(@event.Body.Id)}))
+            .When<Envelope<ApprovalAccepted>>(@event => TSql.NonQueryStatement(@"UPDATE [ApprovalProcess] SET [DispatchAcknowledged] = 1 WHERE [Id] = @P1", new { P1 = TSql.UniqueIdentifier(@event.Body.Id) }))
             .Build();
     }
 }

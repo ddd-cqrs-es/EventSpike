@@ -14,7 +14,7 @@ namespace EventSpike.ApprovalProcessor.Projac
 
         public ProjacInitializer(ConnectionStringSettings settings)
         {
-            _projector = new SqlProjector(ApprovalProcessorProjection.Instance.Concat(StoreCheckpointProjection.Instance), new TransactionalSqlCommandExecutor(settings, IsolationLevel.ReadCommitted));
+            _projector = new SqlProjector(ApprovalProcessorProjection.Instance, new TransactionalSqlCommandExecutor(settings, IsolationLevel.ReadCommitted));
         }
 
         public void Initialize()

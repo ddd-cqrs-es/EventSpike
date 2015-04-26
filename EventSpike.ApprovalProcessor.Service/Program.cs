@@ -25,7 +25,6 @@ namespace EventSpike.ApprovalProcessor.Service
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
                 configure.AddRegistry<CommonDomainRegistry>();
-                configure.AddRegistry<BiggyStreamCheckpointRegistry>();
 
                 configure
                     .For<IStoreCheckpointProvider>()

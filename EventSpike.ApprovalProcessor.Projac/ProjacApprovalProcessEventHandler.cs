@@ -26,7 +26,8 @@ namespace EventSpike.ApprovalProcessor.Projac
 
         private readonly DisposeCallback _catchupDisposeCallback;
         private AsyncSqlProjector _projector;
-        private int _isDispatching = 0;
+        private int _isDispatching;
+        private bool _isLive;
 
         public ProjacApprovalProcessorEventHandler(ConnectionStringSettings settings, IPublisher publisher)
         {
@@ -54,8 +55,11 @@ namespace EventSpike.ApprovalProcessor.Projac
         public void Handle(SubscriptionIsLive @event)
         {
             _catchupDisposeCallback.Dispose();
+            _isLive = true;
 
             _projector = new AsyncSqlProjector(_projection, new TransactionalSqlCommandExecutor(_settings, IsolationLevel.ReadCommitted));
+
+            DispatchCommands();
         }
 
         public void Handle(Envelope<ApprovalInitiated> @event)
@@ -76,11 +80,11 @@ namespace EventSpike.ApprovalProcessor.Projac
 
         private void DispatchCommands()
         {
-            if (Interlocked.CompareExchange(ref _isDispatching, 1, 0) != 0) return;
+            if (!_isLive || Interlocked.CompareExchange(ref _isDispatching, 1, 0) != 0) return;
 
             var candidates = Enumerable.Repeat(new {Id = default(Guid), CausationId = default(Guid)}, 0).ToList();
-            
-            using (var reader = _queryExecutor.ExecuteReader(TSql.QueryStatement(@"SELECT [Id], [CausationId] FROM [ApprovalProcess] WHERE [Dispatched] IS NULL OR [Dispatched] < DATEADD(MINUTE, -5, GETDATE())")))
+
+            using (var reader = _queryExecutor.ExecuteReader(TSql.QueryStatement(@"SELECT [Id], [CausationId] FROM [ApprovalProcess] WHERE [DispatchAcknowledged] = 0 AND ([Dispatched] IS NULL OR [Dispatched] < DATEADD(MINUTE, -5, GETDATE()))")))
             {
                 candidates = reader.Cast<IDataRecord>()
                     .Select(record => new { Id = record.GetGuid(0), CausationId = record.GetGuid(1) })
