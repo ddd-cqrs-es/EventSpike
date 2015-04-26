@@ -5,7 +5,7 @@ using NEventStore;
 
 namespace EventSpike.Common.EventSubscription
 {
-    public class MemBusPublisherCommitObserver : IObserver<ICommit>
+    public class MemBusPublisherCommitObserver : IObserver<object>
     {
         private readonly IBus _bus;
 
@@ -14,8 +14,17 @@ namespace EventSpike.Common.EventSubscription
             _bus = bus;
         }
 
-        public void OnNext(ICommit commit)
+        public void OnNext(object message)
         {
+            if (!(message is ICommit))
+            {
+                _bus.Publish(message);
+
+                return;
+            }
+
+            var commit = message as ICommit;
+
             if (!commit.Headers.ContainsKey("SagaType"))
             {
                 DispatchEvents(commit);

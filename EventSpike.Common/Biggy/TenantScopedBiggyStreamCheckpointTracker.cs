@@ -4,8 +4,8 @@ using EventSpike.Common.EventSubscription;
 
 namespace EventSpike.Common.Biggy
 {
-    public class TenantScopedBiggyStreamCheckpointTracker :
-        IStreamCheckpointTracker,
+    public class TenantScopedBiggyStoreCheckpointTracker :
+        IStoreCheckpointTracker,
         IStoreCheckpointProvider
     {
         private readonly TenantCheckpointTokenDocument _nullTenantCheckpointTokenDocument;
@@ -13,7 +13,7 @@ namespace EventSpike.Common.Biggy
         private readonly BiggyList<TenantCheckpointTokenDocument> _tenantCheckpoints;
         private readonly string _tenantId;
 
-        public TenantScopedBiggyStreamCheckpointTracker(string tenantId, BiggyList<TenantCheckpointTokenDocument> tenantCheckpoints)
+        public TenantScopedBiggyStoreCheckpointTracker(string tenantId, BiggyList<TenantCheckpointTokenDocument> tenantCheckpoints)
         {
             _tenantId = tenantId;
             _tenantCheckpoints = tenantCheckpoints;
@@ -25,7 +25,7 @@ namespace EventSpike.Common.Biggy
             };
         }
 
-        public string GetLastCheckpoint()
+        public string GetCheckpoint()
         {
             var tenantCheckpoint =
                 _tenantCheckpoints.SingleOrDefault(x => x.TenantId == _tenantId) ?? _nullTenantCheckpointTokenDocument;

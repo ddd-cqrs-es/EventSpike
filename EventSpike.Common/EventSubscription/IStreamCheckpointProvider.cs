@@ -2,6 +2,6 @@
 {
     public interface IStoreCheckpointProvider
     {
-        string GetLastCheckpoint();
+        string GetCheckpoint();
     }
 }

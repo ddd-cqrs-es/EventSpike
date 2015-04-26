@@ -77,6 +77,18 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -91,7 +103,9 @@
     <Compile Include="ApprovalCommands\MarkApprovalDenied.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalPartiallyAccepted.cs" />
     <Compile Include="Biggy\BiggyTenantListingProvider.cs" />
+    <Compile Include="DisposeCallback.cs" />
     <Compile Include="EventSubscription\IStreamCheckpointProvider.cs" />
+    <Compile Include="EventSubscription\SubscriptionIsLive.cs" />
     <Compile Include="ExtensionsToDictionary.cs" />
     <Compile Include="ICommandSender.cs" />
     <Compile Include="INeedInitialization.cs" />
@@ -130,7 +144,7 @@
     <Compile Include="ApprovalEvents\ApprovalDenied.cs" />
     <Compile Include="ApprovalEvents\ApprovalDescriptionRevised.cs" />
     <Compile Include="ApprovalEvents\ApprovalPartiallyAccepted.cs" />
-    <Compile Include="EventSubscription\IStreamCheckpointTracker.cs" />
+    <Compile Include="EventSubscription\IStoreCheckpointTracker.cs" />
     <Compile Include="Biggy\TenantCheckpointTokenDocument.cs" />
     <Compile Include="EventSubscription\MassTransitNotificationPipelineHook.cs" />
     <Compile Include="Registries\MassTransitRegistry.cs" />

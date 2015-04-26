@@ -19,7 +19,7 @@ namespace EventSpike.ApprovalProcessor.Projac
             _executer = new SqlCommandExecutor(settings);
         }
 
-        public string GetLastCheckpoint()
+        public string GetCheckpoint()
         {
             const string sql = @"SELECT [CheckpointToken] FROM [StoreCheckpoint] WHERE [StoreId] = @P1";
 

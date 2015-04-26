@@ -5,20 +5,23 @@ using Newtonsoft.Json;
 
 namespace EventSpike.EventConsole
 {
-    internal class ConsoleOutputProjectionCommitObserver : IObserver<ICommit>
+    internal class ConsoleOutputProjectionCommitObserver : IObserver<object>
     {
-        private readonly IStreamCheckpointTracker _streamTrackerProvider;
+        private readonly IStoreCheckpointTracker _storeTrackerProvider;
 
-        public ConsoleOutputProjectionCommitObserver(IStreamCheckpointTracker streamTrackerProvider)
+        public ConsoleOutputProjectionCommitObserver(IStoreCheckpointTracker storeTrackerProvider)
         {
-            _streamTrackerProvider = streamTrackerProvider;
+            _storeTrackerProvider = storeTrackerProvider;
         }
 
-        public void OnNext(ICommit commit)
+        public void OnNext(object message)
         {
+            var commit = message as ICommit;
+            if (commit == null) return;
+
             Console.WriteLine(JsonConvert.SerializeObject(commit));
 
-            _streamTrackerProvider
+            _storeTrackerProvider
                 .UpdateCheckpoint(commit.CheckpointToken);
         }
 

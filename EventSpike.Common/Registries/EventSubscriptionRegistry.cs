@@ -8,7 +8,6 @@ using EventSpike.Common.NEventStore;
 using MemBus;
 using MemBus.Configurators;
 using MemBus.Subscribing;
-using NEventStore;
 using NEventStore.Client;
 using StructureMap;
 using StructureMap.Configuration.DSL;
@@ -29,7 +28,7 @@ namespace EventSpike.Common.Registries
                 .Ctor<IEnumerable<string>>()
                 .Is(context => context.GetInstance<BiggyList<TenantCheckpointTokenDocument>>().Select(x => x.TenantId));
 
-            For<IObserver<ICommit>>()
+            For<IObserver<object>>()
                 .Add<MemBusPublisherCommitObserver>();
 
             For<IBus>()

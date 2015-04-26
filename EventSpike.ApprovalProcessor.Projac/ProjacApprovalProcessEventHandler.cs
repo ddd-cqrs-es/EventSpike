@@ -1,10 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading;
 using EventSpike.ApprovalProcessor.Projac.DataDefinition;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.ApprovalEvents;
+using EventSpike.Common.EventSubscription;
 using Paramol.Executors;
 using Paramol.SqlClient;
 using Projac;
@@ -14,59 +19,87 @@ namespace EventSpike.ApprovalProcessor.Projac
     public class ProjacApprovalProcessorEventHandler :
         IEventHandler
     {
+        private readonly ConnectionStringSettings _settings;
         private readonly IPublisher _publisher;
-        private readonly SqlProjector _projector;
         private readonly SqlCommandExecutor _queryExecutor;
+        private readonly SqlProjection _projection;
+
+        private readonly DisposeCallback _catchupDisposeCallback;
+        private AsyncSqlProjector _projector;
+        private int _isDispatching = 0;
 
         public ProjacApprovalProcessorEventHandler(ConnectionStringSettings settings, IPublisher publisher)
         {
+            _settings = settings;
             _publisher = publisher;
 
             _queryExecutor = new SqlCommandExecutor(settings);
 
-            var projectionExecutor = new TransactionalSqlCommandExecutor(settings, IsolationLevel.ReadCommitted);
+            _projection = ApprovalProcessorProjection.Instance.Concat(StoreCheckpointProjection.Instance);
 
-            _projector = new SqlProjector(ApprovalProcessorProjection.Instance.Concat(StoreCheckpointProjection.Instance), projectionExecutor);
+            var connection = new SqlConnection(settings.ConnectionString);
+            connection.Open();
+
+            var projectionExecutor = new ConnectedSqlCommandExecutor(connection);
+
+            _catchupDisposeCallback = new DisposeCallback(() =>
+            {
+                connection.Close();
+                connection.Dispose();
+            });
+
+            _projector = new AsyncSqlProjector(_projection, projectionExecutor);
+        }
+
+        public void Handle(SubscriptionIsLive @event)
+        {
+            _catchupDisposeCallback.Dispose();
+
+            _projector = new AsyncSqlProjector(_projection, new TransactionalSqlCommandExecutor(_settings, IsolationLevel.ReadCommitted));
         }
 
         public void Handle(Envelope<ApprovalInitiated> @event)
         {
-            _projector.Project(@event);
+            _projector.ProjectAsync(@event);
 
             DispatchCommands();
 
-            _projector.Project(new SetCheckpoint((string)@event.Headers[Constants.TenantIdKey], (string)@event.Headers[Constants.StreamCheckpointTokenKey]));
+            _projector.ProjectAsync(new SetCheckpoint((string)@event.Headers[Constants.TenantIdKey], (string)@event.Headers[Constants.StreamCheckpointTokenKey]));
         }
 
         public void Handle(Envelope<ApprovalAccepted> @event)
         {
-            _projector.Project(@event);
+            _projector.ProjectAsync(@event);
 
-            DispatchCommands();
-
-            _projector.Project(new SetCheckpoint((string)@event.Headers[Constants.TenantIdKey], (string)@event.Headers[Constants.StreamCheckpointTokenKey]));
+            _projector.ProjectAsync(new SetCheckpoint((string)@event.Headers[Constants.TenantIdKey], (string)@event.Headers[Constants.StreamCheckpointTokenKey]));
         }
 
         private void DispatchCommands()
         {
+            if (Interlocked.CompareExchange(ref _isDispatching, 1, 0) != 0) return;
+
+            var candidates = Enumerable.Repeat(new {Id = default(Guid), CausationId = default(Guid)}, 0).ToList();
+            
             using (var reader = _queryExecutor.ExecuteReader(TSql.QueryStatement(@"SELECT [Id], [CausationId] FROM [ApprovalProcess] WHERE [Dispatched] IS NULL OR [Dispatched] < DATEADD(MINUTE, -5, GETDATE())")))
             {
-                if (reader.IsClosed) return;
-                while (reader.Read())
-                {
-                    var id = reader.GetGuid(0);
-                    var causationId = reader.GetGuid(1);
-                    var newCausationId = ApprovalProcessorConstants.DeterministicGuid.Create(causationId.ToByteArray());
-
-                    _publisher.Publish(new MarkApprovalAccepted
-                    {
-                        Id = id,
-                        ReferenceNumber = GuidEncoder.Encode(causationId)
-                    }, context => context.Add(Constants.CausationIdKey, newCausationId.ToString()));
-
-                    _queryExecutor.ExecuteNonQueryAsync(TSql.NonQueryStatement(@"UPDATE [ApprovalProcess] SET [Dispatched] = GETDATE() WHERE [Id] = P1", new { P1 = TSql.UniqueIdentifier(id) }));
-                }
+                candidates = reader.Cast<IDataRecord>()
+                    .Select(record => new { Id = record.GetGuid(0), CausationId = record.GetGuid(1) })
+                    .ToList();
             }
+
+            foreach (var candidate in candidates) {
+                var newCausationId = ApprovalProcessorConstants.DeterministicGuid.Create(candidate.CausationId.ToByteArray());
+
+                _publisher.Publish(new MarkApprovalAccepted
+                {
+                    Id = candidate.Id,
+                    ReferenceNumber = GuidEncoder.Encode(candidate.CausationId)
+                }, context => context.Add(Constants.CausationIdKey, newCausationId.ToString()));
+
+                _queryExecutor.ExecuteNonQuery(TSql.NonQueryStatement(@"UPDATE [ApprovalProcess] SET [Dispatched] = GETDATE() WHERE [Id] = @P1", new { P1 = TSql.UniqueIdentifier(candidate.Id) }));
+            }
+
+            Interlocked.Exchange(ref _isDispatching, 0);
         }
     }
 }

@@ -14,15 +14,15 @@ namespace EventSpike.Common.Registries
                 .Use(() => new StreamCheckpointTokenBiggyListFactory().Construct())
                 .Singleton();
 
-            ForConcreteType<TenantScopedBiggyStreamCheckpointTracker>()
+            ForConcreteType<TenantScopedBiggyStoreCheckpointTracker>()
                 .Configure
                 .Ctor<string>().Is(context => context.GetInstance<TenantIdProvider>()());
 
             For<ITenantListingProvider>()
                 .Use<BiggyTenantListingProvider>();
 
-            Forward<TenantScopedBiggyStreamCheckpointTracker, IStreamCheckpointTracker>();
-            Forward<TenantScopedBiggyStreamCheckpointTracker, IStoreCheckpointProvider>();
+            Forward<TenantScopedBiggyStoreCheckpointTracker, IStoreCheckpointTracker>();
+            Forward<TenantScopedBiggyStoreCheckpointTracker, IStoreCheckpointProvider>();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace EventSpike.Common.EventSubscription
 {
-    public interface IStreamCheckpointTracker
+    public interface IStoreCheckpointTracker
     {
         void UpdateCheckpoint(string checkpointToken);
     }

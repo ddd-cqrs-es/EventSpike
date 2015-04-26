@@ -4,7 +4,6 @@ using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
 using MassTransit;
-using NEventStore;
 using StructureMap;
 
 namespace EventSpike.EventConsole
@@ -30,7 +29,7 @@ namespace EventSpike.EventConsole
                     .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
 
                 configure
-                    .For<IObserver<ICommit>>()
+                    .For<IObserver<object>>()
                     .Add<ConsoleOutputProjectionCommitObserver>();
 
                 configure
