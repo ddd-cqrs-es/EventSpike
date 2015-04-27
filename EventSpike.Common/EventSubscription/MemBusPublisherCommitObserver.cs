@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Magnum.Reflection;
 using MemBus;
 using NEventStore;
@@ -41,11 +42,14 @@ namespace EventSpike.Common.EventSubscription
 
         private void Publish<TEvent>(ICommit commit, TEvent @event)
         {
-            var envelope = Envelope<TEvent>
-                .Create(commit.Headers, @event);
+            var headers = commit.Headers.ToMessageHeaders()
+                .Concat(new[]
+                {
+                    new MessageHeader(Constants.CausationIdKey, commit.CommitId.ToString()),
+                    new MessageHeader(Constants.StreamCheckpointTokenKey, commit.CheckpointToken)
+                }).ToArray();
 
-            envelope.Headers[Constants.CausationIdKey] = commit.CommitId.ToString();
-            envelope.Headers[Constants.StreamCheckpointTokenKey] = commit.CheckpointToken;
+            var envelope = new Envelope<TEvent>(@event, headers);
 
             _bus.Publish(envelope);
         }

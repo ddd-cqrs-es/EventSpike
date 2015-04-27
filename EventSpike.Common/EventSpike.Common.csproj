@@ -106,6 +106,7 @@
     <Compile Include="DisposeCallback.cs" />
     <Compile Include="EventSubscription\IStreamCheckpointProvider.cs" />
     <Compile Include="EventSubscription\SubscriptionIsLive.cs" />
+    <Compile Include="ExtensionsForEnvelope.cs" />
     <Compile Include="ExtensionsToDictionary.cs" />
     <Compile Include="IPublisher.cs" />
     <Compile Include="INeedInitialization.cs" />

@@ -25,10 +25,10 @@ namespace EventSpike.ApprovalProcessor.Projac
                 @"INSERT INTO [ApprovalProcess] ([Id], [CausationId]) VALUES (@P1, @P2)",
                 new
                 {
-                    P1 = TSql.UniqueIdentifier(@event.Body.Id),
+                    P1 = TSql.UniqueIdentifier(@event.Message.Id),
                     P2 = TSql.UniqueIdentifier(Guid.Parse((string)@event.Headers[Constants.CausationIdKey]))
                 }))
-            .When<Envelope<ApprovalAccepted>>(@event => TSql.NonQueryStatement(@"UPDATE [ApprovalProcess] SET [DispatchAcknowledged] = 1 WHERE [Id] = @P1", new { P1 = TSql.UniqueIdentifier(@event.Body.Id) }))
+            .When<Envelope<ApprovalAccepted>>(@event => TSql.NonQueryStatement(@"UPDATE [ApprovalProcess] SET [DispatchAcknowledged] = 1 WHERE [Id] = @P1", new { P1 = TSql.UniqueIdentifier(@event.Message.Id) }))
             .Build();
     }
 }

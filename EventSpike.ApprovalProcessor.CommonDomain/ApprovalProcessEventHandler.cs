@@ -19,24 +19,24 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
         public void Handle(Envelope<ApprovalInitiated> message)
         {
-            var saga = _repository.GetById<ApprovalProcessor>(message.Body.Id);
+            var saga = _repository.GetById<ApprovalProcessor>(message.Message.Id);
 
-            saga.Transition(message.Body);
+            saga.Transition(message.Message);
 
-            var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(((Guid)message.Headers[Constants.CausationIdKey]).ToByteArray());
+            var commitId = ApprovalProcessorConstants.DeterministicGuid.Create((Guid.Parse(message.Headers[Constants.CausationIdKey]).ToByteArray()));
 
-            _repository.Save(saga, commitId, headers => headers.CopyFrom(message.Headers));
+            _repository.Save(saga, commitId, headers => headers.CopyFrom(message.Headers.ToDictionary()));
         }
 
         public void Handle(Envelope<ApprovalAccepted> message)
         {
-            var saga = _repository.GetById<ApprovalProcessor>(message.Body.Id);
+            var saga = _repository.GetById<ApprovalProcessor>(message.Message.Id);
 
-            saga.Transition(message.Body);
+            saga.Transition(message.Message);
 
-            var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(((Guid)message.Headers[Constants.CausationIdKey]).ToByteArray());
+            var commitId = ApprovalProcessorConstants.DeterministicGuid.Create((Guid.Parse(message.Headers[Constants.CausationIdKey])).ToByteArray());
 
-            _repository.Save(saga, commitId, headers => headers.CopyFrom(message.Headers));
+            _repository.Save(saga, commitId, headers => headers.CopyFrom(message.Headers.ToDictionary()));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
             var tenantId = message.Headers[Constants.TenantIdKey];
 
             var processorInstance = _repository
-                .GetProcessorById(message.Body.Id);
+                .GetProcessorById(message.Message.Id);
 
             var processor = new ApprovalProcessor {Publisher = _publisher};
 
@@ -31,7 +31,7 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
         public void Handle(Envelope<ApprovalAccepted> message)
         {
             var processorInstance = _repository
-                .GetProcessorById(message.Body.Id);
+                .GetProcessorById(message.Message.Id);
 
             var processor = new ApprovalProcessor {Publisher = _publisher};
 

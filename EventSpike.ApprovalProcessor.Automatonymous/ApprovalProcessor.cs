@@ -27,8 +27,8 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
                 When(Initiated)
                     .Then((state, @event) =>
                     {
-                        state.ApprovalId = @event.Body.Id;
-                        state.CausationId = (Guid)@event.Headers[Constants.CausationIdKey];
+                        state.ApprovalId = @event.Message.Id;
+                        state.CausationId = Guid.Parse(@event.Headers[Constants.CausationIdKey]);
                     })
                     .TransitionTo(WaitingForApproval));
 

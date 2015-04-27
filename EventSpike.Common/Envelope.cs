@@ -1,33 +1,81 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EventSpike.Common
 {
-    // TODO Consider using an immutable dict/map (eg. Funq?)
-    public class Envelope<TBody>
+    public class Envelope<TMessage>
     {
-        public static Envelope<TBody> Create(TBody body)
+        public readonly TMessage Message;
+        public readonly MessageHeaders Headers;
+
+        public Envelope(TMessage message, MessageHeader[] headers)
         {
-            return new Envelope<TBody>(body);
+            Message = message;
+            Headers = new MessageHeaders(headers);
+        }
+    }
+
+    public class Envelope
+    {
+        public readonly object Message;
+        public readonly MessageHeaders Headers;
+
+        public Envelope(object message, MessageHeader[] headers)
+        {
+            Message = message;
+            Headers = new MessageHeaders(headers);
+        }
+    }
+
+    public class MessageHeaders
+    {
+        public readonly ICollection<MessageHeader> Headers;
+        public static readonly MessageHeaders Empty = new MessageHeaders(new MessageHeader[0]);
+
+        public MessageHeaders(MessageHeader[] headers)
+        {
+            if (headers == null)
+            {
+                Headers = MessageHeader.Empty;
+            }
+            else
+            {
+                var copy = new MessageHeader[headers.Length];
+                Array.Copy(headers, copy, headers.Length);
+                Headers = copy;
+            }
         }
 
-        public static Envelope<TBody> Create(IDictionary<string, object> headers, TBody body)
+        public string this[string name] { get { return GetHeader(name); } }
+
+        public string GetHeader(string name)
         {
-            return new Envelope<TBody>(headers, body);
+            return Headers.First(n => n.Key == name).Value;
         }
 
-        private Envelope(IDictionary<string, object> headers, TBody body)
+        public string GetHeader(string name, string defaultValue)
         {
-            Body = body;
-            Headers = headers;
-        }
+            foreach (var attribute in Headers.Where(attribute => attribute.Key == name))
+            {
+                return attribute.Value;
+            }
 
-        private Envelope(TBody body)
-            : this(new Dictionary<string, object>(), body)
+            return defaultValue;
+        }
+    }
+
+    public struct MessageHeader
+    {
+        public readonly string Key;
+        public readonly string Value;
+
+        public static readonly MessageHeader[] Empty = new MessageHeader[0];
+
+        public MessageHeader(string key, string value)
         {
+            Key = key;
+            Value = value;
         }
-
-        public IDictionary<string, object> Headers { get; private set; }
-
-        public TBody Body { get; private set; }
     }
 }
