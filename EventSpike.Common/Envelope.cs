@@ -37,7 +37,7 @@ namespace EventSpike.Common
         {
             if (headers == null)
             {
-                Headers = MessageHeader.Empty;
+                Headers = new MessageHeader[0];
             }
             else
             {
@@ -69,8 +69,6 @@ namespace EventSpike.Common
     {
         public readonly string Key;
         public readonly string Value;
-
-        public static readonly MessageHeader[] Empty = new MessageHeader[0];
 
         public MessageHeader(string key, string value)
         {
