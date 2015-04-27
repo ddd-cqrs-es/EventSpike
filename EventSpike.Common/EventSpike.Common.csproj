@@ -107,7 +107,7 @@
     <Compile Include="EventSubscription\IStreamCheckpointProvider.cs" />
     <Compile Include="EventSubscription\SubscriptionIsLive.cs" />
     <Compile Include="ExtensionsToDictionary.cs" />
-    <Compile Include="ICommandSender.cs" />
+    <Compile Include="IPublisher.cs" />
     <Compile Include="INeedInitialization.cs" />
     <Compile Include="ITenantListingProvider.cs" />
     <Compile Include="MassTransit\MassTransitPublisher.cs" />
