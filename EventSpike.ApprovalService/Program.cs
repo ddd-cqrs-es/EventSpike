@@ -20,8 +20,6 @@ namespace EventSpike.ApprovalService
                 configure.AddRegistry<NEventStoreRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<CommonDomainRegistry>();
-                configure.AddRegistry<EventSubscriptionRegistry>();
-                configure.AddRegistry<BiggyStreamCheckpointRegistry>();
 
                 configure
                     .For<string>()
@@ -30,12 +28,8 @@ namespace EventSpike.ApprovalService
 
                 configure
                     .For<IConsumer>()
+                    .Singleton()
                     .Add<ApprovalCommandMassTransitConsumer>();
-
-                configure
-                    .ForConcreteType<ApprovalCommandMassTransitConsumer>()
-                    .Configure
-                    .Singleton();
             });
 
             HostFactory.Run(host =>
