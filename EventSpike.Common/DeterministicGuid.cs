@@ -8,12 +8,12 @@ namespace EventSpike.Common
     // http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html
     public class DeterministicGuid
     {
-        public Guid NameSpace;
+        private readonly Guid _nameSpace;
         private readonly byte[] _namespaceBytes;
 
         public DeterministicGuid(Guid guidNameSpace)
         {
-            NameSpace = guidNameSpace;
+            _nameSpace = guidNameSpace;
             _namespaceBytes = guidNameSpace.ToByteArray();
             SwapByteOrder(_namespaceBytes);
         }

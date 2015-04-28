@@ -1,5 +1,4 @@
-﻿using System;
-using EventSpike.ApprovalProcessor.Projac.DataDefinition;
+﻿using EventSpike.ApprovalProcessor.Projac.DataDefinition;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalEvents;
 using Paramol.SqlClient;
@@ -26,7 +25,7 @@ namespace EventSpike.ApprovalProcessor.Projac
                 new
                 {
                     P1 = TSql.UniqueIdentifier(@event.Message.Id),
-                    P2 = TSql.UniqueIdentifier(Guid.Parse((string)@event.Headers[Constants.CausationIdKey]))
+                    P2 = TSql.UniqueIdentifier(@event.Headers[Constants.CausationIdKey].ToGuid())
                 }))
             .When<Envelope<ApprovalAccepted>>(@event => TSql.NonQueryStatement(@"UPDATE [ApprovalProcess] SET [DispatchAcknowledged] = 1 WHERE [Id] = @P1", new { P1 = TSql.UniqueIdentifier(@event.Message.Id) }))
             .Build();

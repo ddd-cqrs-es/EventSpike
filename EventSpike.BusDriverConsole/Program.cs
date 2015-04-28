@@ -34,7 +34,7 @@ namespace EventSpike.BusDriverConsole
             task.Wait();
         }
 
-        public static void DispatchCommands(IServiceBus bus)
+        private static void DispatchCommands(IServiceBus bus)
         {
             const string tenantId = "tenant-1";
             const string userId = "user-1";

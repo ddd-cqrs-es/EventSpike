@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -68,14 +67,14 @@ namespace EventSpike.ApprovalProcessor.Projac
 
             DispatchCommands();
 
-            _projector.ProjectAsync(new SetCheckpoint((string)@event.Headers[Constants.TenantIdKey], (string)@event.Headers[Constants.StreamCheckpointTokenKey]));
+            _projector.ProjectAsync(new SetCheckpoint(@event.Headers[Constants.TenantIdKey], @event.Headers[Constants.StreamCheckpointTokenKey]));
         }
 
         public void Handle(Envelope<ApprovalAccepted> @event)
         {
             _projector.ProjectAsync(@event);
 
-            _projector.ProjectAsync(new SetCheckpoint((string)@event.Headers[Constants.TenantIdKey], (string)@event.Headers[Constants.StreamCheckpointTokenKey]));
+            _projector.ProjectAsync(new SetCheckpoint(@event.Headers[Constants.TenantIdKey], @event.Headers[Constants.StreamCheckpointTokenKey]));
         }
 
         private void DispatchCommands()
@@ -92,7 +91,7 @@ namespace EventSpike.ApprovalProcessor.Projac
             }
 
             foreach (var candidate in candidates) {
-                var newCausationId = ApprovalProcessorConstants.DeterministicGuid.Create(candidate.CausationId.ToByteArray());
+                var newCausationId = ApprovalProcessorConstants.DeterministicGuid.Create(candidate.CausationId);
 
                 _publisher.Publish(new MarkApprovalAccepted
                 {

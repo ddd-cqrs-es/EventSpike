@@ -107,6 +107,8 @@
     <Compile Include="EventSubscription\IStreamCheckpointProvider.cs" />
     <Compile Include="EventSubscription\SubscriptionIsLive.cs" />
     <Compile Include="ExtensionsForEnvelope.cs" />
+    <Compile Include="ExtensionsToString.cs" />
+    <Compile Include="ExtensionsToDeterministicGuid.cs" />
     <Compile Include="ExtensionsToDictionary.cs" />
     <Compile Include="IPublisher.cs" />
     <Compile Include="INeedInitialization.cs" />
@@ -128,7 +130,6 @@
     <Compile Include="Registries\TenantProviderConstants.cs" />
     <Compile Include="GuidEncoder.cs" />
     <Compile Include="TenantIdProvider.cs" />
-    <Compile Include="TypedKey.cs" />
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
     <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />
     <Compile Include="EventSubscription\EventSubscriptionMassTransitConsumer.cs" />

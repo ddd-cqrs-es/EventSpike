@@ -46,7 +46,7 @@ namespace EventSpike.Common.Registries
             };
         }
 
-        public static IServiceBus GetBus(IContext context)
+        private static IServiceBus GetBus(IContext context)
         {
             var bus = ServiceBusFactory.New(configure =>
             {

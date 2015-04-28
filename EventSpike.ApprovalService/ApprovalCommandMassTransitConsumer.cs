@@ -1,5 +1,4 @@
-﻿using System;
-using CommonDomain.Persistence;
+﻿using CommonDomain.Persistence;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using MassTransit;
@@ -23,7 +22,7 @@ namespace EventSpike.ApprovalService
         public void Consume(IConsumeContext<InitiateApproval> context)
         {
             var tenantId = context.Headers[Constants.TenantIdKey];
-            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
+            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
 
             var repository = _repositoryProvider.Get(tenantId);
             var approval = new ApprovalAggregate(context.Message.Id, context.Message.Title, context.Message.Description);
@@ -34,7 +33,7 @@ namespace EventSpike.ApprovalService
         public void Consume(IConsumeContext<MarkApprovalAccepted> context)
         {
             var tenantId = context.Headers[Constants.TenantIdKey];
-            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
+            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
 
             var repository = _repositoryProvider.Get(tenantId);
             var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
@@ -47,7 +46,7 @@ namespace EventSpike.ApprovalService
         public void Consume(IConsumeContext<MarkApprovalCancelled> context)
         {
             var tenantId = context.Headers[Constants.TenantIdKey];
-            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
+            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
 
             var repository = _repositoryProvider.Get(tenantId);
             var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
@@ -60,7 +59,7 @@ namespace EventSpike.ApprovalService
         public void Consume(IConsumeContext<MarkApprovalDenied> context)
         {
             var tenantId = context.Headers[Constants.TenantIdKey];
-            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
+            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
 
             var repository = _repositoryProvider.Get(tenantId);
             var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
@@ -73,7 +72,7 @@ namespace EventSpike.ApprovalService
         public void Consume(IConsumeContext<MarkApprovalPartiallyAccepted> context)
         {
             var tenantId = context.Headers[Constants.TenantIdKey];
-            var causationId = Guid.Parse(context.Headers[Constants.CausationIdKey]);
+            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
 
             var repository = _repositoryProvider.Get(tenantId);
             var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);

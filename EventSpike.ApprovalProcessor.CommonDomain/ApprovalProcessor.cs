@@ -22,14 +22,14 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
             Id = id;
         }
 
-        public void Apply(ApprovalInitiated @event)
+        private void Apply(ApprovalInitiated @event)
         {
-            Id = ApprovalProcessorConstants.DeterministicGuid.Create(@event.Id.ToByteArray()).ToString();
+            Id = ApprovalProcessorConstants.DeterministicGuid.Create(@event.Id).ToString();
 
             Dispatch(new MarkApprovalAccepted {Id = @event.Id, ReferenceNumber = GuidEncoder.Encode(Guid.NewGuid())});
         }
 
-        public void Apply(ApprovalAccepted @event)
+        private void Apply(ApprovalAccepted @event)
         {
             // Do nothing
         }

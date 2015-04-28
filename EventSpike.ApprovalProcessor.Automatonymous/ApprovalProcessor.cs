@@ -1,4 +1,3 @@
-using System;
 using Automatonymous;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
@@ -9,9 +8,9 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
     internal class ApprovalProcessor :
         AutomatonymousStateMachine<ApprovalProcessorInstance>
     {
-        public static readonly string UserId = string.Format("#{0}#", typeof (ApprovalProcessor).Name);
+        private static readonly string UserId = string.Format("#{0}#", typeof (ApprovalProcessor).Name);
 
-        public IPublisher Publisher { get; set; }
+        public IPublisher Publisher { private get; set; }
 
         public ApprovalProcessor()
         {
@@ -28,7 +27,7 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
                     .Then((state, @event) =>
                     {
                         state.ApprovalId = @event.Message.Id;
-                        state.CausationId = Guid.Parse(@event.Headers[Constants.CausationIdKey]);
+                        state.CausationId = @event.Headers[Constants.CausationIdKey].ToGuid();
                     })
                     .TransitionTo(WaitingForApproval));
 
@@ -40,7 +39,7 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
                         ReferenceNumber = GuidEncoder.Encode(state.CausationId)
                     }, headers =>
                     {
-                        headers.Add(Constants.CausationIdKey, ApprovalProcessorConstants.DeterministicGuid.Create(state.CausationId.ToByteArray()).ToString());
+                        headers.Add(Constants.CausationIdKey, ApprovalProcessorConstants.DeterministicGuid.Create(state.CausationId).ToString());
                         headers.Add(Constants.UserIdKey, UserId);
                     })),
                 When(Accepted)
