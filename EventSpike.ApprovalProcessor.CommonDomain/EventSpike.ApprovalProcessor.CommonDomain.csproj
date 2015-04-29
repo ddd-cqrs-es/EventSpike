@@ -57,9 +57,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApprovalProcessEventHandler.cs" />
+    <Compile Include="CommonDomainApprovalProcessEventHandler.cs" />
     <Compile Include="ApprovalProcessor.cs" />
-    <Compile Include="MassTransitCommandDispatcherPipelineHook.cs" />
+    <Compile Include="MassTransitCommandPublisherPipelineHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

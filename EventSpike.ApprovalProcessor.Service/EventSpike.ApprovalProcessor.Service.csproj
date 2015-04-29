@@ -70,7 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApprovalProcessorServiceControl.cs" />
+    <Compile Include="AutomatonymousApprovalProcessorRegistry.cs" />
+    <Compile Include="CommonDomainApprovalProcessorRegistry.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjacApprovalProcessorRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

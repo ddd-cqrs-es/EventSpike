@@ -4,13 +4,13 @@ using NEventStore;
 
 namespace EventSpike.ApprovalProcessor.CommonDomain
 {
-    public class CommandPublisherPipelineHook :
+    public class MassTransitCommandPublisherPipelineHook :
         PipelineHookBase
     {
         private readonly IPublisher _publisher;
         // This could also be dispatched via a PollingConsumer
 
-        public CommandPublisherPipelineHook(IPublisher publisher)
+        public MassTransitCommandPublisherPipelineHook(IPublisher publisher)
         {
             _publisher = publisher;
         }
@@ -26,7 +26,7 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
             foreach (var command in commands)
             {
-                _publisher.Publish(command);
+                _publisher.Publish(command, headers => headers.CopyFrom(committed.Headers.Where(tuple => !tuple.Key.StartsWith("UndispatchedMessage."))));
             }
         }
     }

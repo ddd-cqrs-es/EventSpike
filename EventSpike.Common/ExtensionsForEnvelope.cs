@@ -12,7 +12,9 @@ namespace EventSpike.Common
 
         public static IDictionary<string, string> ToDictionary(this MessageHeaders source)
         {
-            return source.Headers.ToDictionary(keyIs => keyIs.Key, valueIs => valueIs.Value);
+            return source.Headers
+                .ToLookup(keyIs => keyIs.Key, valueIs => valueIs.Value)
+                .ToDictionary(keyIs => keyIs.Key, valueIs => valueIs.FirstOrDefault());
         }
     }
 }

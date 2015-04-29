@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CommonDomain.Persistence;
 using EventSpike.Common;
@@ -25,7 +26,7 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
             var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(message.Headers[Constants.CausationIdKey].ToGuid());
 
-            _repository.Save(saga, commitId, headers => SetHeaders(headers, message.Headers));
+            _repository.Save(saga, commitId, headers => SetHeaders(headers, message.Headers, commitId));
         }
 
         public void Handle(Envelope<ApprovalAccepted> message)
@@ -36,13 +37,14 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
             var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(message.Headers[Constants.CausationIdKey].ToGuid());
 
-            _repository.Save(saga, commitId, headers => SetHeaders(headers, message.Headers));
+            _repository.Save(saga, commitId, headers => SetHeaders(headers, message.Headers, commitId));
         }
 
-        private void SetHeaders(IDictionary<string, object> target, MessageHeaders source)
+        private static void SetHeaders(IDictionary<string, object> target, MessageHeaders source, Guid commitId)
         {
             target.CopyFrom(source.ToDictionary());
             target[Constants.UserIdKey] = UserId;
+            target[Constants.CausationIdKey] = commitId.ToString();
         }
     }
 }
