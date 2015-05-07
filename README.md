@@ -6,6 +6,7 @@ Reference:
 
 ## Plans
 
+* Keep up with development of libs (submodules)
 * [EventStore](https://github.com/EventStore/EventStore)
 * [Paramore](https://github.com/iancooper/Paramore)
 * [Cedar](https://github.com/damianh/Cedar)
