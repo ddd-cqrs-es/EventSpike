@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using Topshelf;
 
-namespace EventSpike.ApprovalService
+namespace EventSpike.ApprovalAggregate.Service
 {
     internal class ApprovalServiceControl :
         ServiceControl

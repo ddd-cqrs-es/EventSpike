@@ -3,9 +3,9 @@ using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using MassTransit;
 
-namespace EventSpike.ApprovalService
+namespace EventSpike.ApprovalAggregate.CommonDomain
 {
-    internal class ApprovalCommandMassTransitConsumer :
+    public class MassTransitApprovalCommandConsumer :
         Consumes<InitiateApproval>.Context,
         Consumes<MarkApprovalAccepted>.Context,
         Consumes<MarkApprovalPartiallyAccepted>.Context,
@@ -14,7 +14,7 @@ namespace EventSpike.ApprovalService
     {
         private readonly ITenantProvider<IRepository> _repositoryProvider;
 
-        public ApprovalCommandMassTransitConsumer(ITenantProvider<IRepository> repositoryProvider)
+        public MassTransitApprovalCommandConsumer(ITenantProvider<IRepository> repositoryProvider)
         {
             _repositoryProvider = repositoryProvider;
         }

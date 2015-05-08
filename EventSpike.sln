@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B866D6F7-16F1-48DA-BC8D-FB608D1D3422}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.Common", "EventS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.BusDriverConsole", "EventSpike.BusDriverConsole\EventSpike.BusDriverConsole.csproj", "{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalService", "EventSpike.ApprovalService\EventSpike.ApprovalService.csproj", "{1CE642F2-136E-4958-82D0-F84E80DA86ED}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcessor.Automatonymous", "EventSpike.ApprovalProcessor.Automatonymous\EventSpike.ApprovalProcessor.Automatonymous.csproj", "{E97D2CA6-E197-4E45-91B5-C24273887D5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcessor.Service", "EventSpike.ApprovalProcessor.Service\EventSpike.ApprovalProcessor.Service.csproj", "{3BFFF49B-FC05-4645-9A30-90DF59C26A0D}"
@@ -27,6 +25,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.EventConsole", "EventSpike.EventConsole\EventSpike.EventConsole.csproj", "{B4BA82F5-7D46-46C7-8CEB-030288891960}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcessor", "EventSpike.ApprovalProcessor\EventSpike.ApprovalProcessor.csproj", "{27316DE3-99C0-4ADF-95AE-1D150D831A69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalAggregate.CommonDomain", "EventSpike.ApprovalAggregate.CommonDomain\EventSpike.ApprovalAggregate.CommonDomain.csproj", "{1CE642F2-136E-4958-82D0-F84E80DA86ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalAggregate.Service", "EventSpike.ApprovalAggregate.Service\EventSpike.ApprovalAggregate.Service.csproj", "{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,10 +44,6 @@ Global
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E97D2CA6-E197-4E45-91B5-C24273887D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E97D2CA6-E197-4E45-91B5-C24273887D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E97D2CA6-E197-4E45-91B5-C24273887D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,6 +68,14 @@ Global
 		{27316DE3-99C0-4ADF-95AE-1D150D831A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27316DE3-99C0-4ADF-95AE-1D150D831A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27316DE3-99C0-4ADF-95AE-1D150D831A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE642F2-136E-4958-82D0-F84E80DA86ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("EventSpike.EventConsole")]
+[assembly: AssemblyTitle("EventSpike.ApprovalAggregate.CommonDomain")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EventSpike.EventConsole")]
+[assembly: AssemblyProduct("EventSpike.ApprovalAggregate.CommonDomain")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("ca8a9970-52a3-4c90-a481-91fc6fef546e")]
+[assembly: Guid("9d7338cf-5ab9-4842-bed3-c51fe5ca0d82")]
 
 // Version information for an assembly consists of the following four values:
 //

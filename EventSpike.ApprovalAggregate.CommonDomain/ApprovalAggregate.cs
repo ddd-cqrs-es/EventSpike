@@ -2,13 +2,11 @@
 using CommonDomain.Core;
 using EventSpike.Common.ApprovalEvents;
 
-namespace EventSpike.ApprovalService
+namespace EventSpike.ApprovalAggregate.CommonDomain
 {
     internal class ApprovalAggregate :
         AggregateBase
     {
-        private bool _isDescriptionLocked;
-
         private ApprovalAggregate(Guid id)
         {
             Id = id;
@@ -26,11 +24,6 @@ namespace EventSpike.ApprovalService
 
         public void ReviseDescription(string description)
         {
-            if (_isDescriptionLocked)
-            {
-                throw new ApprovalModifiedWhenLocked("Description can not be revised when the approval is locked");
-            }
-
             RaiseEvent(new ApprovalDescriptionRevised
             {
                 Id = Id,
@@ -77,27 +70,22 @@ namespace EventSpike.ApprovalService
 
         private void Apply(ApprovalInitiated @event)
         {
-            _isDescriptionLocked = false;
         }
 
         private void Apply(ApprovalAccepted @event)
         {
-            _isDescriptionLocked = true;
         }
 
         private void Apply(ApprovalPartiallyAccepted @event)
         {
-            _isDescriptionLocked = true;
         }
 
         private void Apply(ApprovalDenied @event)
         {
-            _isDescriptionLocked = false;
         }
 
         private void Apply(ApprovalCancelled @event)
         {
-            _isDescriptionLocked = true;
         }
     }
 }

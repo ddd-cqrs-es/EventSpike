@@ -1,17 +1,18 @@
-﻿using EventSpike.Common.MassTransit;
+﻿using EventSpike.ApprovalAggregate.CommonDomain;
+using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
 using MassTransit;
 using StructureMap;
 using Topshelf;
 
-namespace EventSpike.ApprovalService
+namespace EventSpike.ApprovalAggregate.Service
 {
     internal class Program
     {
         private static void Main(string[] args)
         {
-            var dataEndpointName = typeof (Program).ToEndpointName();
-            var serviceName = typeof (Program).ToServiceName();
+            var dataEndpointName = typeof(Program).ToEndpointName();
+            var serviceName = typeof(Program).ToServiceName();
 
             var container = new Container(configure =>
             {
@@ -29,7 +30,7 @@ namespace EventSpike.ApprovalService
                 configure
                     .For<IConsumer>()
                     .Singleton()
-                    .Add<ApprovalCommandMassTransitConsumer>();
+                    .Add<MassTransitCommonDomainApprovalCommandConsumer>();
             });
 
             HostFactory.Run(host =>
