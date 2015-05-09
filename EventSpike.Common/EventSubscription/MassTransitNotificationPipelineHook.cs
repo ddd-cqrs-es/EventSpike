@@ -17,7 +17,7 @@ namespace EventSpike.Common.EventSubscription
             _publisher.Publish(new EventStreamUpdated
             {
                 StreamId = committed.StreamId,
-                CausationId = committed.CommitId,
+                CausationId = committed.Headers[Constants.CausationIdKey].ToString().ToGuid(),
                 CheckpointToken = committed.CheckpointToken
             });
         }

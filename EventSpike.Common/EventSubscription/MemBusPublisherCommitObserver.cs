@@ -45,7 +45,7 @@ namespace EventSpike.Common.EventSubscription
             var headers = commit.Headers.ToMessageHeaders()
                 .Concat(new[]
                 {
-                    new MessageHeader(Constants.CausationIdKey, commit.CommitId.ToString()),
+                    new MessageHeader(Constants.CausationIdKey, commit.Headers[Constants.CausationIdKey].ToString()),
                     new MessageHeader(Constants.StreamCheckpointTokenKey, commit.CheckpointToken)
                 }).ToArray();
 
