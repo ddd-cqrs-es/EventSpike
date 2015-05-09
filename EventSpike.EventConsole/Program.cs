@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using EventSpike.Common;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
@@ -16,14 +17,13 @@ namespace EventSpike.EventConsole
 
             var container = new Container(configure =>
             {
-                configure.AddRegistry<SingleDbSqlRegistry>();
                 configure.AddRegistry<TenantProviderRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
-                configure.AddRegistry<NEventStoreRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
                 configure.AddRegistry<BiggyStreamCheckpointRegistry>();
-
+                configure.AddRegistry<NEventStoreRegistry>();
+                
                 configure.For<string>()
                     .Add(endpointName)
                     .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
@@ -35,6 +35,10 @@ namespace EventSpike.EventConsole
                 configure
                     .For<INeedInitialization>()
                     .Add<EventSubscriptionInitializer>();
+
+                configure
+                    .For<ConnectionStringSettings>()
+                    .Use(context => context.GetInstance<SingleTenantConnectionStringFactory>().GetSettings());
             });
 
             var initializers = container.GetAllInstances<INeedInitialization>();

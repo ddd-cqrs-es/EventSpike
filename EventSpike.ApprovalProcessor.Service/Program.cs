@@ -1,4 +1,5 @@
-﻿using EventSpike.Common;
+﻿using System.Configuration;
+using EventSpike.Common;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
@@ -17,15 +18,18 @@ namespace EventSpike.ApprovalProcessor.Service
             var container = new Container(configure =>
             {
                 configure.AddRegistry<TenantProviderRegistry>();
-                configure.AddRegistry<SingleDbSqlRegistry>();
-                configure.AddRegistry<NEventStoreRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry<NEventStoreRegistry>();
 
                 //configure.AddRegistry<ProjacApprovalProcessorRegistry>();
                 //configure.AddRegistry<AutomatonymousApprovalProcessorRegistry>();
 
                 configure.AddRegistry<CommonDomainApprovalProcessorRegistry>();
+
+                configure
+                    .For<ConnectionStringSettings>()
+                    .Use(context => context.GetInstance<SingleTenantConnectionStringFactory>().GetSettings());
 
                 configure
                     .For<INeedInitialization>()

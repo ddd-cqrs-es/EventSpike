@@ -38,7 +38,7 @@ namespace EventSpike.Common.Registries
                 .OnCreation((context, bus) => WireUpMemBus(context, bus));
 
             For<IObserveCommits>()
-                .Use(context => context.GetInstance<EventSubscriptionFactory>().Construct());
+                .Add(context => context.GetInstance<EventSubscriptionFactory>().Construct());
         }
 
         private static void WireUpMemBus(IContext context, IBus bus)

@@ -1,4 +1,5 @@
-﻿using EventSpike.ApprovalAggregate.CommonDomain;
+﻿using System.Configuration;
+using EventSpike.ApprovalAggregate.CommonDomain;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
 using MassTransit;
@@ -17,10 +18,13 @@ namespace EventSpike.ApprovalAggregate.Service
             var container = new Container(configure =>
             {
                 configure.AddRegistry<TenantProviderRegistry>();
-                configure.AddRegistry<SingleDbSqlRegistry>();
-                configure.AddRegistry<NEventStoreRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<CommonDomainRegistry>();
+                configure.AddRegistry<NEventStoreRegistry>();
+
+                configure
+                    .For<ConnectionStringSettings>()
+                    .Use(context => context.GetInstance<SingleTenantConnectionStringFactory>().GetSettings());
 
                 configure
                     .For<string>()
@@ -30,7 +34,7 @@ namespace EventSpike.ApprovalAggregate.Service
                 configure
                     .For<IConsumer>()
                     .Singleton()
-                    .Add<MassTransitCommonDomainApprovalCommandConsumer>();
+                    .Add<MassTransitApprovalCommandConsumer>();
             });
 
             HostFactory.Run(host =>

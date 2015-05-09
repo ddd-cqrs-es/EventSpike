@@ -36,7 +36,8 @@ namespace EventSpike.Common.Registries
                 .Use<EventStoreRepository>();
 
             For<ISagaRepository>()
-                .Use<SagaEventStoreRepository>();
+                .Use<SagaEventStoreRepository>()
+                .Ctor<IStoreEvents>().Named("Projections");
         }
 
         private static void ConfigureConflictDetector(IContext context, ConflictDetector conflictDetector)

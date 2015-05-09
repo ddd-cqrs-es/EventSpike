@@ -1,3 +1,4 @@
+using System.Configuration;
 using EventSpike.ApprovalProcessor.CommonDomain;
 using EventSpike.Common;
 using EventSpike.Common.Registries;
@@ -20,6 +21,10 @@ namespace EventSpike.ApprovalProcessor.Service
 
             For<IPipelineHook>()
                 .Add<MassTransitCommandPublisherPipelineHook>();
+
+            For<ConnectionStringSettings>()
+                .Add(context => context.GetInstance<SingleTenantConnectionStringFactory>().GetSettings("Projections"))
+                .Named("Projections");
         }
     }
 }

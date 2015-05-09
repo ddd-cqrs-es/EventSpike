@@ -1,8 +1,5 @@
 using System.Configuration;
 using NEventStore;
-using NEventStore.Persistence.Sql;
-using NEventStore.Persistence.Sql.SqlDialects;
-using StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace EventSpike.Common.Registries
@@ -12,23 +9,20 @@ namespace EventSpike.Common.Registries
     {
         public NEventStoreRegistry()
         {
+            For<NEventStoreFactory>()
+                .Use<NEventStoreFactory>();
+
             For<IStoreEvents>()
-                .Use(context => WireUpEventStore(context));
-        }
+                .Use(context => context.GetInstance<NEventStoreFactory>().Create());
 
-        private static IStoreEvents WireUpEventStore(IContext context)
-        {
-            var settings = context.GetInstance<ConnectionStringSettings>();
+            For<NEventStoreFactory>()
+                .Add<NEventStoreFactory>()
+                .Ctor<ConnectionStringSettings>().Named("Projections")
+                .Named("Projections");
 
-            var pipelineHooks = context.GetAllInstances<IPipelineHook>();
-
-            return Wireup.Init()
-                .UsingSqlPersistence(new ConfigurationConnectionFactory(settings.Name, settings.ProviderName, settings.ConnectionString))
-                .WithDialect(new MsSqlDialect())
-                .InitializeStorageEngine()
-                .UsingJsonSerialization()
-                .HookIntoPipelineUsing(pipelineHooks)
-                .Build();
+            For<IStoreEvents>()
+                .Add(context => context.GetInstance<NEventStoreFactory>("Projections").Create())
+                .Named("Projections");
         }
     }
 }
