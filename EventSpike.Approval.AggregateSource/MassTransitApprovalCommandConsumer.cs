@@ -1,9 +1,10 @@
-﻿using CommonDomain.Persistence;
+﻿using AggregateSource.NEventStore;
+using EventSpike.Approval.AggregateSource.Persistence;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using MassTransit;
 
-namespace EventSpike.ApprovalAggregate.CommonDomain
+namespace EventSpike.Approval.AggregateSource
 {
     public class MassTransitApprovalCommandConsumer :
         Consumes<InitiateApproval>.Context,
@@ -12,11 +13,13 @@ namespace EventSpike.ApprovalAggregate.CommonDomain
         Consumes<MarkApprovalDenied>.Context,
         Consumes<MarkApprovalCancelled>.Context
     {
-        private readonly ITenantProvider<IRepository> _repositoryProvider;
+        private readonly ITenantProvider<Repository<ApprovalAggregate>> _repositoryProvider;
+        private readonly ITenantProvider<NEventStoreUnitOfWorkCommitter> _committer;
 
-        public MassTransitApprovalCommandConsumer(ITenantProvider<IRepository> repositoryProvider)
+        public MassTransitApprovalCommandConsumer(ITenantProvider<Repository<ApprovalAggregate>> repositoryProvider, ITenantProvider<NEventStoreUnitOfWorkCommitter> committer)
         {
             _repositoryProvider = repositoryProvider;
+            _committer = committer;
         }
 
         public void Consume(IConsumeContext<InitiateApproval> context)
@@ -25,9 +28,12 @@ namespace EventSpike.ApprovalAggregate.CommonDomain
             var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
 
             var repository = _repositoryProvider.Get(tenantId);
+
             var approval = new ApprovalAggregate(context.Message.Id, context.Message.Title, context.Message.Description);
 
-            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
+            repository.Add(context.Message.Id.ToString(), approval);
+
+            _committer.Get(tenantId).Commit(repository.UnitOfWork, causationId, headers => headers.CopyFrom(context.Headers));
         }
 
         public void Consume(IConsumeContext<MarkApprovalAccepted> context)
@@ -36,37 +42,11 @@ namespace EventSpike.ApprovalAggregate.CommonDomain
             var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
 
             var repository = _repositoryProvider.Get(tenantId);
-            var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
+            var approval = repository.Get(context.Message.Id.ToString());
 
             approval.MarkAccepted(context.Message.ReferenceNumber);
 
-            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
-        }
-
-        public void Consume(IConsumeContext<MarkApprovalCancelled> context)
-        {
-            var tenantId = context.Headers[Constants.TenantIdKey];
-            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
-
-            var repository = _repositoryProvider.Get(tenantId);
-            var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
-
-            approval.Cancel(context.Message.CancellationReason);
-
-            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
-        }
-
-        public void Consume(IConsumeContext<MarkApprovalDenied> context)
-        {
-            var tenantId = context.Headers[Constants.TenantIdKey];
-            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
-
-            var repository = _repositoryProvider.Get(tenantId);
-            var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
-
-            approval.MarkDenied(context.Message.ReferenceNumber, context.Message.DenialReason);
-
-            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
+            _committer.Get(tenantId).Commit(repository.UnitOfWork, causationId, headers => headers.CopyFrom(context.Headers));
         }
 
         public void Consume(IConsumeContext<MarkApprovalPartiallyAccepted> context)
@@ -75,11 +55,37 @@ namespace EventSpike.ApprovalAggregate.CommonDomain
             var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
 
             var repository = _repositoryProvider.Get(tenantId);
-            var approval = repository.GetById<ApprovalAggregate>(context.Message.Id);
+            var approval = repository.Get(context.Message.Id.ToString());
 
             approval.MarkPartiallyAccepted(context.Message.ReferenceNumber);
 
-            repository.Save(approval, causationId, headers => headers.CopyFrom(context.Headers));
+            _committer.Get(tenantId).Commit(repository.UnitOfWork, causationId, headers => headers.CopyFrom(context.Headers));
+        }
+
+        public void Consume(IConsumeContext<MarkApprovalDenied> context)
+        {
+            var tenantId = context.Headers[Constants.TenantIdKey];
+            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
+
+            var repository = _repositoryProvider.Get(tenantId);
+            var approval = repository.Get(context.Message.Id.ToString());
+
+            approval.MarkDenied(context.Message.ReferenceNumber, context.Message.DenialReason);
+
+            _committer.Get(tenantId).Commit(repository.UnitOfWork, causationId, headers => headers.CopyFrom(context.Headers));
+        }
+
+        public void Consume(IConsumeContext<MarkApprovalCancelled> context)
+        {
+            var tenantId = context.Headers[Constants.TenantIdKey];
+            var causationId = context.Headers[Constants.CausationIdKey].ToGuid();
+
+            var repository = _repositoryProvider.Get(tenantId);
+            var approval = repository.Get(context.Message.Id.ToString());
+
+            approval.Cancel(context.Message.CancellationReason);
+
+            _committer.Get(tenantId).Commit(repository.UnitOfWork, causationId, headers => headers.CopyFrom(context.Headers));
         }
     }
 }

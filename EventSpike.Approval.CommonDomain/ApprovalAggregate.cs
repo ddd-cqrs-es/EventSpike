@@ -2,7 +2,7 @@
 using CommonDomain.Core;
 using EventSpike.Common.ApprovalEvents;
 
-namespace EventSpike.ApprovalAggregate.CommonDomain
+namespace EventSpike.Approval.CommonDomain
 {
     internal class ApprovalAggregate :
         AggregateBase

@@ -7,8 +7,8 @@
     <ProjectGuid>{60754543-76BD-4339-A6AB-21AAF478F0DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EventSpike.ApprovalAggregate.AggregateSource</RootNamespace>
-    <AssemblyName>EventSpike.ApprovalAggregate.AggregateSource</AssemblyName>
+    <RootNamespace>EventSpike.Approval.AggregateSource</RootNamespace>
+    <AssemblyName>EventSpike.Approval.AggregateSource</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -58,8 +58,10 @@
   <ItemGroup>
     <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="ApprovalAggregate.cs" />
+    <Compile Include="Persistence\ConflictingCommandException.cs" />
     <Compile Include="MassTransitApprovalCommandConsumer.cs" />
-    <Compile Include="NEventStoreUnitOfWorkCommitter.cs" />
+    <Compile Include="Persistence\NEventStoreUnitOfWorkCommitter.cs" />
+    <Compile Include="Persistence\PersistenceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

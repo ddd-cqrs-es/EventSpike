@@ -1,12 +1,10 @@
 ﻿using System.Configuration;
-using EventSpike.ApprovalAggregate.CommonDomain;
 using EventSpike.Common.MassTransit;
 using EventSpike.Common.Registries;
-using MassTransit;
 using StructureMap;
 using Topshelf;
 
-namespace EventSpike.ApprovalAggregate.Service
+namespace EventSpike.Approval.Service
 {
     internal class Program
     {
@@ -19,8 +17,10 @@ namespace EventSpike.ApprovalAggregate.Service
             {
                 configure.AddRegistry<TenantProviderRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
-                configure.AddRegistry<CommonDomainRegistry>();
                 configure.AddRegistry<NEventStoreRegistry>();
+
+                //configure.AddRegistry<CommonDomainApprovalAggregateRegistry>();
+                configure.AddRegistry<AggregateSourceApprovalAggregateRegistry>();
 
                 configure
                     .For<ConnectionStringSettings>()
@@ -30,11 +30,6 @@ namespace EventSpike.ApprovalAggregate.Service
                     .For<string>()
                     .Add(dataEndpointName)
                     .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
-
-                configure
-                    .For<IConsumer>()
-                    .Singleton()
-                    .Add<MassTransitApprovalCommandConsumer>();
             });
 
             HostFactory.Run(host =>

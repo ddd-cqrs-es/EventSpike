@@ -1,8 +1,8 @@
 ﻿using System;
-using EventSpike.ApprovalAggregate.AggregateSource.AggregateSource;
+using EventSpike.Approval.AggregateSource.AggregateSource;
 using EventSpike.Common.ApprovalEvents;
 
-namespace EventSpike.ApprovalAggregate.AggregateSource
+namespace EventSpike.Approval.AggregateSource
 {
     public class ApprovalAggregate : AggregateRootEntity
     {

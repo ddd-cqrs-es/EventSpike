@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AggregateSource;
 
-namespace EventSpike.ApprovalAggregate.AggregateSource
+namespace EventSpike.Approval.AggregateSource
 {
     namespace AggregateSource
     {
