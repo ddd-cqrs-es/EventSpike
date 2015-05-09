@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalAggregat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalAggregate.Service", "EventSpike.ApprovalAggregate.Service\EventSpike.ApprovalAggregate.Service.csproj", "{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalAggregate.AggregateSource", "EventSpike.ApprovalAggregate.AggregateSource\EventSpike.ApprovalAggregate.AggregateSource.csproj", "{60754543-76BD-4339-A6AB-21AAF478F0DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5EAF8FB-BCD7-4DB9-82C0-2B6E287B2406}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60754543-76BD-4339-A6AB-21AAF478F0DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60754543-76BD-4339-A6AB-21AAF478F0DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60754543-76BD-4339-A6AB-21AAF478F0DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60754543-76BD-4339-A6AB-21AAF478F0DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
