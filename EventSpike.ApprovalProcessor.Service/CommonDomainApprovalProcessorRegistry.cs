@@ -16,7 +16,7 @@ namespace EventSpike.ApprovalProcessor.Service
 
             IncludeRegistry<BiggyStreamCheckpointRegistry>();
 
-            For<IEventHandler>()
+            For<IHandler>()
                 .Add<CommonDomainApprovalProcessEventHandler>();
 
             For<IPipelineHook>()

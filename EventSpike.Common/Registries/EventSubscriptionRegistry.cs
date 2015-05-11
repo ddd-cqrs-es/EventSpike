@@ -43,7 +43,7 @@ namespace EventSpike.Common.Registries
 
         private static void WireUpMemBus(IContext context, IBus bus)
         {
-            var handlers = context.GetAllInstances<IEventHandler>();
+            var handlers = context.GetAllInstances<IHandler>();
 
             foreach (var handler in handlers)
             {

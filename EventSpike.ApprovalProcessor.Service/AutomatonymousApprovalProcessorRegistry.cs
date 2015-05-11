@@ -12,7 +12,7 @@ namespace EventSpike.ApprovalProcessor.Service
         {
             IncludeRegistry<BiggyStreamCheckpointRegistry>();
 
-            For<IEventHandler>()
+            For<IHandler>()
                 .Add<AutomatonymousApprovalProcessEventHandler>();
         }
     }
