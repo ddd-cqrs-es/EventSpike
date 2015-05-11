@@ -4,7 +4,12 @@ using EventSpike.Common.ApprovalCommands;
 
 namespace EventSpike.Approval.CommonDomain
 {
-    public class ApprovalCommandHandler : IHandler
+    public class ApprovalCommandHandler :
+        IHandle<Envelope<InitiateApproval>>,
+        IHandle<Envelope<MarkApprovalAccepted>>,
+        IHandle<Envelope<MarkApprovalPartiallyAccepted>>,
+        IHandle<Envelope<MarkApprovalDenied>>,
+        IHandle<Envelope<MarkApprovalCancelled>>
     {
         private readonly IRepository _repository;
 

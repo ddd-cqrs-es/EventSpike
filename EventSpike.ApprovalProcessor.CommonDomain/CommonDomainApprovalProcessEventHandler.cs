@@ -7,7 +7,7 @@ using EventSpike.Common.ApprovalEvents;
 namespace EventSpike.ApprovalProcessor.CommonDomain
 {
     public class CommonDomainApprovalProcessEventHandler :
-        IHandler
+        IHandleEvents
     {
         private readonly ISagaRepository _repository;
         

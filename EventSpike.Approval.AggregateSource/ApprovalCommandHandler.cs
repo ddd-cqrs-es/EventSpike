@@ -5,7 +5,12 @@ using EventSpike.Common.ApprovalCommands;
 
 namespace EventSpike.Approval.AggregateSource
 {
-    public class ApprovalCommandHandler : IHandler
+    public class ApprovalCommandHandler :
+        IHandle<Envelope<InitiateApproval>>,
+        IHandle<Envelope<MarkApprovalAccepted>>,
+        IHandle<Envelope<MarkApprovalPartiallyAccepted>>,
+        IHandle<Envelope<MarkApprovalDenied>>,
+        IHandle<Envelope<MarkApprovalCancelled>>
     {
         private readonly Repository<ApprovalAggregate> _repository;
         private readonly NEventStoreUnitOfWorkCommitter _committer;

@@ -5,7 +5,7 @@ using EventSpike.Common.ApprovalEvents;
 namespace EventSpike.ApprovalProcessor.Automatonymous
 {
     public class AutomatonymousApprovalProcessEventHandler :
-        IHandler
+        IHandleEvents
     {
         private readonly IPublisher _publisher;
         private readonly IApprovalProcessorRepository _repository;

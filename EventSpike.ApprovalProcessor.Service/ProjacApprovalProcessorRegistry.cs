@@ -16,7 +16,7 @@ namespace EventSpike.ApprovalProcessor.Service
             For<ITenantListingProvider>()
                 .Use<ProjacTenantListingProvider>();
 
-            For<IHandler>()
+            For<IHandleEvents>()
                 .Add<ProjacApprovalProcessorEventHandler>();
             
             For<INeedInitialization>()

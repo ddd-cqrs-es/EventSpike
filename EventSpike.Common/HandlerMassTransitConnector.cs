@@ -1,17 +1,16 @@
 ﻿using System.Linq;
 using MassTransit;
-using MemBus;
 
 namespace EventSpike.Common
 {
-    public class MemBusMassTransitConnector<TMessage> : Consumes<TMessage>.Context
+    public class HandlerMassTransitConnector<TMessage> : Consumes<TMessage>.Context
         where TMessage : class
     {
-        private readonly ITenantProvider<IBus> _busProvider;
+        private readonly ITenantProvider<IHandle<Envelope<TMessage>>> _handlerProvider;
 
-        public MemBusMassTransitConnector(ITenantProvider<IBus> busProvider)
+        public HandlerMassTransitConnector(ITenantProvider<IHandle<Envelope<TMessage>>> handlerProvider)
         {
-            _busProvider = busProvider;
+            _handlerProvider = handlerProvider;
         }
 
         public void Consume(IConsumeContext<TMessage> context)
@@ -25,7 +24,7 @@ namespace EventSpike.Common
 
             var envelope = new Envelope<TMessage>(context.Message, headers);
 
-            _busProvider.Get(tenantId).Publish(envelope);
+            _handlerProvider.Get(tenantId).Handle(envelope);
         }
     }
 }

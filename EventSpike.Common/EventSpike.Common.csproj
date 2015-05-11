@@ -103,12 +103,13 @@
     <Compile Include="ExtensionsToString.cs" />
     <Compile Include="ExtensionsToDeterministicGuid.cs" />
     <Compile Include="ExtensionsToDictionary.cs" />
+    <Compile Include="HandlerMassTransitConnector.cs" />
+    <Compile Include="HandlerMassTransitConnectorConvention.cs" />
+    <Compile Include="IHandleEvents.cs" />
     <Compile Include="IPublisher.cs" />
     <Compile Include="INeedInitialization.cs" />
     <Compile Include="ITenantListingProvider.cs" />
     <Compile Include="MassTransit\MassTransitPublisher.cs" />
-    <Compile Include="MemBusMassTransitConnector.cs" />
-    <Compile Include="MemBusMassTransitConnectorConvention.cs" />
     <Compile Include="Registries\BiggyStreamCheckpointRegistry.cs" />
     <Compile Include="Registries\CommonDomainRegistry.cs" />
     <Compile Include="CommonDomain\SagaFactory.cs" />
@@ -116,7 +117,7 @@
     <Compile Include="Envelope.cs" />
     <Compile Include="EventSubscription\MemBusPublisherCommitObserver.cs" />
     <Compile Include="GuidNamespaces.cs" />
-    <Compile Include="IHandler.cs" />
+    <Compile Include="IHandle.cs" />
     <Compile Include="NEventStore\EventSubscriptionFactory.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Registries\EventSubscriptionRegistry.cs" />

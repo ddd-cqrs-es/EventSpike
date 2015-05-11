@@ -1,6 +1,6 @@
 ﻿namespace EventSpike.Common
 {
-    public interface IHandler
+    public interface IHandleEvents
     {
     }
 }
