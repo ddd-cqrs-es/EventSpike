@@ -6,7 +6,8 @@ Reference:
 
 ## Plans
 
-* Keep up with development of libs (submodules)
+* [FeatureSwitch](https://github.com/valdisiljuconoks/FeatureSwitch)
+* [Fooidity](https://github.com/phatboyg/Fooidity)
 * [EventStore](https://github.com/EventStore/EventStore)
 * [Paramore](https://github.com/iancooper/Paramore)
 * [Cedar](https://github.com/damianh/Cedar)
@@ -14,3 +15,4 @@ Reference:
 * [ReactiveETL](https://reactiveetl.codeplex.com/) (for projections?)
 * [rethinkdb-net](https://github.com/mfenniak/rethinkdb-net)
 * [Elasticsearch.Net / NEST](https://github.com/elastic/elasticsearch-net)
+* Keep up with development of libs (submodules)
