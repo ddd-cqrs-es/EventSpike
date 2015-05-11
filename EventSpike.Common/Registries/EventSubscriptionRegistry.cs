@@ -5,11 +5,7 @@ using Biggy.Core;
 using EventSpike.Common.Biggy;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.NEventStore;
-using MemBus;
-using MemBus.Configurators;
-using MemBus.Subscribing;
 using NEventStore.Client;
-using StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace EventSpike.Common.Registries
@@ -31,24 +27,8 @@ namespace EventSpike.Common.Registries
             For<IObserver<object>>()
                 .Add<MemBusPublisherCommitObserver>();
 
-            For<IBus>()
-                .Use(context => BusSetup.StartWith<Conservative>()
-                    .Apply<FlexibleSubscribeAdapter>(a => a.RegisterMethods("Handle"))
-                    .Construct())
-                .OnCreation((context, bus) => WireUpMemBus(context, bus));
-
             For<IObserveCommits>()
                 .Add(context => context.GetInstance<EventSubscriptionFactory>().Construct());
-        }
-
-        private static void WireUpMemBus(IContext context, IBus bus)
-        {
-            var handlers = context.GetAllInstances<IHandler>();
-
-            foreach (var handler in handlers)
-            {
-                bus.Subscribe(handler);
-            }
         }
     }
 }

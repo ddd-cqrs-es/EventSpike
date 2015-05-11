@@ -3,7 +3,6 @@ using EventSpike.Approval.AggregateSource;
 using EventSpike.Approval.AggregateSource.Persistence;
 using EventSpike.Common;
 using EventSpike.Common.EventSubscription;
-using MassTransit;
 using NEventStore;
 using StructureMap.Configuration.DSL;
 
@@ -14,9 +13,15 @@ namespace EventSpike.Approval.Service
     {
         public AggregateSourceApprovalAggregateRegistry()
         {
-            For<IConsumer>()
-                .Use<MassTransitApprovalCommandConsumer>();
+            Scan(scan =>
+            {
+                scan.AssemblyContainingType<ApprovalAggregate>();
 
+                scan.AddAllTypesOf<IHandler>();
+
+                scan.With(new MemBusMassTransitConnectorConvention());
+            });
+            
             For<IPipelineHook>()
                 .Add<MassTransitNotificationPipelineHook>();
 

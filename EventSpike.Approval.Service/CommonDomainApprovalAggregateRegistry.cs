@@ -1,6 +1,6 @@
-﻿using EventSpike.Approval.AggregateSource;
+﻿using EventSpike.Approval.CommonDomain;
+using EventSpike.Common;
 using EventSpike.Common.Registries;
-using MassTransit;
 using StructureMap.Configuration.DSL;
 
 namespace EventSpike.Approval.Service
@@ -12,9 +12,14 @@ namespace EventSpike.Approval.Service
         {
             IncludeRegistry<CommonDomainRegistry>();
 
-            For<IConsumer>()
-                .Singleton()
-                .Add<MassTransitApprovalCommandConsumer>();
+            Scan(scan =>
+            {
+                scan.AssemblyContainingType<ApprovalAggregate>();
+
+                scan.AddAllTypesOf<IHandler>();
+
+                scan.With(new MemBusMassTransitConnectorConvention());
+            });
         }
     }
 }

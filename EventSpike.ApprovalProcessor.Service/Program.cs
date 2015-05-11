@@ -20,6 +20,7 @@ namespace EventSpike.ApprovalProcessor.Service
                 configure.AddRegistry<TenantProviderRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry<MemBusRegistry>();
                 configure.AddRegistry<NEventStoreRegistry>();
 
                 //configure.AddRegistry<ProjacApprovalProcessorRegistry>();

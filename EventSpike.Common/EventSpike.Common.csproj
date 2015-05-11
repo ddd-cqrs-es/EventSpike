@@ -77,7 +77,11 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Reactive.Interfaces">
+    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Linq">
@@ -104,6 +108,7 @@
     <Compile Include="ITenantListingProvider.cs" />
     <Compile Include="MassTransit\MassTransitPublisher.cs" />
     <Compile Include="MemBusMassTransitConnector.cs" />
+    <Compile Include="MemBusMassTransitConnectorConvention.cs" />
     <Compile Include="Registries\BiggyStreamCheckpointRegistry.cs" />
     <Compile Include="Registries\CommonDomainRegistry.cs" />
     <Compile Include="CommonDomain\SagaFactory.cs" />
@@ -115,6 +120,7 @@
     <Compile Include="NEventStore\EventSubscriptionFactory.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Registries\EventSubscriptionRegistry.cs" />
+    <Compile Include="Registries\MemBusRegistry.cs" />
     <Compile Include="Registries\NEventStoreRegistry.cs" />
     <Compile Include="Registries\SqlConnectionSettingsFactory.cs" />
     <Compile Include="Registries\TenantProfileProvider.cs" />

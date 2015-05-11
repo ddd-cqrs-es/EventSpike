@@ -40,21 +40,9 @@
       <HintPath>..\packages\AggregateSource.NEventStore.0.0.300\lib\net45\AggregateSource.NEventStore.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Magnum, Version=2.1.3.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Magnum.2.1.3\lib\NET40\Magnum.dll</HintPath>
-    </Reference>
-    <Reference Include="MassTransit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MassTransit.2.9.9\lib\net40\MassTransit.dll</HintPath>
-    </Reference>
     <Reference Include="NEventStore, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NEventStore.5.1.0\lib\net40\NEventStore.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,8 +50,8 @@
   <ItemGroup>
     <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="ApprovalAggregate.cs" />
+    <Compile Include="ApprovalCommandHandler.cs" />
     <Compile Include="Persistence\ConflictingCommandException.cs" />
-    <Compile Include="MassTransitApprovalCommandConsumer.cs" />
     <Compile Include="Persistence\NEventStoreUnitOfWorkCommitter.cs" />
     <Compile Include="Persistence\PersistenceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -85,6 +85,10 @@
       <Project>{60754543-76BD-4339-A6AB-21AAF478F0DE}</Project>
       <Name>EventSpike.Approval.AggregateSource</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Approval.CommonDomain\EventSpike.Approval.CommonDomain.csproj">
+      <Project>{1CE642F2-136E-4958-82D0-F84E80DA86ED}</Project>
+      <Name>EventSpike.Approval.CommonDomain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
       <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
       <Name>EventSpike.Common</Name>

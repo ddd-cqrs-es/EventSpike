@@ -19,8 +19,8 @@ namespace EventSpike.EventConsole
             {
                 configure.AddRegistry<TenantProviderRegistry>();
                 configure.AddRegistry<EventSubscriptionRegistry>();
+                configure.AddRegistry<MemBusRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
-                configure.AddRegistry<EventSubscriptionRegistry>();
                 configure.AddRegistry<BiggyStreamCheckpointRegistry>();
                 configure.AddRegistry<NEventStoreRegistry>();
                 

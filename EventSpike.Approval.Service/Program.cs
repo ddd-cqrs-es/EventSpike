@@ -18,6 +18,7 @@ namespace EventSpike.Approval.Service
                 configure.AddRegistry<TenantProviderRegistry>();
                 configure.AddRegistry<MassTransitRegistry>();
                 configure.AddRegistry<NEventStoreRegistry>();
+                configure.AddRegistry<MemBusRegistry>();
 
                 //configure.AddRegistry<CommonDomainApprovalAggregateRegistry>();
                 configure.AddRegistry<AggregateSourceApprovalAggregateRegistry>();
