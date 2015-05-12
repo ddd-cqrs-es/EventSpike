@@ -17,9 +17,7 @@ namespace EventSpike.Approval.AggregateSource.Persistence
         private readonly IStoreEvents _eventStore;
         private readonly ConflictsWithDelegate _conflictDetector;
         private readonly DetermisticGuidDelegate _determisticGuid;
-
-        private readonly IDictionary<string, IEventStream> _streams = new Dictionary<string, IEventStream>();
-
+        
         public NEventStoreUnitOfWorkCommitter(IStoreEvents eventStore, ConflictsWithDelegate conflictDetector, DetermisticGuidDelegate determisticGuid)
         {
             _eventStore = eventStore;
@@ -29,59 +27,56 @@ namespace EventSpike.Approval.AggregateSource.Persistence
 
         public void Commit(UnitOfWork unitOfWork, Guid commitSetId, Action<IDictionary<string, object>> updateHeaders)
         {
-            Commit(Bucket.Default, unitOfWork, commitSetId, updateHeaders);
-        }
-
-        public void Commit(string bucketId, UnitOfWork unitOfWork, Guid commitSetId, Action<IDictionary<string, object>> updateHeaders)
-        {
             foreach (var aggregate in unitOfWork.GetChanges())
             {
                 var commitId = _determisticGuid(commitSetId, aggregate.Identifier);
 
-                Save(bucketId, aggregate, commitId, updateHeaders);
+                Save(aggregate, commitId, updateHeaders);
             }
         }
 
-        private void Save(string bucketId, Aggregate aggregate, Guid commitId, Action<IDictionary<string, object>> updateHeaders)
+        private void Save(Aggregate aggregate, Guid commitId, Action<IDictionary<string, object>> updateHeaders)
         {
             var headers = PrepareHeaders(aggregate.Root, updateHeaders);
 
             while (true)
             {
-                var stream = PrepareStream(bucketId, aggregate, headers);
+                using (var stream = PrepareStream(aggregate, headers))
+                {
+                    int commitEventCount = stream.CommittedEvents.Count;
 
-                try
-                {
-                    stream.CommitChanges(commitId);
-                    aggregate.Root.ClearChanges();
-                    return;
-                }
-                catch (DuplicateCommitException)
-                {
-                    stream.ClearChanges();
-                    return;
-                }
-                catch (ConcurrencyException e)
-                {
-                    stream.ClearChanges();
+                    try
+                    {
+                        stream.CommitChanges(commitId);
+                        aggregate.Root.ClearChanges();
+                        return;
+                    }
+                    catch (DuplicateCommitException)
+                    {
+                        stream.ClearChanges();
+                        return;
+                    }
+                    catch (ConcurrencyException e)
+                    {
+                        var conflict = ThrowOnConflict(stream, commitEventCount);
+                        stream.ClearChanges();
 
-                    throw new ConflictingCommandException(e.Message, e);
-                }
-                catch (StorageException e)
-                {
-                    throw new PersistenceException(e.Message, e);
+                        if (conflict)
+                        {
+                            throw new ConflictingCommandException(e.Message, e);
+                        }
+                    }
+                    catch (StorageException e)
+                    {
+                        throw new PersistenceException(e.Message, e);
+                    }
                 }
             }
         }
 
-        private IEventStream PrepareStream(string bucketId, Aggregate aggregate, Dictionary<string, object> headers)
+        private IEventStream PrepareStream(Aggregate aggregate, Dictionary<string, object> headers)
         {
-            IEventStream stream;
-            var streamId = bucketId + "+" + aggregate.Identifier;
-            if (!_streams.TryGetValue(streamId, out stream))
-            {
-                _streams[streamId] = stream = _eventStore.CreateStream(bucketId, aggregate.Identifier);
-            }
+            var stream = _eventStore.OpenStream(aggregate.Identifier, minRevision: 0);
 
             foreach (var item in headers)
             {

@@ -15,9 +15,7 @@ namespace EventSpike.Approval.Service
             Scan(scan =>
             {
                 scan.AssemblyContainingType<ApprovalAggregate>();
-
-                scan.AddAllTypesOf(typeof(IHandle<>));
-
+                
                 scan.With(new HandlerMassTransitConnectorConvention());
             });
         }

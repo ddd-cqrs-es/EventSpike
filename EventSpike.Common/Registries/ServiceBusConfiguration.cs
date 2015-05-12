@@ -2,5 +2,5 @@ using MassTransit.BusConfigurators;
 
 namespace EventSpike.Common.Registries
 {
-    public delegate void ServiceBusConfiguration(ServiceBusConfigurator configure);
+    public delegate void ServiceBusConfigurationDelegate(ServiceBusConfigurator configure);
 }

@@ -10,7 +10,7 @@ namespace EventSpike.Common.Registries
     {
         public MassTransitRegistry()
         {
-            For<ServiceBusConfiguration>()
+            For<ServiceBusConfigurationDelegate>()
                 .Add(context => DefaultConfiguration(context));
 
             For<IServiceBus>()
@@ -25,7 +25,7 @@ namespace EventSpike.Common.Registries
                 .Use<MassTransitTenantPublisher>();
         }
 
-        private static ServiceBusConfiguration DefaultConfiguration(IContext context)
+        private static ServiceBusConfigurationDelegate DefaultConfiguration(IContext context)
         {
             return configure =>
             {
@@ -42,7 +42,7 @@ namespace EventSpike.Common.Registries
 
                 configure.UseControlBus();
 
-                configure.Subscribe(subscribe => subscribe.LoadFrom(context.GetInstance<IContainer>()));
+                configure.Subscribe(subscribe => subscribe.LoadFromWithContext(context.GetInstance<IContainer>()));
             };
         }
 
@@ -50,7 +50,7 @@ namespace EventSpike.Common.Registries
         {
             var bus = ServiceBusFactory.New(configure =>
             {
-                var configurations = context.GetAllInstances<ServiceBusConfiguration>();
+                var configurations = context.GetAllInstances<ServiceBusConfigurationDelegate>();
 
                 foreach (var configuration in configurations)
                 {

@@ -3,6 +3,8 @@ using EventSpike.Approval.AggregateSource;
 using EventSpike.Approval.AggregateSource.Persistence;
 using EventSpike.Common;
 using EventSpike.Common.EventSubscription;
+using EventSpike.Common.Registries;
+using MassTransit;
 using NEventStore;
 using StructureMap.Configuration.DSL;
 
@@ -16,8 +18,6 @@ namespace EventSpike.Approval.Service
             Scan(scan =>
             {
                 scan.AssemblyContainingType<ApprovalAggregate>();
-
-                scan.AddAllTypesOf(typeof (IHandle<>));
 
                 scan.With(new HandlerMassTransitConnectorConvention());
             });
@@ -33,6 +33,9 @@ namespace EventSpike.Approval.Service
 
             For<DetermisticGuidDelegate>()
                 .Use(context => new DetermisticGuidDelegate((guid, input) => new DeterministicGuid(guid).Create(input)));
+
+            For<ServiceBusConfigurationDelegate>()
+                .Add(new ServiceBusConfigurationDelegate(configure => configure.SetConcurrentConsumerLimit(1)));
         }
     }
 }

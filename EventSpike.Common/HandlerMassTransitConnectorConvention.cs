@@ -13,18 +13,28 @@ namespace EventSpike.Common
         {
             if (!type.ImplementsInterfaceTemplate(typeof(IHandle<>))) return;
 
-            var handledMessageTypes = type.GetInterfaces()
+            var typeSets = type.GetInterfaces()
                 .Where(@interface => @interface.IsGenericType && @interface.GetGenericTypeDefinition() == typeof(IHandle<>))
-                .Select(handlerInterface => handlerInterface.GetGenericArguments().First())
-                .Where(messageType => messageType.GetGenericTypeDefinition() == typeof(Envelope<>))
-                .Select(envelopeType => envelopeType.GetGenericArguments().First())
+                .Select(handlerInterface => new
+                {
+                    HandlerInterface = handlerInterface,
+                    EnvelopeType = handlerInterface.GetGenericArguments().First()
+                })
+                .Where(types => types.EnvelopeType.GetGenericTypeDefinition() == typeof(Envelope<>))
+                .Select(types => new
+                {
+                    types.HandlerInterface,
+                    types.EnvelopeType,
+                    MessageType = types.EnvelopeType.GetGenericArguments().First()
+                })
                 .ToList();
 
-            if (!handledMessageTypes.Any()) return;
-
-            foreach (var handledMessageType in handledMessageTypes)
+            if (!typeSets.Any()) return;
+            
+            foreach (var types in typeSets)
             {
-                registry.For(typeof(IConsumer)).Add(typeof(HandlerMassTransitConnector<>).MakeGenericType(handledMessageType));
+                registry.For(types.HandlerInterface).Use(type);
+                registry.For(typeof(IConsumer)).Add(typeof(HandlerMassTransitConnector<>).MakeGenericType(types.MessageType));
             }
         }
     }

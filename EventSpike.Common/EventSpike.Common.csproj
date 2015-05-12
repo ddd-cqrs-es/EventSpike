@@ -109,7 +109,12 @@
     <Compile Include="IPublisher.cs" />
     <Compile Include="INeedInitialization.cs" />
     <Compile Include="ITenantListingProvider.cs" />
+    <Compile Include="ITenantProvider.cs" />
     <Compile Include="MassTransit\MassTransitPublisher.cs" />
+    <Compile Include="MassTransit\StructureMapConsumerFactory.cs" />
+    <Compile Include="MassTransit\StructureMapConsumerFactoryConfigurator.cs" />
+    <Compile Include="MassTransit\StructureMapExtensions.cs" />
+    <Compile Include="MassTransit\StructureMapSagaRepository.cs" />
     <Compile Include="Registries\BiggyStreamCheckpointRegistry.cs" />
     <Compile Include="Registries\CommonDomainRegistry.cs" />
     <Compile Include="CommonDomain\SagaFactory.cs" />
@@ -127,12 +132,12 @@
     <Compile Include="Registries\TenantProfileProvider.cs" />
     <Compile Include="Registries\TenantProviderConstants.cs" />
     <Compile Include="GuidEncoder.cs" />
+    <Compile Include="StructureMapTenantContainerProvider.cs" />
     <Compile Include="TenantIdProvider.cs" />
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
     <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />
     <Compile Include="EventSubscription\EventSubscriptionMassTransitConsumer.cs" />
     <Compile Include="Registries\ServiceBusConfiguration.cs" />
-    <Compile Include="StructureMapTenantContainerProvider.cs" />
     <Compile Include="Registries\TenantProviderRegistry.cs" />
     <Compile Include="EventSubscription\NullCheckpointToken.cs" />
     <Compile Include="Biggy\TenantScopedBiggyStreamCheckpointTracker.cs" />
@@ -151,7 +156,6 @@
     <Compile Include="NEventStoreFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventSubscription\EventStreamUpdated.cs" />
-    <Compile Include="ITenantProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

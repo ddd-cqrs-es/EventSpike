@@ -25,7 +25,7 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
             saga.Transition(message.Message);
 
             var commitId = ApprovalProcessorConstants.DeterministicGuid.Create(message.Headers[Constants.CausationIdKey].ToGuid());
-
+            
             _repository.Save(saga, commitId, headers => SetHeaders(headers, message.Headers, commitId));
         }
 

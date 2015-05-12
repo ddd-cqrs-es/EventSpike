@@ -38,7 +38,7 @@ namespace EventSpike.Approval.AggregateSource
             approval.MarkAccepted(envelope.Message.ReferenceNumber);
 
             var commitId = envelope.Headers[Constants.CausationIdKey].ToGuid();
-            _committer.Commit(this._repository.UnitOfWork, commitId, headers => headers.CopyFrom(envelope.Headers.ToDictionary()));
+            _committer.Commit(_repository.UnitOfWork, commitId, headers => headers.CopyFrom(envelope.Headers.ToDictionary()));
         }
 
         public void Handle(Envelope<MarkApprovalPartiallyAccepted> envelope)
