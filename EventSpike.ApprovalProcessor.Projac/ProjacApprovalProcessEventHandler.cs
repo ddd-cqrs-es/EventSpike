@@ -19,7 +19,7 @@ namespace EventSpike.ApprovalProcessor.Projac
         IHandleEvents
     {
         private readonly ConnectionStringSettings _settings;
-        private readonly IPublisher _publisher;
+        private readonly IPublishMessages _publisher;
         private readonly SqlCommandExecutor _queryExecutor;
         private readonly SqlProjection _projection;
 
@@ -28,7 +28,7 @@ namespace EventSpike.ApprovalProcessor.Projac
         private int _isDispatching;
         private bool _isLive;
 
-        public ProjacApprovalProcessorEventHandler(ConnectionStringSettings settings, IPublisher publisher)
+        public ProjacApprovalProcessorEventHandler(ConnectionStringSettings settings, IPublishMessages publisher)
         {
             _settings = settings;
             _publisher = publisher;

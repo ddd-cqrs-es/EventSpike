@@ -5,8 +5,8 @@ using EventSpike.Common.EventSubscription;
 namespace EventSpike.Common.Biggy
 {
     public class TenantScopedBiggyStoreCheckpointTracker :
-        IStoreCheckpointTracker,
-        IStoreCheckpointProvider
+        ITrackStoreCheckpoints,
+        IProvideStoreCheckpoints
     {
         private readonly TenantCheckpointTokenDocument _nullTenantCheckpointTokenDocument;
 

@@ -6,9 +6,9 @@ namespace EventSpike.Common.EventSubscription
     public class EventSubscriptionMassTransitConsumer :
         Consumes<EventStreamUpdated>.Context
     {
-        private readonly ITenantProvider<IObserveCommits> _commitObserverProvider;
+        private readonly IProvideForTenant<IObserveCommits> _commitObserverProvider;
 
-        public EventSubscriptionMassTransitConsumer(ITenantProvider<IObserveCommits> commitObserverProvider)
+        public EventSubscriptionMassTransitConsumer(IProvideForTenant<IObserveCommits> commitObserverProvider)
         {
             _commitObserverProvider = commitObserverProvider;
         }

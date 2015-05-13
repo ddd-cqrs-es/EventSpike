@@ -9,12 +9,12 @@ namespace EventSpike.Common.NEventStore
 {
     public class EventSubscriptionFactory
     {
-        private readonly IStoreCheckpointProvider _checkpointTracker;
+        private readonly IProvideStoreCheckpoints _checkpointTracker;
         private readonly IEnumerable<IObserver<object>> _commitObservers;
         private readonly IStoreEvents _eventStore;
 
         public EventSubscriptionFactory(IStoreEvents eventStore,
-            IStoreCheckpointProvider checkpointTracker,
+            IProvideStoreCheckpoints checkpointTracker,
             IEnumerable<IObserver<object>> commitObservers)
         {
             _eventStore = eventStore;

@@ -7,7 +7,7 @@ using Paramol.SqlClient;
 namespace EventSpike.ApprovalProcessor.Projac
 {
     public class ProjacStoreCheckpointProvider :
-        IStoreCheckpointProvider
+        IProvideStoreCheckpoints
     {
         private readonly TenantIdProvider _tenantIdProvider;
         private readonly SqlCommandExecutor _executer;

@@ -18,11 +18,11 @@ namespace EventSpike.Common.Registries
                 .Configure
                 .Ctor<string>().Is(context => context.GetInstance<TenantIdProvider>()());
 
-            For<ITenantListingProvider>()
+            For<IListTenants>()
                 .Use<BiggyTenantListingProvider>();
 
-            Forward<TenantScopedBiggyStoreCheckpointTracker, IStoreCheckpointTracker>();
-            Forward<TenantScopedBiggyStoreCheckpointTracker, IStoreCheckpointProvider>();
+            Forward<TenantScopedBiggyStoreCheckpointTracker, ITrackStoreCheckpoints>();
+            Forward<TenantScopedBiggyStoreCheckpointTracker, IProvideStoreCheckpoints>();
         }
     }
 }

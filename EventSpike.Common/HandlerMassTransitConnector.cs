@@ -6,9 +6,9 @@ namespace EventSpike.Common
     public class HandlerMassTransitConnector<TMessage> : Consumes<TMessage>.Context
         where TMessage : class
     {
-        private readonly ITenantProvider<IHandle<Envelope<TMessage>>> _handlerProvider;
+        private readonly IProvideForTenant<IHandle<Envelope<TMessage>>> _handlerProvider;
 
-        public HandlerMassTransitConnector(ITenantProvider<IHandle<Envelope<TMessage>>> handlerProvider)
+        public HandlerMassTransitConnector(IProvideForTenant<IHandle<Envelope<TMessage>>> handlerProvider)
         {
             _handlerProvider = handlerProvider;
         }

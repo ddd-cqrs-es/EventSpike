@@ -7,10 +7,10 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
     public class AutomatonymousApprovalProcessEventHandler :
         IHandleEvents
     {
-        private readonly IPublisher _publisher;
+        private readonly IPublishMessages _publisher;
         private readonly IApprovalProcessorRepository _repository;
 
-        public AutomatonymousApprovalProcessEventHandler(IPublisher publisher, IApprovalProcessorRepository repository)
+        public AutomatonymousApprovalProcessEventHandler(IPublishMessages publisher, IApprovalProcessorRepository repository)
         {
             _publisher = publisher;
             _repository = repository;

@@ -3,7 +3,7 @@
 namespace EventSpike.Common
 {
     public class StructureMapTenantContainerProvider<TValue> :
-        ITenantProvider<TValue>
+        IProvideForTenant<TValue>
     {
         private readonly IContainer _container;
 

@@ -7,10 +7,10 @@ namespace EventSpike.Common.EventSubscription
     public class EventSubscriptionInitializer :
         INeedInitialization
     {
-        private readonly ITenantProvider<IEnumerable<IObserveCommits>> _commitObserversFactory;
-        private readonly ITenantListingProvider _tenantListingProvider;
+        private readonly IProvideForTenant<IEnumerable<IObserveCommits>> _commitObserversFactory;
+        private readonly IListTenants _tenantListingProvider;
 
-        public EventSubscriptionInitializer(ITenantProvider<IEnumerable<IObserveCommits>> commitObserversFactory, ITenantListingProvider tenantListingProvider)
+        public EventSubscriptionInitializer(IProvideForTenant<IEnumerable<IObserveCommits>> commitObserversFactory, IListTenants tenantListingProvider)
         {
             _commitObserversFactory = commitObserversFactory;
             _tenantListingProvider = tenantListingProvider;

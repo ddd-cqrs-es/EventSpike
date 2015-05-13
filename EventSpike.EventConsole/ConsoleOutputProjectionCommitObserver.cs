@@ -7,9 +7,9 @@ namespace EventSpike.EventConsole
 {
     internal class ConsoleOutputProjectionCommitObserver : IObserver<object>
     {
-        private readonly IStoreCheckpointTracker _storeTrackerProvider;
+        private readonly ITrackStoreCheckpoints _storeTrackerProvider;
 
-        public ConsoleOutputProjectionCommitObserver(IStoreCheckpointTracker storeTrackerProvider)
+        public ConsoleOutputProjectionCommitObserver(ITrackStoreCheckpoints storeTrackerProvider)
         {
             _storeTrackerProvider = storeTrackerProvider;
         }

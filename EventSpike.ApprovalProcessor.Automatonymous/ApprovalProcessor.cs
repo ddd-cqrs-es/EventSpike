@@ -10,7 +10,7 @@ namespace EventSpike.ApprovalProcessor.Automatonymous
     {
         private static readonly string UserId = string.Format("#{0}#", typeof (ApprovalProcessor).Name);
 
-        public IPublisher Publisher { private get; set; }
+        public IPublishMessages Publisher { private get; set; }
 
         public ApprovalProcessor()
         {

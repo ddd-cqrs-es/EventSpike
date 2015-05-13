@@ -97,7 +97,7 @@
     <Compile Include="ApprovalCommands\MarkApprovalPartiallyAccepted.cs" />
     <Compile Include="Biggy\BiggyTenantListingProvider.cs" />
     <Compile Include="DisposeCallback.cs" />
-    <Compile Include="EventSubscription\IStreamCheckpointProvider.cs" />
+    <Compile Include="EventSubscription\IProvideStoreCheckpoints.cs" />
     <Compile Include="EventSubscription\SubscriptionIsLive.cs" />
     <Compile Include="ExtensionsForEnvelope.cs" />
     <Compile Include="ExtensionsToString.cs" />
@@ -106,10 +106,10 @@
     <Compile Include="HandlerMassTransitConnector.cs" />
     <Compile Include="HandlerMassTransitConnectorConvention.cs" />
     <Compile Include="IHandleEvents.cs" />
-    <Compile Include="IPublisher.cs" />
+    <Compile Include="IPublishMessages.cs" />
     <Compile Include="INeedInitialization.cs" />
-    <Compile Include="ITenantListingProvider.cs" />
-    <Compile Include="ITenantProvider.cs" />
+    <Compile Include="IListTenants.cs" />
+    <Compile Include="IProvideForTenant.cs" />
     <Compile Include="MassTransit\MassTransitPublisher.cs" />
     <Compile Include="Registries\BiggyStreamCheckpointRegistry.cs" />
     <Compile Include="Registries\CommonDomainRegistry.cs" />
@@ -125,7 +125,6 @@
     <Compile Include="Registries\MemBusRegistry.cs" />
     <Compile Include="Registries\NEventStoreRegistry.cs" />
     <Compile Include="Registries\SqlConnectionSettingsFactory.cs" />
-    <Compile Include="Registries\TenantProfileProvider.cs" />
     <Compile Include="Registries\TenantProviderConstants.cs" />
     <Compile Include="GuidEncoder.cs" />
     <Compile Include="StructureMapTenantContainerProvider.cs" />
@@ -145,7 +144,7 @@
     <Compile Include="ApprovalEvents\ApprovalDenied.cs" />
     <Compile Include="ApprovalEvents\ApprovalDescriptionRevised.cs" />
     <Compile Include="ApprovalEvents\ApprovalPartiallyAccepted.cs" />
-    <Compile Include="EventSubscription\IStoreCheckpointTracker.cs" />
+    <Compile Include="EventSubscription\ITrackStoreCheckpoints.cs" />
     <Compile Include="Biggy\TenantCheckpointTokenDocument.cs" />
     <Compile Include="EventSubscription\MassTransitNotificationPipelineHook.cs" />
     <Compile Include="Registries\MassTransitRegistry.cs" />

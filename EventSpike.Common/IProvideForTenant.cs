@@ -1,6 +1,6 @@
 ﻿namespace EventSpike.Common
 {
-    public interface ITenantProvider<out TValue>
+    public interface IProvideForTenant<out TValue>
     {
         TValue Get(string tenantId);
     }

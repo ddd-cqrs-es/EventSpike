@@ -5,9 +5,9 @@ namespace EventSpike.Common.EventSubscription
     public class MassTransitNotificationPipelineHook :
         PipelineHookBase
     {
-        private readonly IPublisher _publisher;
+        private readonly IPublishMessages _publisher;
 
-        public MassTransitNotificationPipelineHook(IPublisher publisher)
+        public MassTransitNotificationPipelineHook(IPublishMessages publisher)
         {
             _publisher = publisher;
         }

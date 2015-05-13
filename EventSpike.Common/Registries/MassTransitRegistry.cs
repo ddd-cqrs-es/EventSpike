@@ -21,7 +21,7 @@ namespace EventSpike.Common.Registries
                 .Add("mt_subscriptions")
                 .Named(InstanceNames.SubscriptionEndpointName);
 
-            For<IPublisher>()
+            For<IPublishMessages>()
                 .Use<MassTransitTenantPublisher>();
         }
 

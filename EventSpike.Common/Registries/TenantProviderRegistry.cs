@@ -6,17 +6,13 @@ namespace EventSpike.Common.Registries
     {
         public TenantProviderRegistry()
         {
-            For(typeof (ITenantProvider<>))
+            For(typeof (IProvideForTenant<>))
                 .Singleton()
                 .Use(typeof (StructureMapTenantContainerProvider<>));
 
             For<TenantIdProvider>()
                 .Singleton()
                 .Use(TenantProviderConstants.NullTenantIdProvider);
-
-            For<TenantProfileProvider>()
-                .Singleton()
-                .Use(TenantProviderConstants.NullProfileProvider);
         }
     }
 }

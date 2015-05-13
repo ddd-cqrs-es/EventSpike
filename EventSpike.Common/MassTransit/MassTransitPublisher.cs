@@ -5,7 +5,7 @@ using MassTransit;
 namespace EventSpike.Common.MassTransit
 {
     public class MassTransitTenantPublisher :
-        IPublisher
+        IPublishMessages
     {
         private readonly IServiceBus _bus;
         private readonly TenantIdProvider _tenantIdProvider;

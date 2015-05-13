@@ -10,10 +10,10 @@ namespace EventSpike.ApprovalProcessor.Service
     {
         public ProjacApprovalProcessorRegistry()
         {
-            For<IStoreCheckpointProvider>()
+            For<IProvideStoreCheckpoints>()
                 .Use<ProjacStoreCheckpointProvider>();
 
-            For<ITenantListingProvider>()
+            For<IListTenants>()
                 .Use<ProjacTenantListingProvider>();
 
             For<IHandleEvents>()

@@ -7,10 +7,10 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
     public class MassTransitCommandPublisherPipelineHook :
         PipelineHookBase
     {
-        private readonly IPublisher _publisher;
+        private readonly IPublishMessages _publisher;
         // This could also be dispatched via a PollingConsumer
 
-        public MassTransitCommandPublisherPipelineHook(IPublisher publisher)
+        public MassTransitCommandPublisherPipelineHook(IPublishMessages publisher)
         {
             _publisher = publisher;
         }

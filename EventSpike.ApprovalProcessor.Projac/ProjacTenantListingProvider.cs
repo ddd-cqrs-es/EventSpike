@@ -7,7 +7,7 @@ using Paramol.SqlClient;
 namespace EventSpike.ApprovalProcessor.Projac
 {
     public class ProjacTenantListingProvider :
-        ITenantListingProvider
+        IListTenants
     {
         private readonly SqlCommandExecutor _executer;
 

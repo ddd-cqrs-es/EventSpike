@@ -5,7 +5,7 @@ using Biggy.Core;
 namespace EventSpike.Common.Biggy
 {
     public class BiggyTenantListingProvider :
-        ITenantListingProvider
+        IListTenants
     {
         private readonly BiggyList<TenantCheckpointTokenDocument> _tenantCheckpoints;
 

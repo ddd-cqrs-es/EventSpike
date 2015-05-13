@@ -2,7 +2,7 @@
 
 namespace EventSpike.Common
 {
-    public interface ITenantListingProvider
+    public interface IListTenants
     {
         IEnumerable<string> GetTenantIds();
     }
