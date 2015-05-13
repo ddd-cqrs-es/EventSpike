@@ -6,11 +6,11 @@ namespace EventSpike.Common
     public class HandlerMassTransitConnector<TMessage> : Consumes<TMessage>.Context
         where TMessage : class
     {
-        private readonly IHandle<Envelope<TMessage>> _handler;
+        private readonly ITenantProvider<IHandle<Envelope<TMessage>>> _handlerProvider;
 
-        public HandlerMassTransitConnector(IHandle<Envelope<TMessage>> handler)
+        public HandlerMassTransitConnector(ITenantProvider<IHandle<Envelope<TMessage>>> handlerProvider)
         {
-            _handler = handler;
+            _handlerProvider = handlerProvider;
         }
 
         public void Consume(IConsumeContext<TMessage> context)
@@ -22,7 +22,7 @@ namespace EventSpike.Common
 
             var envelope = new Envelope<TMessage>(context.Message, headers);
 
-            _handler.Handle(envelope);
+            _handlerProvider.Get(context.Headers[Constants.TenantIdKey]).Handle(envelope);
         }
     }
 }

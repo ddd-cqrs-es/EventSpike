@@ -5,9 +5,9 @@ using Biggy.Core;
 using EventSpike.Common.Biggy;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.NEventStore;
-using Magnum.Caching;
 using NEventStore.Client;
 using StructureMap.Configuration.DSL;
+using StructureMap.Pipeline;
 
 namespace EventSpike.Common.Registries
 {
@@ -27,14 +27,10 @@ namespace EventSpike.Common.Registries
 
             For<IObserver<object>>()
                 .Add<MemBusPublisherCommitObserver>();
-
-            For<Cache<string, IObserveCommits>>()
-                .Singleton()
-                .Use<ConcurrentCache<string, IObserveCommits>>()
-                .SelectConstructor(() => new ConcurrentCache<string, IObserveCommits>());
             
             For<IObserveCommits>()
-                .Use(context => context.GetInstance<Cache<string, IObserveCommits>>().Get(context.GetInstance<TenantIdProvider>()(), tenantId => context.GetInstance<EventSubscriptionFactory>().Construct()));
+                .Use(context => context.GetInstance<EventSubscriptionFactory>().Construct())
+                .LifecycleIs<ContainerLifecycle>();
         }
     }
 }

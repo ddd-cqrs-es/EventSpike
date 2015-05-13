@@ -14,7 +14,7 @@ namespace EventSpike.Common
 
         public TValue Get(string tenantId)
         {
-            return _container.With(new TenantIdProvider(() => tenantId)).GetInstance<TValue>();
+            return _container.GetProfile(tenantId).With(new TenantIdProvider(() => tenantId)).GetInstance<TValue>();
         }
     }
 }

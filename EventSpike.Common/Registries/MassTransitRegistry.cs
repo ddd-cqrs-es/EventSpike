@@ -42,7 +42,7 @@ namespace EventSpike.Common.Registries
 
                 configure.UseControlBus();
 
-                configure.Subscribe(subscribe => subscribe.LoadFromWithContext(context.GetInstance<IContainer>()));
+                configure.Subscribe(subscribe => subscribe.LoadFrom(context.GetInstance<IContainer>()));
             };
         }
 

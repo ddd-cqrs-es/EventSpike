@@ -111,10 +111,6 @@
     <Compile Include="ITenantListingProvider.cs" />
     <Compile Include="ITenantProvider.cs" />
     <Compile Include="MassTransit\MassTransitPublisher.cs" />
-    <Compile Include="MassTransit\StructureMapConsumerFactory.cs" />
-    <Compile Include="MassTransit\StructureMapConsumerFactoryConfigurator.cs" />
-    <Compile Include="MassTransit\StructureMapExtensions.cs" />
-    <Compile Include="MassTransit\StructureMapSagaRepository.cs" />
     <Compile Include="Registries\BiggyStreamCheckpointRegistry.cs" />
     <Compile Include="Registries\CommonDomainRegistry.cs" />
     <Compile Include="CommonDomain\SagaFactory.cs" />

@@ -1,6 +1,7 @@
 using System.Configuration;
 using NEventStore;
 using StructureMap.Configuration.DSL;
+using StructureMap.Pipeline;
 
 namespace EventSpike.Common.Registries
 {
@@ -13,7 +14,8 @@ namespace EventSpike.Common.Registries
                 .Use<NEventStoreFactory>();
 
             For<IStoreEvents>()
-                .Use(context => context.GetInstance<NEventStoreFactory>().Create());
+                .Use(context => context.GetInstance<NEventStoreFactory>().Create())
+                .LifecycleIs<ContainerLifecycle>();
 
             For<NEventStoreFactory>()
                 .Add<NEventStoreFactory>()
@@ -22,6 +24,7 @@ namespace EventSpike.Common.Registries
 
             For<IStoreEvents>()
                 .Add(context => context.GetInstance<NEventStoreFactory>("Projections").Create())
+                .LifecycleIs<ContainerLifecycle>()
                 .Named("Projections");
         }
     }
