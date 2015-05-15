@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using EventSpike.Common;
+﻿using EventSpike.Common;
 using MassTransit;
 using Topshelf;
 
@@ -9,20 +8,17 @@ namespace EventSpike.ApprovalProcessor.Service
         ServiceControl
     {
         private readonly IServiceBus _bus;
-        private readonly IEnumerable<INeedInitialization> _initializers;
+        private readonly ISystemInitializer _initializer;
 
-        public ApprovalProcessorServiceControl(IServiceBus bus, IEnumerable<INeedInitialization> initializers)
+        public ApprovalProcessorServiceControl(IServiceBus bus, ISystemInitializer initializer)
         {
             _bus = bus;
-            _initializers = initializers;
+            _initializer = initializer;
         }
 
         public bool Start(HostControl hostControl)
         {
-            foreach (var initializer in _initializers)
-            {
-                initializer.Initialize();
-            }
+            _initializer.Initialize();
 
             return true;
         }

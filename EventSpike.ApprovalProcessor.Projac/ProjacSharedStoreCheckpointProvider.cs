@@ -1,20 +1,19 @@
 using System.Configuration;
-using EventSpike.Common;
 using EventSpike.Common.EventSubscription;
 using Paramol.Executors;
 using Paramol.SqlClient;
 
 namespace EventSpike.ApprovalProcessor.Projac
 {
-    public class ProjacStoreCheckpointProvider :
+    public class ProjacSharedStoreCheckpointProvider :
         IProvideStoreCheckpoints
     {
-        private readonly TenantIdProvider _tenantIdProvider;
+        private readonly string _tenantId;
         private readonly SqlCommandExecutor _executer;
 
-        public ProjacStoreCheckpointProvider(ConnectionStringSettings settings, TenantIdProvider tenantIdProvider)
+        public ProjacSharedStoreCheckpointProvider(ConnectionStringSettings settings, string tenantId)
         {
-            _tenantIdProvider = tenantIdProvider;
+            _tenantId = tenantId;
 
             _executer = new SqlCommandExecutor(settings);
         }
@@ -23,7 +22,7 @@ namespace EventSpike.ApprovalProcessor.Projac
         {
             const string sql = @"SELECT [CheckpointToken] FROM [StoreCheckpoint] WHERE [StoreId] = @P1";
 
-            using (var reader = _executer.ExecuteReader(TSql.QueryStatement(sql, new { P1 = TSql.NVarCharMax(_tenantIdProvider()) })))
+            using (var reader = _executer.ExecuteReader(TSql.QueryStatement(sql, new { P1 = TSql.NVarCharMax(_tenantId) })))
             {
                 if (reader.IsClosed) return null;
                 return reader.Read() ? reader.GetString(0) : null;

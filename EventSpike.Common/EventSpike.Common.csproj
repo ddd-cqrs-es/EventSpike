@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="Autofac.Extras.Multitenant">
       <HintPath>..\packages\Autofac.Extras.Multitenant.3.1.1\lib\net40\Autofac.Extras.Multitenant.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Biggy">
       <HintPath>..\packages\Biggy.Core.0.1.0.1\lib\net40\Biggy.dll</HintPath>
@@ -59,9 +60,6 @@
     <Reference Include="MassTransit.AutofacIntegration">
       <HintPath>..\packages\MassTransit.Autofac.2.9.9\lib\net40\MassTransit.AutofacIntegration.dll</HintPath>
     </Reference>
-    <Reference Include="MassTransit.StructureMapIntegration">
-      <HintPath>..\packages\MassTransit.StructureMap.2.9.9\lib\net40\MassTransit.StructureMapIntegration.dll</HintPath>
-    </Reference>
     <Reference Include="MassTransit.Transports.MSMQ, Version=2.9.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MassTransit.MSMQ.2.9.9\lib\net40\MassTransit.Transports.MSMQ.dll</HintPath>
@@ -75,13 +73,6 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.Net4, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -117,6 +108,7 @@
     <Compile Include="InstanceNames.cs" />
     <Compile Include="IPublishMessages.cs" />
     <Compile Include="INeedInitialization.cs" />
+    <Compile Include="ISystemInitializer.cs" />
     <Compile Include="MassTransit\MassTransitPublisher.cs" />
     <Compile Include="Autofac\BiggyStreamCheckpointModule.cs" />
     <Compile Include="Autofac\CommonDomainModule.cs" />
@@ -128,7 +120,7 @@
     <Compile Include="NEventStore\EventSubscriptionFactory.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Autofac\EventSubscriptionModule.cs" />
-    <Compile Include="MassTransitContextTenantIdentificationStrategy.cs" />
+    <Compile Include="MassTransitMessageHeadersTenantIdentificationProvider.cs" />
     <Compile Include="Autofac\MassTransitModule.cs" />
     <Compile Include="Autofac\MemBusModule.cs" />
     <Compile Include="Autofac\NEventStoreModule.cs" />
@@ -138,7 +130,7 @@
     <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />
     <Compile Include="EventSubscription\EventSubscriptionMassTransitConsumer.cs" />
     <Compile Include="Autofac\ServiceBusConfiguration.cs" />
-    <Compile Include="Autofac\TenantModlue.cs" />
+    <Compile Include="Autofac\TenantModule.cs" />
     <Compile Include="EventSubscription\NullCheckpointToken.cs" />
     <Compile Include="Biggy\TenantScopedBiggyStreamCheckpointTracker.cs" />
     <Compile Include="EventSubscription\EventSubscriptionBootstrapper.cs" />
@@ -155,8 +147,10 @@
     <Compile Include="NEventStoreFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventSubscription\EventStreamUpdated.cs" />
+    <Compile Include="SystemInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

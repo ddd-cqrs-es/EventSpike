@@ -1,4 +1,6 @@
 using Autofac;
+using Autofac.Core;
+using Autofac.Extras.Multitenant;
 using EventSpike.ApprovalProcessor.Projac;
 using EventSpike.Common;
 using EventSpike.Common.EventSubscription;
@@ -9,13 +11,15 @@ namespace EventSpike.ApprovalProcessor.Service
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ProjacStoreCheckpointProvider>().As<IProvideStoreCheckpoints>();
+            builder.RegisterType<ProjacSharedStoreCheckpointProvider>()
+                .WithParameter(ResolvedParameter.ForNamed<string>(InstanceNames.CurrentTenantId))
+                .As<IProvideStoreCheckpoints>();
 
             builder.RegisterType<ProjacTenantListingProvider>().As<IListTenants>();
 
             builder.RegisterType<ProjacApprovalProcessorEventHandler>().As<IHandler>();
 
-            builder.RegisterType<ProjacInitializer>().As<INeedInitialization>();
+            builder.RegisterType<ProjacInitializer>().As<INeedInitialization>().InstancePerTenant();
         }
     }
 }

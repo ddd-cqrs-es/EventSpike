@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using Autofac;
 using Autofac.Extras.Multitenant;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;
-using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
 using MassTransit;
 
@@ -20,18 +17,16 @@ namespace EventSpike.EventConsole
 
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule<TenantModlue>();
+            builder.RegisterModule<TenantModule>();
             builder.RegisterModule<EventSubscriptionModule>();
             builder.RegisterModule<MemBusModule>();
             builder.RegisterModule<MassTransitModule>();
             builder.RegisterModule<BiggyStreamCheckpointModule>();
             builder.RegisterModule<NEventStoreModule>();
 
-            builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.InstanceNames.DataEndpointName);
+            builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
 
             builder.RegisterType<ConsoleOutputProjectionCommitObserver>().As<IObserver<object>>().InstancePerTenant();
-
-            builder.RegisterType<EventSubscriptionInitializer>().As<INeedInitialization>();
 
             builder.RegisterType<ConventionTenantSqlConnectionSettingsFactory>().AsSelf();
             
@@ -41,16 +36,7 @@ namespace EventSpike.EventConsole
 
             var tenantContainer = container.Resolve<MultitenantContainer>();
 
-            var tenantIds = tenantContainer.ResolveNamed<IEnumerable<string>>(InstanceNames.AllTenantIds).ToList();
-
-            var tenantInitializers = tenantIds
-                .Select(tenantId => tenantContainer.GetTenantScope(tenantId).Resolve<IEnumerable<INeedInitialization>>().ToList())
-                .SelectMany(initializers => initializers);
-
-            foreach (var initializer in tenantInitializers)
-            {
-                initializer.Initialize();
-            }
+            tenantContainer.Resolve<ISystemInitializer>().Initialize();
 
             tenantContainer.Resolve<IServiceBus>();
 

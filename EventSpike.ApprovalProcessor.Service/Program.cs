@@ -1,9 +1,8 @@
 ﻿using System.Configuration;
-using EventSpike.Common;
+using Autofac;
+using Autofac.Extras.Multitenant;
 using EventSpike.Common.Autofac;
-using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
-using StructureMap;
 using Topshelf;
 
 namespace EventSpike.ApprovalProcessor.Service
@@ -15,39 +14,30 @@ namespace EventSpike.ApprovalProcessor.Service
             var endpointName = typeof(Program).ToEndpointName();
             var serviceName = typeof(Program).ToServiceName();
 
-            var container = new Container(configure =>
-            {
-                configure.AddRegistry<TenantProviderRegistry>();
-                configure.AddRegistry<MassTransitRegistry>();
-                configure.AddRegistry<EventSubscriptionRegistry>();
-                configure.AddRegistry<MemBusRegistry>();
-                configure.AddRegistry<NEventStoreRegistry>();
+            var builder = new ContainerBuilder();
 
-                //configure.AddRegistry<ProjacApprovalProcessorRegistry>();
-                //configure.AddRegistry<AutomatonymousApprovalProcessorRegistry>();
+            builder.RegisterModule<TenantModule>();
+            builder.RegisterModule<MassTransitModule>();
+            builder.RegisterModule<EventSubscriptionModule>();
+            builder.RegisterModule<MemBusModule>();
+            builder.RegisterModule<NEventStoreModule>();
 
-                configure.AddRegistry<CommonDomainApprovalProcessorRegistry>();
+            builder.RegisterModule<CommonDomainApprovalProcessorModule>();
+            
+            builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
+            
+            builder.Register(context => context.Resolve<ConventionTenantSqlConnectionSettingsFactory>().GetSettings()).As<ConnectionStringSettings>();
 
-                configure
-                    .For<ConnectionStringSettings>()
-                    .Use(context => context.GetInstance<ConventionTenantSqlConnectionSettingsFactory>().GetSettings());
+            var container = builder.Build();
 
-                configure
-                    .For<INeedInitialization>()
-                    .Add<EventSubscriptionInitializer>();
-
-                configure
-                    .For<string>()
-                    .Add(endpointName)
-                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
-            });
-
+            var tenantContainer = container.Resolve<MultitenantContainer>();
+            
             HostFactory.Run(host =>
             {
                 host.SetServiceName(serviceName);
                 host.DependsOnMsmq();
 
-                host.Service(container.GetInstance<ApprovalProcessorServiceControl>);
+                host.Service(tenantContainer.Resolve<ApprovalProcessorServiceControl>);
             });
         }
     }

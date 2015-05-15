@@ -35,8 +35,7 @@ namespace EventSpike.Common.Biggy
 
         public void UpdateCheckpoint(string checkpointToken)
         {
-            var tenantCheckpoint =
-                _tenantCheckpoints.SingleOrDefault(x => x.TenantId == _tenantId);
+            var tenantCheckpoint = _tenantCheckpoints.SingleOrDefault(x => x.TenantId == _tenantId);
 
             if (tenantCheckpoint != null)
             {

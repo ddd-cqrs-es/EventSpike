@@ -8,12 +8,12 @@ namespace EventSpike.Common.MassTransit
         IPublishMessages
     {
         private readonly IServiceBus _bus;
-        private readonly TenantIdProvider _tenantIdProvider;
+        private readonly string _tenantId;
 
-        public MassTransitTenantPublisher(IServiceBus bus, TenantIdProvider tenantIdProvider)
+        public MassTransitTenantPublisher(IServiceBus bus, string tenantId)
         {
             _bus = bus;
-            _tenantIdProvider = tenantIdProvider;
+            _tenantId = tenantId;
         }
 
         public void Publish(object message)
@@ -25,7 +25,7 @@ namespace EventSpike.Common.MassTransit
         {
             _bus.Publish(message, (Action<IPublishContext>)(context =>
             {
-                context.SetHeader(Constants.TenantIdKey, _tenantIdProvider());
+                context.SetHeader(Constants.TenantIdKey, _tenantId);
 
                 var headers = new Dictionary<string, string>();
                 setHeaders(headers);

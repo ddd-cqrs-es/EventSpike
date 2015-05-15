@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using Autofac;
-using Autofac.Core;
 using Autofac.Extras.Multitenant;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.NEventStore;
@@ -16,8 +14,8 @@ namespace EventSpike.Common.Autofac
             builder.RegisterType<EventSubscriptionMassTransitConsumer>().AsSelf().SingleInstance();
 
             builder.RegisterType<EventSubscriptionInitializer>()
-                .AsSelf()
-                .WithParameter(ResolvedParameter.ForNamed<IEnumerable<string>>(InstanceNames.AllTenantIds));
+                .As<INeedInitialization>()
+                .InstancePerTenant();
 
             builder.RegisterType<MemBusPublisherCommitObserver>().As<IObserver<object>>();
 
