@@ -15,12 +15,7 @@ namespace EventSpike.Approval.Service
     {
         public AggregateSourceApprovalAggregateRegistry()
         {
-            Scan(scan =>
-            {
-                scan.AssemblyContainingType<ApprovalAggregate>();
-
-                scan.With(new HandlerMassTransitConnectorConvention());
-            });
+            ForConcreteType<MassTransitApprovalCommandConsumer>();
             
             For<IPipelineHook>()
                 .Add<MassTransitNotificationPipelineHook>();

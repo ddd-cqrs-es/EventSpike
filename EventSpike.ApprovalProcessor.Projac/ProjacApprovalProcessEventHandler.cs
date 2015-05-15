@@ -16,7 +16,7 @@ using Projac;
 namespace EventSpike.ApprovalProcessor.Projac
 {
     public class ProjacApprovalProcessorEventHandler :
-        IHandleEvents
+        IHandler
     {
         private readonly ConnectionStringSettings _settings;
         private readonly IPublishMessages _publisher;

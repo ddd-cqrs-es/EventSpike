@@ -1,5 +1,4 @@
 ﻿using EventSpike.Approval.CommonDomain;
-using EventSpike.Common;
 using EventSpike.Common.Registries;
 using StructureMap.Configuration.DSL;
 
@@ -12,12 +11,7 @@ namespace EventSpike.Approval.Service
         {
             IncludeRegistry<CommonDomainRegistry>();
 
-            Scan(scan =>
-            {
-                scan.AssemblyContainingType<ApprovalAggregate>();
-                
-                scan.With(new HandlerMassTransitConnectorConvention());
-            });
+            ForConcreteType<MassTransitApprovalCommandConsumer>();
         }
     }
 }
