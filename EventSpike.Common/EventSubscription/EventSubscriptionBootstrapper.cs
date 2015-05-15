@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using NEventStore.Client;
 
 namespace EventSpike.Common.EventSubscription
@@ -7,18 +6,16 @@ namespace EventSpike.Common.EventSubscription
     public class EventSubscriptionInitializer :
         INeedInitialization
     {
-        private readonly IProvideForTenant<IEnumerable<IObserveCommits>> _commitObserversFactory;
-        private readonly IListTenants _tenantListingProvider;
+        private readonly IEnumerable<IObserveCommits> _commitObservers;
 
-        public EventSubscriptionInitializer(IProvideForTenant<IEnumerable<IObserveCommits>> commitObserversFactory, IListTenants tenantListingProvider)
+        public EventSubscriptionInitializer(IEnumerable<IObserveCommits> commitObservers)
         {
-            _commitObserversFactory = commitObserversFactory;
-            _tenantListingProvider = tenantListingProvider;
+            _commitObservers = commitObservers;
         }
 
         public void Initialize()
         {
-            foreach (var observer in _tenantListingProvider.GetTenantIds().SelectMany(tenantId => _commitObserversFactory.Get(tenantId)))
+            foreach (var observer in _commitObservers)
             {
                 observer.Start();
             }

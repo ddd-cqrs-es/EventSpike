@@ -10,6 +10,7 @@ namespace EventSpike.ApprovalProcessor.Projac
     public class ProjacInitializer :
         INeedInitialization
     {
+        private bool _initialized;
         private readonly SqlProjector _projector;
 
         public ProjacInitializer(ConnectionStringSettings settings)
@@ -19,7 +20,10 @@ namespace EventSpike.ApprovalProcessor.Projac
 
         public void Initialize()
         {
+            if (_initialized) return;
+
             _projector.Project(new object[] { new DropSchema(), new CreateSchema() });
+            _initialized = true;
         }
     }
 }

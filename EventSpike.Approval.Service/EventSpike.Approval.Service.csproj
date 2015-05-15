@@ -38,6 +38,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AggregateSource.0.0.300\lib\net45\AggregateSource.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Extras.Multitenant">
+      <HintPath>..\packages\Autofac.Extras.Multitenant.3.1.1\lib\net40\Autofac.Extras.Multitenant.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Magnum, Version=2.1.3.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\Magnum.2.1.3\lib\NET40\Magnum.dll</HintPath>
       <Private>True</Private>
@@ -70,9 +78,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregateSourceApprovalAggregateRegistry.cs" />
+    <Compile Include="AggregateSourceApprovalAggregateModule.cs" />
     <Compile Include="ApprovalServiceControl.cs" />
-    <Compile Include="CommonDomainApprovalAggregateRegistry.cs" />
+    <Compile Include="CommonDomainApprovalAggregateModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

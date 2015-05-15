@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extras.Multitenant">
+      <HintPath>..\packages\Autofac.Extras.Multitenant.3.1.1\lib\net40\Autofac.Extras.Multitenant.dll</HintPath>
+    </Reference>
     <Reference Include="Biggy">
       <HintPath>..\packages\Biggy.Core.0.1.0.1\lib\net40\Biggy.dll</HintPath>
     </Reference>
@@ -49,6 +55,9 @@
     <Reference Include="MassTransit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MassTransit.2.9.9\lib\net40\MassTransit.dll</HintPath>
+    </Reference>
+    <Reference Include="MassTransit.AutofacIntegration">
+      <HintPath>..\packages\MassTransit.Autofac.2.9.9\lib\net40\MassTransit.AutofacIntegration.dll</HintPath>
     </Reference>
     <Reference Include="MassTransit.StructureMapIntegration">
       <HintPath>..\packages\MassTransit.StructureMap.2.9.9\lib\net40\MassTransit.StructureMapIntegration.dll</HintPath>
@@ -104,13 +113,13 @@
     <Compile Include="ExtensionsToDeterministicGuid.cs" />
     <Compile Include="ExtensionsToDictionary.cs" />
     <Compile Include="IHandler.cs" />
+    <Compile Include="IListTenants.cs" />
+    <Compile Include="InstanceNames.cs" />
     <Compile Include="IPublishMessages.cs" />
     <Compile Include="INeedInitialization.cs" />
-    <Compile Include="IListTenants.cs" />
-    <Compile Include="IProvideForTenant.cs" />
     <Compile Include="MassTransit\MassTransitPublisher.cs" />
-    <Compile Include="Registries\BiggyStreamCheckpointRegistry.cs" />
-    <Compile Include="Registries\CommonDomainRegistry.cs" />
+    <Compile Include="Autofac\BiggyStreamCheckpointModule.cs" />
+    <Compile Include="Autofac\CommonDomainModule.cs" />
     <Compile Include="CommonDomain\SagaFactory.cs" />
     <Compile Include="DeterministicGuid.cs" />
     <Compile Include="Envelope.cs" />
@@ -118,19 +127,18 @@
     <Compile Include="GuidNamespaces.cs" />
     <Compile Include="NEventStore\EventSubscriptionFactory.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Registries\EventSubscriptionRegistry.cs" />
-    <Compile Include="Registries\MemBusRegistry.cs" />
-    <Compile Include="Registries\NEventStoreRegistry.cs" />
-    <Compile Include="Registries\SqlConnectionSettingsFactory.cs" />
-    <Compile Include="Registries\TenantProviderConstants.cs" />
+    <Compile Include="Autofac\EventSubscriptionModule.cs" />
+    <Compile Include="MassTransitContextTenantIdentificationStrategy.cs" />
+    <Compile Include="Autofac\MassTransitModule.cs" />
+    <Compile Include="Autofac\MemBusModule.cs" />
+    <Compile Include="Autofac\NEventStoreModule.cs" />
+    <Compile Include="Autofac\ConventionTenantSqlConnectionSettingsFactory.cs" />
     <Compile Include="GuidEncoder.cs" />
-    <Compile Include="StructureMapTenantContainerProvider.cs" />
-    <Compile Include="TenantIdProvider.cs" />
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
     <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />
     <Compile Include="EventSubscription\EventSubscriptionMassTransitConsumer.cs" />
-    <Compile Include="Registries\ServiceBusConfiguration.cs" />
-    <Compile Include="Registries\TenantProviderRegistry.cs" />
+    <Compile Include="Autofac\ServiceBusConfiguration.cs" />
+    <Compile Include="Autofac\TenantModlue.cs" />
     <Compile Include="EventSubscription\NullCheckpointToken.cs" />
     <Compile Include="Biggy\TenantScopedBiggyStreamCheckpointTracker.cs" />
     <Compile Include="EventSubscription\EventSubscriptionBootstrapper.cs" />
@@ -144,7 +152,6 @@
     <Compile Include="EventSubscription\ITrackStoreCheckpoints.cs" />
     <Compile Include="Biggy\TenantCheckpointTokenDocument.cs" />
     <Compile Include="EventSubscription\MassTransitNotificationPipelineHook.cs" />
-    <Compile Include="Registries\MassTransitRegistry.cs" />
     <Compile Include="NEventStoreFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventSubscription\EventStreamUpdated.cs" />

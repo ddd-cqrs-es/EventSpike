@@ -3,7 +3,7 @@
     public class Constants
     {
         public const string
-            TenantIdKey = "TenantId",
+            TenantIdKey = "CurrentTenantId",
             CausationIdKey = "CausationId",
             UserIdKey = "UserId",
             StreamCheckpointTokenKey = "StreamCheckpoint";

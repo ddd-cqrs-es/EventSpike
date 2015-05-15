@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using Autofac;
+using Autofac.Extras.Multitenant;
 using EventSpike.Common;
+using EventSpike.Common.Autofac;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
-using EventSpike.Common.Registries;
 using MassTransit;
-using StructureMap;
 
 namespace EventSpike.EventConsole
 {
@@ -15,41 +18,41 @@ namespace EventSpike.EventConsole
         {
             var endpointName = typeof (Program).ToEndpointName();
 
-            var container = new Container(configure =>
-            {
-                configure.AddRegistry<TenantProviderRegistry>();
-                configure.AddRegistry<EventSubscriptionRegistry>();
-                configure.AddRegistry<MemBusRegistry>();
-                configure.AddRegistry<MassTransitRegistry>();
-                configure.AddRegistry<BiggyStreamCheckpointRegistry>();
-                configure.AddRegistry<NEventStoreRegistry>();
-                
-                configure.For<string>()
-                    .Add(endpointName)
-                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
+            var builder = new ContainerBuilder();
 
-                configure
-                    .For<IObserver<object>>()
-                    .Add<ConsoleOutputProjectionCommitObserver>();
+            builder.RegisterModule<TenantModlue>();
+            builder.RegisterModule<EventSubscriptionModule>();
+            builder.RegisterModule<MemBusModule>();
+            builder.RegisterModule<MassTransitModule>();
+            builder.RegisterModule<BiggyStreamCheckpointModule>();
+            builder.RegisterModule<NEventStoreModule>();
 
-                configure
-                    .For<INeedInitialization>()
-                    .Add<EventSubscriptionInitializer>();
+            builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.InstanceNames.DataEndpointName);
 
-                configure
-                    .For<ConnectionStringSettings>()
-                    .Use(context => context.GetInstance<SingleTenantConnectionStringFactory>().GetSettings());
-            });
+            builder.RegisterType<ConsoleOutputProjectionCommitObserver>().As<IObserver<object>>().InstancePerTenant();
 
-            var initializers = container.GetAllInstances<INeedInitialization>();
+            builder.RegisterType<EventSubscriptionInitializer>().As<INeedInitialization>();
 
-            foreach (var initializer in initializers)
+            builder.RegisterType<ConventionTenantSqlConnectionSettingsFactory>().AsSelf();
+            
+            builder.Register(context => context.Resolve<ConventionTenantSqlConnectionSettingsFactory>().GetSettings()).As<ConnectionStringSettings>();
+
+            var container = builder.Build();
+
+            var tenantContainer = container.Resolve<MultitenantContainer>();
+
+            var tenantIds = tenantContainer.ResolveNamed<IEnumerable<string>>(InstanceNames.AllTenantIds).ToList();
+
+            var tenantInitializers = tenantIds
+                .Select(tenantId => tenantContainer.GetTenantScope(tenantId).Resolve<IEnumerable<INeedInitialization>>().ToList())
+                .SelectMany(initializers => initializers);
+
+            foreach (var initializer in tenantInitializers)
             {
                 initializer.Initialize();
             }
 
-
-            var bus = container.GetInstance<IServiceBus>();
+            tenantContainer.Resolve<IServiceBus>();
 
             Console.ReadLine();
         }

@@ -1,7 +1,7 @@
 using System.Configuration;
 using EventSpike.ApprovalProcessor.CommonDomain;
 using EventSpike.Common;
-using EventSpike.Common.Registries;
+using EventSpike.Common.Autofac;
 using NEventStore;
 using StructureMap.Configuration.DSL;
 
@@ -23,7 +23,7 @@ namespace EventSpike.ApprovalProcessor.Service
                 .Add<MassTransitCommandPublisherPipelineHook>();
 
             For<ConnectionStringSettings>()
-                .Add(context => context.GetInstance<SingleTenantConnectionStringFactory>().GetSettings("Projections"))
+                .Add(context => context.GetInstance<ConventionTenantSqlConnectionSettingsFactory>().GetSettings("Projections"))
                 .Named("Projections");
         }
     }

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
+using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
-using EventSpike.Common.Registries;
 using Magnum.Reflection;
 using MassTransit;
-using StructureMap;
 
 namespace EventSpike.BusDriverConsole
 {
@@ -17,17 +17,13 @@ namespace EventSpike.BusDriverConsole
         {
             var endpointName = typeof (Program).ToEndpointName();
 
-            var container = new Container(configure =>
-            {
-                configure.AddRegistry<MassTransitRegistry>();
+            var builder = new ContainerBuilder();
+            builder.RegisterModule<MassTransitModule>();
+            builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.InstanceNames.DataEndpointName);
 
-                configure
-                    .For<string>()
-                    .Add(endpointName)
-                    .Named(MassTransitRegistry.InstanceNames.DataEndpointName);
-            });
+            var container = builder.Build();
 
-            var bus = container.GetInstance<IServiceBus>();
+            var bus = container.Resolve<IServiceBus>();
 
             var task = Task.Run(() => DispatchCommands(bus));
 

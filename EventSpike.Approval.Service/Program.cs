@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
+using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
-using EventSpike.Common.Registries;
 using StructureMap;
 using Topshelf;
 
@@ -25,7 +25,7 @@ namespace EventSpike.Approval.Service
 
                 configure
                     .For<ConnectionStringSettings>()
-                    .Use(context => context.GetInstance<SingleTenantConnectionStringFactory>().GetSettings());
+                    .Use(context => context.GetInstance<ConventionTenantSqlConnectionSettingsFactory>().GetSettings());
 
                 configure
                     .For<string>()

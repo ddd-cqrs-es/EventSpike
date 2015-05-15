@@ -1,8 +1,8 @@
 ﻿using System.Configuration;
 using EventSpike.Common;
+using EventSpike.Common.Autofac;
 using EventSpike.Common.EventSubscription;
 using EventSpike.Common.MassTransit;
-using EventSpike.Common.Registries;
 using StructureMap;
 using Topshelf;
 
@@ -30,7 +30,7 @@ namespace EventSpike.ApprovalProcessor.Service
 
                 configure
                     .For<ConnectionStringSettings>()
-                    .Use(context => context.GetInstance<SingleTenantConnectionStringFactory>().GetSettings());
+                    .Use(context => context.GetInstance<ConventionTenantSqlConnectionSettingsFactory>().GetSettings());
 
                 configure
                     .For<INeedInitialization>()
