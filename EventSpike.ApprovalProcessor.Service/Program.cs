@@ -23,14 +23,14 @@ namespace EventSpike.ApprovalProcessor.Service
             builder.RegisterModule<NEventStoreModule>();
 
             builder.RegisterModule<CommonDomainApprovalProcessorModule>();
-            
+
             builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
             
             builder.Register(context => context.Resolve<ConventionTenantSqlConnectionSettingsFactory>().GetSettings()).As<ConnectionStringSettings>();
 
             var container = builder.Build();
 
-            var tenantContainer = container.Resolve<MultitenantContainer>();
+            var tenantContainer = container.Resolve<MultitenantContainer>(TypedParameter.From(container));
             
             HostFactory.Run(host =>
             {

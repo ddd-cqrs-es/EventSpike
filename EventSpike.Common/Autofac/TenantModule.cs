@@ -18,16 +18,14 @@ namespace EventSpike.Common.Autofac
                 .Named<IEnumerable<string>>(InstanceNames.AllTenantIds);
 
             builder.RegisterType<MassTransitMessageHeadersTenantIdentificationProvider>()
+                .SingleInstance()
                 .As<ITenantIdentificationStrategy>();
+            
+            builder.RegisterType<ExplicitTenantIdProvider>().AsSelf().As<ITenantIdProvider>().InstancePerTenant();
 
-            builder.Register(context =>
-            {
-                object tenantId;
-                context.Resolve<ITenantIdentificationStrategy>().TryIdentifyTenant(out tenantId);
-                return tenantId != null ? tenantId.ToString() : null;
-            })
-            .InstancePerTenant()
-            .Named<string>(InstanceNames.CurrentTenantId);
+            builder.Register(context => context.Resolve<ITenantIdProvider>().TenantId.ToString())
+                .InstancePerTenant()
+                .Named<string>("CurrentTenantId");
 
             builder.RegisterType<SystemInitializer>()
                 .As<ISystemInitializer>()
@@ -36,7 +34,12 @@ namespace EventSpike.Common.Autofac
                     var tenantIds = context.ResolveNamed<IEnumerable<string>>(InstanceNames.AllTenantIds);
                     var multitenantContainer = context.Resolve<MultitenantContainer>();
 
-                    return tenantIds.Select(tenantId => multitenantContainer.GetTenantScope(tenantId).Resolve<IEnumerable<INeedInitialization>>().ToList()).SelectMany(_ => _).Distinct();
+                    return tenantIds.Select(tenantId =>
+                    {
+                        var scope = multitenantContainer.GetTenantScope(tenantId);
+                        scope.Resolve<ExplicitTenantIdProvider>().IdentifyAs(tenantId);
+                        return scope.Resolve<IEnumerable<INeedInitialization>>().ToList();
+                    }).SelectMany(_ => _).Distinct();
                 });
         }
     }

@@ -18,7 +18,9 @@ namespace EventSpike.BusDriverConsole
             var endpointName = typeof (Program).ToEndpointName();
 
             var builder = new ContainerBuilder();
+
             builder.RegisterModule<MassTransitModule>();
+
             builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
 
             var container = builder.Build();

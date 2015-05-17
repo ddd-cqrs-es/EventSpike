@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 using EventSpike.Common.MassTransit;
@@ -9,6 +10,8 @@ namespace EventSpike.Common.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterInstance("mt_subscriptions").Named<string>(MassTransitInstanceNames.SubscriptionEndpointName);
+
             builder.Register(context => new ServiceBusConfigurationDelegate(bus =>
             {
                 var dataEndpointName = context.ResolveNamed<string>(MassTransitInstanceNames.DataEndpointName);
@@ -24,10 +27,25 @@ namespace EventSpike.Common.Autofac
 
                 bus.UseControlBus();
 
-                bus.Subscribe(subscribe => subscribe.LoadFrom(context.ResolveNamed<ILifetimeScope>(MassTransitInstanceNames.LifetimeScope)));
+                var scope = context.ResolveOptionalNamed<ILifetimeScope>(MassTransitInstanceNames.LifetimeScope) ??
+                            context.Resolve<ILifetimeScope>();
+
+                bus.Subscribe(subscribe => subscribe.LoadFrom(scope));
             }))
-            .As<IServiceBus>()
-            .As<ServiceBus>()
+            .As<ServiceBusConfigurationDelegate>();
+
+            builder.Register(context =>
+            {
+                var configurations = context.Resolve<IEnumerable<ServiceBusConfigurationDelegate>>();
+
+                return ServiceBusFactory.New(bus =>
+                {
+                    foreach (var configuration in configurations)
+                    {
+                        configuration(bus);
+                    }
+                });
+            }).As<IServiceBus>()
             .SingleInstance();
 
             builder.RegisterType<MassTransitTenantPublisher>()
@@ -37,7 +55,7 @@ namespace EventSpike.Common.Autofac
         public static class MassTransitInstanceNames
         {
             public const string
-                LifetimeScope = "MassTransitEndpointName",
+                LifetimeScope = "MassTransitLifetimeScope",
                 DataEndpointName = "MassTransitEndpointName",
                 SubscriptionEndpointName = "MassTransitSubscriptionEndpointName";
         }

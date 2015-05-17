@@ -30,7 +30,7 @@ namespace EventSpike.Approval.Service
 
             var container = builder.Build();
 
-            var tenantContainer = container.Resolve<MultitenantContainer>();
+            var tenantContainer = container.Resolve<MultitenantContainer>(TypedParameter.From(container));
 
             HostFactory.Run(host =>
             {

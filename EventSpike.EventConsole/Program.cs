@@ -34,7 +34,7 @@ namespace EventSpike.EventConsole
 
             var container = builder.Build();
 
-            var tenantContainer = container.Resolve<MultitenantContainer>();
+            var tenantContainer = container.Resolve<MultitenantContainer>(TypedParameter.From(container));
 
             tenantContainer.Resolve<ISystemInitializer>().Initialize();
 

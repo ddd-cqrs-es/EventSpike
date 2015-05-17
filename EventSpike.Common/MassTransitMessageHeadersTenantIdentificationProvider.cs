@@ -6,28 +6,20 @@ namespace EventSpike.Common
 {
     public class MassTransitMessageHeadersTenantIdentificationProvider : ITenantIdentificationStrategy
     {
-        private readonly IServiceBus _bus;
-        private readonly MultitenantContainer _container;
+        // TODO: does this need to be a Func
+        private readonly Func<IServiceBus> _busProvider;
 
-        public MassTransitMessageHeadersTenantIdentificationProvider(IServiceBus bus, MultitenantContainer container)
+        public MassTransitMessageHeadersTenantIdentificationProvider(Func<IServiceBus> busProvider)
         {
-            _bus = bus;
-            _container = container;
+            _busProvider = busProvider;
         }
 
         public bool TryIdentifyTenant(out object tenantId)
         {
-            var current = _container.Tag;
-            if (current != null)
-            {
-                tenantId = current;
-                return true;
-            }
-
             try
             {
-                tenantId = _bus.Context().Headers[Constants.TenantIdKey];
-                return true;
+                tenantId = _busProvider().Context().Headers[Constants.TenantIdKey];
+                return tenantId != null;
             }
             catch(Exception)
             {
