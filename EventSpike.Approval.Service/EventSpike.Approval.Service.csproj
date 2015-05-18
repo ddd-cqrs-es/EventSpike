@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AggregateSource.0.0.300\lib\net45\AggregateSource.dll</HintPath>
     </Reference>
+    <Reference Include="AggregateSource.NEventStore, Version=0.0.300.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AggregateSource.NEventStore.0.0.300\lib\net45\AggregateSource.NEventStore.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>

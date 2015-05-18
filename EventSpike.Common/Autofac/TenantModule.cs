@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using Autofac.Core;
 using Autofac.Extras.Multitenant;
+using Magnum.Extensions;
 
 namespace EventSpike.Common.Autofac
 {
@@ -9,23 +11,28 @@ namespace EventSpike.Common.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<ConventionTenantSqlConnectionSettingsFactory>()
+                .AsSelf()
+                .WithParameter(ResolvedParameter.ForNamed<string>(InstanceNames.CurrentTenantId));
+
             builder.RegisterType<MultitenantContainer>()
                 .SingleInstance()
                 .As<MultitenantContainer>()
                 .Named<ILifetimeScope>(MassTransitModule.MassTransitInstanceNames.LifetimeScope);
 
-            builder.Register(context => context.Resolve<IListTenants>().GetTenantIds())
+            builder.Register(context => context.ResolveOptional<IListTenants>().With(lister => lister.GetTenantIds()) ?? Enumerable.Empty<string>())
                 .Named<IEnumerable<string>>(InstanceNames.AllTenantIds);
 
             builder.RegisterType<MassTransitMessageHeadersTenantIdentificationProvider>()
                 .SingleInstance()
+                .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies)
                 .As<ITenantIdentificationStrategy>();
             
             builder.RegisterType<ExplicitTenantIdProvider>().AsSelf().As<ITenantIdProvider>().InstancePerTenant();
 
             builder.Register(context => context.Resolve<ITenantIdProvider>().TenantId.ToString())
                 .InstancePerTenant()
-                .Named<string>("CurrentTenantId");
+                .Named<string>(InstanceNames.CurrentTenantId);
 
             builder.RegisterType<SystemInitializer>()
                 .As<ISystemInitializer>()

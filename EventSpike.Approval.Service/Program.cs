@@ -25,8 +25,10 @@ namespace EventSpike.Approval.Service
             builder.RegisterModule<AggregateSourceApprovalAggregateModule>();
 
             builder.Register(context => context.Resolve<ConventionTenantSqlConnectionSettingsFactory>().GetSettings()).As<ConnectionStringSettings>();
-            
+
             builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
+
+            builder.RegisterType<ApprovalServiceControl>().AsSelf();
 
             var container = builder.Build();
 

@@ -28,6 +28,8 @@ namespace EventSpike.ApprovalProcessor.Service
             
             builder.Register(context => context.Resolve<ConventionTenantSqlConnectionSettingsFactory>().GetSettings()).As<ConnectionStringSettings>();
 
+            builder.RegisterType<ApprovalProcessorServiceControl>().AsSelf();
+
             var container = builder.Build();
 
             var tenantContainer = container.Resolve<MultitenantContainer>(TypedParameter.From(container));

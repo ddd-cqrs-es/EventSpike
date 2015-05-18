@@ -1,3 +1,5 @@
+using AggregateSource;
+using AggregateSource.NEventStore;
 using Autofac;
 using EventSpike.Approval.AggregateSource;
 using EventSpike.Approval.AggregateSource.Persistence;
@@ -16,6 +18,12 @@ namespace EventSpike.Approval.Service
             builder.RegisterType<MassTransitApprovalCommandConsumer>().AsSelf();
 
             builder.RegisterType<MassTransitNotificationPipelineHook>().As<IPipelineHook>();
+
+            builder.RegisterType<UnitOfWork>().AsSelf();
+
+            builder.RegisterGeneric(typeof(Repository<>));
+
+            builder.RegisterType<NEventStoreUnitOfWorkCommitter>().AsSelf();
 
             builder.RegisterInstance(ApprovalAggregate.Factory);
 
