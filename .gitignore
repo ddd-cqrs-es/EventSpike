@@ -188,4 +188,5 @@ Desktop.ini
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 /RuntimeServices/
+/SystemView/
 Data
