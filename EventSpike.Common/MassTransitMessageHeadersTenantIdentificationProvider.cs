@@ -11,6 +11,7 @@ namespace EventSpike.Common
 
         public bool TryIdentifyTenant(out object tenantId)
         {
+            tenantId = null;
             try
             {
                 tenantId = Bus.With(bus => bus.Context().Headers[Constants.TenantIdKey]);
@@ -18,7 +19,6 @@ namespace EventSpike.Common
             }
             catch (Exception)
             {
-                tenantId = null;
                 return false;
             }
         }

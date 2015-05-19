@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extras.Multitenant;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
@@ -21,12 +20,11 @@ namespace EventSpike.ApprovalProcessor.Service
             builder.RegisterModule<EventSubscriptionModule>();
             builder.RegisterModule<MemBusModule>();
             builder.RegisterModule<NEventStoreModule>();
+            builder.RegisterModule<SqlConectionSettingsModule>();
 
             builder.RegisterModule<CommonDomainApprovalProcessorModule>();
 
             builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
-            
-            builder.Register(context => context.Resolve<ConventionTenantSqlConnectionSettingsFactory>().GetSettings()).As<ConnectionStringSettings>();
 
             builder.RegisterType<ApprovalProcessorServiceControl>().AsSelf();
 

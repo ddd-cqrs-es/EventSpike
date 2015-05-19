@@ -11,13 +11,15 @@ namespace EventSpike.Common.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<EventSubscriptionMassTransitConsumer>().AsSelf().SingleInstance();
+            builder.RegisterType<EventSubscriptionMassTransitConsumer>().AsSelf();
 
             builder.RegisterType<EventSubscriptionInitializer>()
                 .As<INeedInitialization>()
                 .InstancePerTenant();
 
             builder.RegisterType<MemBusPublisherCommitObserver>().As<IObserver<object>>();
+
+            builder.RegisterType<EventSubscriptionFactory>().AsSelf();
 
             builder.Register(context => context.Resolve<EventSubscriptionFactory>().Construct())
                 .As<IObserveCommits>()

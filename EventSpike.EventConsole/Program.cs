@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using Autofac;
 using Autofac.Extras.Multitenant;
 using EventSpike.Common;
@@ -23,14 +22,11 @@ namespace EventSpike.EventConsole
             builder.RegisterModule<MassTransitModule>();
             builder.RegisterModule<BiggyStreamCheckpointModule>();
             builder.RegisterModule<NEventStoreModule>();
+            builder.RegisterModule<SqlConectionSettingsModule>();
 
             builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
 
             builder.RegisterType<ConsoleOutputProjectionCommitObserver>().As<IObserver<object>>().InstancePerTenant();
-
-            builder.RegisterType<ConventionTenantSqlConnectionSettingsFactory>().AsSelf();
-            
-            builder.Register(context => context.Resolve<ConventionTenantSqlConnectionSettingsFactory>().GetSettings()).As<ConnectionStringSettings>();
 
             var container = builder.Build();
 

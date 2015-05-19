@@ -14,25 +14,25 @@ namespace EventSpike.Common.Autofac
 
             builder.Register(context => new ServiceBusConfigurationDelegate(bus =>
             {
-                var dataEndpointName = context.ResolveNamed<string>(MassTransitInstanceNames.DataEndpointName);
+                var dataEndpointUri = context.ResolveNamed<string>(MassTransitInstanceNames.DataEndpointName).AsEndpointUri();
 
-                bus.ReceiveFrom(dataEndpointName.AsEndpointUri());
+                bus.ReceiveFrom(dataEndpointUri);
 
                 bus.UseMsmq(msmq =>
                 {
-                    var subscriptionEndpointName = context.ResolveNamed<string>(MassTransitInstanceNames.SubscriptionEndpointName);
+                    var subscriptionEndpointUri = context.ResolveNamed<string>(MassTransitInstanceNames.SubscriptionEndpointName).AsEndpointUri();
 
-                    msmq.UseSubscriptionService(subscriptionEndpointName.AsEndpointUri());
+                    msmq.UseSubscriptionService(subscriptionEndpointUri);
                 });
 
                 bus.UseControlBus();
 
-                var scope = context.ResolveOptionalNamed<ILifetimeScope>(MassTransitInstanceNames.LifetimeScope) ??
-                            context.Resolve<ILifetimeScope>();
+                var scope = context.ResolveOptionalNamed<ILifetimeScope>(MassTransitInstanceNames.LifetimeScope) ?? context.Resolve<ILifetimeScope>();
 
                 bus.Subscribe(subscribe => subscribe.LoadFrom(scope));
             }))
-            .As<ServiceBusConfigurationDelegate>();
+            .As<ServiceBusConfigurationDelegate>()
+            .SingleInstance();
 
             builder.Register(context =>
             {
@@ -49,7 +49,8 @@ namespace EventSpike.Common.Autofac
             .SingleInstance();
 
             builder.RegisterType<MassTransitTenantPublisher>()
-                .WithParameter(ResolvedParameter.ForNamed<string>(InstanceNames.CurrentTenantId));
+                .WithParameter(ResolvedParameter.ForNamed<string>(InstanceNames.CurrentTenantId))
+                .As<IPublishMessages>();
         }
 
         public static class MassTransitInstanceNames

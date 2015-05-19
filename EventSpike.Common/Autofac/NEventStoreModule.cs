@@ -15,8 +15,8 @@ namespace EventSpike.Common.Autofac
             builder.Register(context => context.Resolve<NEventStoreFactory>().Create()).As<IStoreEvents>().InstancePerTenant();
 
             builder.RegisterType<NEventStoreFactory>()
-                .AsSelf()
                 .WithParameter(ResolvedParameter.ForNamed<ConnectionStringSettings>("Projections"))
+                .Named<NEventStoreFactory>("Projections")
                 .InstancePerTenant();
 
             builder.Register(context => context.ResolveNamed<NEventStoreFactory>("Projections").Create())

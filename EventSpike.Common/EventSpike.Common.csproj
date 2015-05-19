@@ -89,6 +89,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Autofac\SqlConectionSettingsModule.cs" />
     <Compile Include="CommonDomain\AggregateFactory.cs" />
     <Compile Include="ApprovalCommands\InitiateApproval.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalAccepted.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="Autofac\MassTransitModule.cs" />
     <Compile Include="Autofac\MemBusModule.cs" />
     <Compile Include="Autofac\NEventStoreModule.cs" />
-    <Compile Include="Autofac\ConventionTenantSqlConnectionSettingsFactory.cs" />
+    <Compile Include="ConventionTenantSqlConnectionSettingsFactory.cs" />
     <Compile Include="GuidEncoder.cs" />
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
     <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />

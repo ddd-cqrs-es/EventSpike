@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extras.Multitenant;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
@@ -16,15 +15,12 @@ namespace EventSpike.Approval.Service
 
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule<TenantModule>();
-            builder.RegisterModule<MassTransitModule>();
-            builder.RegisterModule<EventSubscriptionModule>();
-            builder.RegisterModule<MemBusModule>();
-            builder.RegisterModule<NEventStoreModule>();
-
             builder.RegisterModule<AggregateSourceApprovalAggregateModule>();
 
-            builder.Register(context => context.Resolve<ConventionTenantSqlConnectionSettingsFactory>().GetSettings()).As<ConnectionStringSettings>();
+            builder.RegisterModule<TenantModule>();
+            builder.RegisterModule<MassTransitModule>();
+            builder.RegisterModule<NEventStoreModule>();
+            builder.RegisterModule<SqlConectionSettingsModule>();
 
             builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
 
@@ -33,7 +29,7 @@ namespace EventSpike.Approval.Service
             var container = builder.Build();
 
             var tenantContainer = container.Resolve<MultitenantContainer>(TypedParameter.From(container));
-
+            
             HostFactory.Run(host =>
             {
                 host.SetServiceName(serviceName);

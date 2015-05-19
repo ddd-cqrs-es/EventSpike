@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using System.Linq;
 
-namespace EventSpike.Common.Autofac
+namespace EventSpike.Common
 {
     public class ConventionTenantSqlConnectionSettingsFactory
     {

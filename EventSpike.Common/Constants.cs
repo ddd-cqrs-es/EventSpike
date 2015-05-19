@@ -6,6 +6,7 @@
             TenantIdKey = "CurrentTenantId",
             CausationIdKey = "CausationId",
             UserIdKey = "UserId",
-            StreamCheckpointTokenKey = "StreamCheckpoint";
+            StreamCheckpointTokenKey = "StreamCheckpoint",
+            DefaultTenantId = "DefaultTenant";
     }
 }

@@ -9,6 +9,7 @@ namespace EventSpike.Approval.Service
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterModule<CommonDomainModule>();
+            builder.RegisterModule<NEventStoreModule>();
 
             builder.RegisterType<MassTransitApprovalCommandConsumer>().AsSelf();
         }

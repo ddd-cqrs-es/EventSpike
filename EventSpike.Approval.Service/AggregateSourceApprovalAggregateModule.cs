@@ -21,7 +21,7 @@ namespace EventSpike.Approval.Service
 
             builder.RegisterType<UnitOfWork>().AsSelf();
 
-            builder.RegisterGeneric(typeof(Repository<>));
+            builder.RegisterGeneric(typeof (Repository<>));//.InstancePerMessageScope();
 
             builder.RegisterType<NEventStoreUnitOfWorkCommitter>().AsSelf();
 

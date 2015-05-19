@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using Autofac.Core;
 using Autofac.Extras.Multitenant;
 using Magnum.Extensions;
 
@@ -11,10 +10,6 @@ namespace EventSpike.Common.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ConventionTenantSqlConnectionSettingsFactory>()
-                .AsSelf()
-                .WithParameter(ResolvedParameter.ForNamed<string>(InstanceNames.CurrentTenantId));
-
             builder.RegisterType<MultitenantContainer>()
                 .SingleInstance()
                 .As<MultitenantContainer>()
@@ -30,7 +25,7 @@ namespace EventSpike.Common.Autofac
             
             builder.RegisterType<ExplicitTenantIdProvider>().AsSelf().As<ITenantIdProvider>().InstancePerTenant();
 
-            builder.Register(context => context.Resolve<ITenantIdProvider>().TenantId.ToString())
+            builder.Register(context => context.Resolve<ITenantIdProvider>().TenantId.With(_ => _.ToString()) ?? Constants.DefaultTenantId)
                 .InstancePerTenant()
                 .Named<string>(InstanceNames.CurrentTenantId);
 
