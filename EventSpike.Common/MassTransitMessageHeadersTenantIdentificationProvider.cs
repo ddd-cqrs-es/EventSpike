@@ -1,26 +1,21 @@
 ﻿using System;
 using Autofac.Extras.Multitenant;
-using Magnum.Extensions;
-using MassTransit;
 
 namespace EventSpike.Common
 {
-    public class MassTransitMessageHeadersTenantIdentificationProvider : ITenantIdentificationStrategy
+    public class ExplicitThreadStaticTenantIdentificationProvider : ITenantIdentificationStrategy
     {
-        public IServiceBus Bus { get; set; }
+        [ThreadStatic] private static object _tenantId;
 
         public bool TryIdentifyTenant(out object tenantId)
         {
-            tenantId = null;
-            try
-            {
-                tenantId = Bus.With(bus => bus.Context().Headers[Constants.TenantIdKey]);
-                return tenantId != null;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            tenantId = _tenantId;
+            return _tenantId != null;
+        }
+
+        public static void IdentifyAs(object tenantId)
+        {
+            _tenantId = tenantId;
         }
     }
 }

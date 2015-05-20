@@ -24,7 +24,7 @@ namespace EventSpike.ApprovalProcessor.Service
 
             builder.RegisterModule<CommonDomainApprovalProcessorModule>();
 
-            builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
+            builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
 
             builder.RegisterType<ApprovalProcessorServiceControl>().AsSelf();
 

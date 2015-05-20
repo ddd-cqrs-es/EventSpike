@@ -30,6 +30,8 @@ namespace EventSpike.Common.Autofac
                 var scope = context.ResolveOptionalNamed<ILifetimeScope>(MassTransitInstanceNames.LifetimeScope) ?? context.Resolve<ILifetimeScope>();
 
                 bus.Subscribe(subscribe => subscribe.LoadFrom(scope));
+
+                bus.AddInboundInterceptor(new TenantIdentifierInboundInterceptor());
             }))
             .As<ServiceBusConfigurationDelegate>()
             .SingleInstance();
@@ -51,14 +53,6 @@ namespace EventSpike.Common.Autofac
             builder.RegisterType<MassTransitTenantPublisher>()
                 .WithParameter(ResolvedParameter.ForNamed<string>(InstanceNames.CurrentTenantId))
                 .As<IPublishMessages>();
-        }
-
-        public static class MassTransitInstanceNames
-        {
-            public const string
-                LifetimeScope = "MassTransitLifetimeScope",
-                DataEndpointName = "MassTransitEndpointName",
-                SubscriptionEndpointName = "MassTransitSubscriptionEndpointName";
         }
     }
 }

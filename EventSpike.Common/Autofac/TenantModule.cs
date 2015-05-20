@@ -13,21 +13,23 @@ namespace EventSpike.Common.Autofac
             builder.RegisterType<MultitenantContainer>()
                 .SingleInstance()
                 .As<MultitenantContainer>()
-                .Named<ILifetimeScope>(MassTransitModule.MassTransitInstanceNames.LifetimeScope);
+                .Named<ILifetimeScope>(MassTransitInstanceNames.LifetimeScope);
 
             builder.Register(context => context.ResolveOptional<IListTenants>().With(lister => lister.GetTenantIds()) ?? Enumerable.Empty<string>())
                 .Named<IEnumerable<string>>(InstanceNames.AllTenantIds);
 
-            builder.RegisterType<MassTransitMessageHeadersTenantIdentificationProvider>()
+            builder.RegisterType<ExplicitThreadStaticTenantIdentificationProvider>()
                 .SingleInstance()
-                .PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies)
+                .AsSelf()
                 .As<ITenantIdentificationStrategy>();
-            
-            builder.RegisterType<ExplicitTenantIdProvider>().AsSelf().As<ITenantIdProvider>().InstancePerTenant();
 
-            builder.Register(context => context.Resolve<ITenantIdProvider>().TenantId.With(_ => _.ToString()) ?? Constants.DefaultTenantId)
-                .InstancePerTenant()
-                .Named<string>(InstanceNames.CurrentTenantId);
+            builder.Register(context =>
+            {
+                object tenantId;
+                return context.Resolve<ITenantIdentificationStrategy>().TryIdentifyTenant(out tenantId) ? tenantId.ToString() : Constants.DefaultTenantId;
+            })
+            .InstancePerTenant()
+            .Named<string>(InstanceNames.CurrentTenantId);
 
             builder.RegisterType<SystemInitializer>()
                 .As<ISystemInitializer>()
@@ -39,7 +41,7 @@ namespace EventSpike.Common.Autofac
                     return tenantIds.Select(tenantId =>
                     {
                         var scope = multitenantContainer.GetTenantScope(tenantId);
-                        scope.Resolve<ExplicitTenantIdProvider>().IdentifyAs(tenantId);
+                        ExplicitThreadStaticTenantIdentificationProvider.IdentifyAs(tenantId);
                         return scope.Resolve<IEnumerable<INeedInitialization>>().ToList();
                     }).SelectMany(_ => _).Distinct();
                 });

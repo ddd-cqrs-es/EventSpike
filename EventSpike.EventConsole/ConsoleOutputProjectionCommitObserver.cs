@@ -21,8 +21,7 @@ namespace EventSpike.EventConsole
 
             Console.WriteLine(JsonConvert.SerializeObject(commit));
 
-            _storeTrackerProvider
-                .UpdateCheckpoint(commit.CheckpointToken);
+            _storeTrackerProvider.UpdateCheckpoint(commit.CheckpointToken);
         }
 
         public void OnError(Exception error)

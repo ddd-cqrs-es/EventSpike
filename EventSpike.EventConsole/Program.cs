@@ -24,7 +24,7 @@ namespace EventSpike.EventConsole
             builder.RegisterModule<NEventStoreModule>();
             builder.RegisterModule<SqlConectionSettingsModule>();
 
-            builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
+            builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
 
             builder.RegisterType<ConsoleOutputProjectionCommitObserver>().As<IObserver<object>>().InstancePerTenant();
 

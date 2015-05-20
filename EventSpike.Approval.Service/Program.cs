@@ -22,7 +22,7 @@ namespace EventSpike.Approval.Service
             builder.RegisterModule<NEventStoreModule>();
             builder.RegisterModule<SqlConectionSettingsModule>();
 
-            builder.RegisterInstance(endpointName).Named<string>(MassTransitModule.MassTransitInstanceNames.DataEndpointName);
+            builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
 
             builder.RegisterType<ApprovalServiceControl>().AsSelf();
 

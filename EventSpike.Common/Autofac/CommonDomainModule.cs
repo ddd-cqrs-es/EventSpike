@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Autofac;
+using Autofac.Core;
 using CommonDomain;
 using CommonDomain.Core;
 using CommonDomain.Persistence;
@@ -23,7 +24,9 @@ namespace EventSpike.Common.Autofac
 
             builder.RegisterType<EventStoreRepository>().As<IRepository>();
 
-            builder.RegisterType<SagaEventStoreRepository>().As<ISagaRepository>();
+            builder.RegisterType<SagaEventStoreRepository>()
+                .WithParameter(ResolvedParameter.ForNamed<IStoreEvents>("Projections"))
+                .As<ISagaRepository>();
 
             builder.RegisterType<ConflictDetector>().As<IDetectConflicts>().OnActivated(@event =>
             {
