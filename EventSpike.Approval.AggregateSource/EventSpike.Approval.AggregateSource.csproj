@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="ApprovalAggregate.cs" />
+    <Compile Include="Entity.cs" />
     <Compile Include="MassTransitApprovalCommandConsumer.cs" />
     <Compile Include="Persistence\ConflictingCommandException.cs" />
     <Compile Include="Persistence\NEventStoreUnitOfWorkCommitter.cs" />

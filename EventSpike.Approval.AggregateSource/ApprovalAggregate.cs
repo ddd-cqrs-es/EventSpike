@@ -1,5 +1,5 @@
 ﻿using System;
-using EventSpike.Approval.AggregateSource.AggregateSource;
+using AggregateSource;
 using EventSpike.Common.ApprovalEvents;
 
 namespace EventSpike.Approval.AggregateSource
