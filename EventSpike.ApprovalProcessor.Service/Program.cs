@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.Multitenant;
+using EventSpike.ApprovalProcessor.CommonDomain;
+using EventSpike.ApprovalProcessor.CommonDomain.Automatonymous;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
 using Topshelf;
@@ -22,7 +24,7 @@ namespace EventSpike.ApprovalProcessor.Service
             builder.RegisterModule<NEventStoreModule>();
             builder.RegisterModule<SqlConectionSettingsModule>();
 
-            builder.RegisterModule<CommonDomainApprovalProcessorModule>();
+            builder.RegisterModule<CommonDomainApprovalProcessorModule<CommonDomain.Automatonymous.ApprovalProcessor>>();
 
             builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
 

@@ -4,9 +4,8 @@ using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.ApprovalEvents;
 
-namespace EventSpike.ApprovalProcessor.CommonDomain
+namespace EventSpike.ApprovalProcessor.CommonDomain.CommonDomainSaga
 {
-    // This could also make use of Automatonymous or Stateless
     public class ApprovalProcessor :
         SagaBase<object>
     {

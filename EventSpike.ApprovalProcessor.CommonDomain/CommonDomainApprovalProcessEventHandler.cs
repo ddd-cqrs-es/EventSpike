@@ -1,17 +1,20 @@
 using System;
 using System.Collections.Generic;
+using CommonDomain;
 using CommonDomain.Persistence;
+using EventSpike.ApprovalProcessor.CommonDomain.CommonDomainSaga;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalEvents;
 
 namespace EventSpike.ApprovalProcessor.CommonDomain
 {
-    public class CommonDomainApprovalProcessEventHandler :
+    public class CommonDomainApprovalProcessEventHandler<TProcessor> :
         IHandler
+        where TProcessor : class, ISaga
     {
         private readonly ISagaRepository _repository;
         
-        public static readonly string UserId = string.Format("#{0}#", typeof(ApprovalProcessor).Name);
+        public readonly string UserId = string.Format("#{0}#", typeof(CommonDomainSaga.ApprovalProcessor).Name);
 
         public CommonDomainApprovalProcessEventHandler(ISagaRepository repository)
         {
@@ -20,7 +23,7 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
         public void Handle(Envelope<ApprovalInitiated> message)
         {
-            var saga = _repository.GetById<ApprovalProcessor>(message.Message.Id);
+            var saga = _repository.GetById<TProcessor>(message.Message.Id);
 
             saga.Transition(message.Message);
 
@@ -31,7 +34,7 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
         public void Handle(Envelope<ApprovalAccepted> message)
         {
-            var saga = _repository.GetById<ApprovalProcessor>(message.Message.Id);
+            var saga = _repository.GetById<TProcessor>(message.Message.Id);
 
             saga.Transition(message.Message);
 
@@ -40,7 +43,7 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
             _repository.Save(saga, commitId, headers => SetHeaders(headers, message.Headers, commitId));
         }
 
-        private static void SetHeaders(IDictionary<string, object> target, MessageHeaders source, Guid commitId)
+        private void SetHeaders(IDictionary<string, object> target, MessageHeaders source, Guid commitId)
         {
             target.CopyFrom(source.ToDictionary());
             target[Constants.UserIdKey] = UserId;

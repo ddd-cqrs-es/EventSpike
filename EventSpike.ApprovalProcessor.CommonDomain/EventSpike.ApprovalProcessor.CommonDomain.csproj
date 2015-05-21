@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Automatonymous">
+      <HintPath>..\packages\Automatonymous.1.2.8\lib\net40\Automatonymous.dll</HintPath>
+    </Reference>
     <Reference Include="Magnum">
       <HintPath>..\packages\Magnum.2.1.3\lib\NET40\Magnum.dll</HintPath>
     </Reference>
@@ -47,10 +50,16 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="Taskell">
+      <HintPath>..\packages\Taskell.0.1.2\lib\net40\Taskell.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Automatonymous\ApprovalProcessor.cs" />
+    <Compile Include="Automatonymous\ApprovalProcessorInstance.cs" />
     <Compile Include="CommonDomainApprovalProcessEventHandler.cs" />
-    <Compile Include="ApprovalProcessor.cs" />
+    <Compile Include="CommonDomainSaga\ApprovalProcessor.cs" />
+    <Compile Include="Automatonymous\EventSourcedAutomatonymousStateMachine.cs" />
     <Compile Include="MassTransitCommandPublisherPipelineHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

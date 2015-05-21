@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.Common", "EventS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.BusDriverConsole", "EventSpike.BusDriverConsole\EventSpike.BusDriverConsole.csproj", "{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcessor.Automatonymous", "EventSpike.ApprovalProcessor.Automatonymous\EventSpike.ApprovalProcessor.Automatonymous.csproj", "{E97D2CA6-E197-4E45-91B5-C24273887D5B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcessor.Service", "EventSpike.ApprovalProcessor.Service\EventSpike.ApprovalProcessor.Service.csproj", "{3BFFF49B-FC05-4645-9A30-90DF59C26A0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcessor.CommonDomain", "EventSpike.ApprovalProcessor.CommonDomain\EventSpike.ApprovalProcessor.CommonDomain.csproj", "{412F7C1C-AAEA-4BDE-964D-6352BDD07BB6}"
@@ -46,10 +44,6 @@ Global
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E97D2CA6-E197-4E45-91B5-C24273887D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E97D2CA6-E197-4E45-91B5-C24273887D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E97D2CA6-E197-4E45-91B5-C24273887D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E97D2CA6-E197-4E45-91B5-C24273887D5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3BFFF49B-FC05-4645-9A30-90DF59C26A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3BFFF49B-FC05-4645-9A30-90DF59C26A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BFFF49B-FC05-4645-9A30-90DF59C26A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,12 +1,11 @@
 using System;
 using Automatonymous;
 
-namespace EventSpike.ApprovalProcessor.Automatonymous
+namespace EventSpike.ApprovalProcessor.CommonDomain.Automatonymous
 {
     public class ApprovalProcessorInstance
     {
         public Guid ApprovalId { get; set; }
-        public Guid CausationId { get; set; }
         public State CurrentState { get; set; }
     }
 }

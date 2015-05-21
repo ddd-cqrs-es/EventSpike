@@ -26,7 +26,12 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
 
             foreach (var command in commands)
             {
-                _publisher.Publish(command, headers => headers.CopyFrom(committed.Headers.Where(tuple => !tuple.Key.StartsWith("UndispatchedMessage."))));
+                var filteredHeaders = committed.Headers
+                    .Where(tuple => !tuple.Key.StartsWith("UndispatchedMessage."))
+                    .Where(tuple => tuple.Key != "AggregateType")
+                    .Where(tuple => tuple.Key != "SagaType");
+
+                _publisher.Publish(command, headers => headers.CopyFrom(filteredHeaders));
             }
         }
     }
