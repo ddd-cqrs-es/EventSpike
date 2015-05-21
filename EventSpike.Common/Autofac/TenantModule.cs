@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using Autofac.Extras.Multitenant;
@@ -41,7 +42,7 @@ namespace EventSpike.Common.Autofac
                     return tenantIds.Select(tenantId =>
                     {
                         var scope = multitenantContainer.GetTenantScope(tenantId);
-                        ExplicitThreadStaticTenantIdentificationProvider.IdentifyAs(tenantId);
+                        ExplicitThreadStaticTenantIdentificationProvider.IdentifyAs(tenantId, StringComparer.OrdinalIgnoreCase);
                         return scope.Resolve<IEnumerable<INeedInitialization>>().ToList();
                     }).SelectMany(_ => _).Distinct();
                 });

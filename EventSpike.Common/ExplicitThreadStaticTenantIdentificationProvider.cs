@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Autofac.Extras.Multitenant;
 
 namespace EventSpike.Common
@@ -13,9 +14,9 @@ namespace EventSpike.Common
             return _tenantId != null;
         }
 
-        public static void IdentifyAs(object tenantId)
+        public static void IdentifyAs<TIdentifier>(TIdentifier tenantId, IComparer<TIdentifier> comparer) where TIdentifier : class
         {
-            _tenantId = tenantId;
+            if (comparer.Compare(_tenantId as TIdentifier, tenantId) != 0) _tenantId = tenantId;
         }
     }
 }

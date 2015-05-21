@@ -1,3 +1,4 @@
+using System;
 using MassTransit;
 
 namespace EventSpike.Common.Autofac
@@ -6,7 +7,7 @@ namespace EventSpike.Common.Autofac
     {
         public void PreDispatch(IConsumeContext context)
         {
-            ExplicitThreadStaticTenantIdentificationProvider.IdentifyAs(context.Headers[Constants.TenantIdKey]);
+            ExplicitThreadStaticTenantIdentificationProvider.IdentifyAs(context.Headers[Constants.TenantIdKey], StringComparer.OrdinalIgnoreCase);
         }
 
         public void PostDispatch(IConsumeContext context)
