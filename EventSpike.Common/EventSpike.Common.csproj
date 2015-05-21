@@ -112,7 +112,7 @@
     <Compile Include="IPublishMessages.cs" />
     <Compile Include="INeedInitialization.cs" />
     <Compile Include="ISystemInitializer.cs" />
-    <Compile Include="MassTransit\MassTransitPublisher.cs" />
+    <Compile Include="MassTransit\MassTransitTenantPublisher.cs" />
     <Compile Include="Autofac\BiggyStreamCheckpointModule.cs" />
     <Compile Include="Autofac\CommonDomainModule.cs" />
     <Compile Include="CommonDomain\SagaFactory.cs" />
@@ -120,10 +120,12 @@
     <Compile Include="Envelope.cs" />
     <Compile Include="EventSubscription\MemBusPublisherCommitObserver.cs" />
     <Compile Include="GuidNamespaces.cs" />
+    <Compile Include="MessageHeader.cs" />
+    <Compile Include="MessageHeaders.cs" />
     <Compile Include="NEventStore\EventSubscriptionFactory.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Autofac\EventSubscriptionModule.cs" />
-    <Compile Include="MassTransitMessageHeadersTenantIdentificationProvider.cs" />
+    <Compile Include="ExplicitThreadStaticTenantIdentificationProvider.cs" />
     <Compile Include="Autofac\MassTransitModule.cs" />
     <Compile Include="Autofac\MemBusModule.cs" />
     <Compile Include="Autofac\NEventStoreModule.cs" />
@@ -132,11 +134,11 @@
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
     <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />
     <Compile Include="EventSubscription\EventSubscriptionMassTransitConsumer.cs" />
-    <Compile Include="Autofac\ServiceBusConfiguration.cs" />
+    <Compile Include="Autofac\ServiceBusConfigurationDelegate.cs" />
     <Compile Include="Autofac\TenantModule.cs" />
     <Compile Include="EventSubscription\NullCheckpointToken.cs" />
-    <Compile Include="Biggy\TenantScopedBiggyStreamCheckpointTracker.cs" />
-    <Compile Include="EventSubscription\EventSubscriptionBootstrapper.cs" />
+    <Compile Include="Biggy\TenantScopedBiggyStoreCheckpointTracker.cs" />
+    <Compile Include="EventSubscription\EventSubscriptionInitializer.cs" />
     <Compile Include="Biggy\StreamCheckpointTokenBiggyListFactory.cs" />
     <Compile Include="ApprovalEvents\ApprovalAccepted.cs" />
     <Compile Include="ApprovalEvents\ApprovalCancelled.cs" />

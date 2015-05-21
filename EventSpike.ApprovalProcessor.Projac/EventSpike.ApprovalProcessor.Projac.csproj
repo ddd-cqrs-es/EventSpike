@@ -59,7 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProjacApprovalProcessEventHandler.cs" />
+    <Compile Include="ProjacApprovalProcessorEventHandler.cs" />
     <Compile Include="ApprovalProcessorProjection.cs" />
     <Compile Include="DataDefinition\CreateSchema.cs" />
     <Compile Include="DataDefinition\DeleteData.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="ProjacTenantListingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataDefinition\SetCheckpoint.cs" />
-    <Compile Include="StreamCheckpointProjection.cs" />
+    <Compile Include="StoreCheckpointProjection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

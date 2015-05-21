@@ -7,9 +7,6 @@ using NEventStore.Persistence;
 
 namespace EventSpike.Approval.AggregateSource.Persistence
 {
-    public delegate bool ConflictsWithDelegate(IEnumerable<object> uncommittedEvents, IEnumerable<object> committedEvents);
-    public delegate Guid DetermisticGuidDelegate(Guid commitSetId, string aggregateId);
-    
     public class NEventStoreUnitOfWorkCommitter
     {
         private const string AggregateTypeHeader = "AggregateType";

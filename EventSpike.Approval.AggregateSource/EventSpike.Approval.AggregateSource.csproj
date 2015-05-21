@@ -64,6 +64,8 @@
     <Compile Include="Entity.cs" />
     <Compile Include="MassTransitApprovalCommandConsumer.cs" />
     <Compile Include="Persistence\ConflictingCommandException.cs" />
+    <Compile Include="Persistence\ConflictsWithDelegate.cs" />
+    <Compile Include="Persistence\DetermisticGuidDelegate.cs" />
     <Compile Include="Persistence\NEventStoreUnitOfWorkCommitter.cs" />
     <Compile Include="Persistence\PersistenceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

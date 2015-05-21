@@ -43,7 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApprovalProcessEventHandler.cs" />
+    <Compile Include="AutomatonymousApprovalProcessEventHandler.cs" />
     <Compile Include="ApprovalProcessor.cs" />
     <Compile Include="ApprovalProcessorInstance.cs" />
     <Compile Include="IApprovalProcessorRepository.cs" />

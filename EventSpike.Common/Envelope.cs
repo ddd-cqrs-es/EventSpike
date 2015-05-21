@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace EventSpike.Common
+﻿namespace EventSpike.Common
 {
     public class Envelope<TMessage>
     {
@@ -25,55 +21,6 @@ namespace EventSpike.Common
         {
             Message = message;
             Headers = new MessageHeaders(headers);
-        }
-    }
-
-    public class MessageHeaders
-    {
-        public readonly ICollection<MessageHeader> Headers;
-        public static readonly MessageHeaders Empty = new MessageHeaders(new MessageHeader[0]);
-
-        public MessageHeaders(MessageHeader[] headers)
-        {
-            if (headers == null)
-            {
-                Headers = new MessageHeader[0];
-            }
-            else
-            {
-                var copy = new MessageHeader[headers.Length];
-                Array.Copy(headers, copy, headers.Length);
-                Headers = copy;
-            }
-        }
-
-        public string this[string name] { get { return GetHeader(name); } }
-
-        public string GetHeader(string name)
-        {
-            return Headers.First(n => n.Key == name).Value;
-        }
-
-        public string GetHeader(string name, string defaultValue)
-        {
-            foreach (var attribute in Headers.Where(attribute => attribute.Key == name))
-            {
-                return attribute.Value;
-            }
-
-            return defaultValue;
-        }
-    }
-
-    public struct MessageHeader
-    {
-        public readonly string Key;
-        public readonly string Value;
-
-        public MessageHeader(string key, string value)
-        {
-            Key = key;
-            Value = value;
         }
     }
 }
