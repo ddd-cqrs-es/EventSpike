@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using CommonDomain;
 using CommonDomain.Persistence;
-using EventSpike.ApprovalProcessor.CommonDomain.CommonDomainSaga;
 using EventSpike.Common;
 using EventSpike.Common.ApprovalEvents;
 
