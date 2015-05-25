@@ -17,6 +17,7 @@ namespace EventSpike.Approval.Service
 
             builder.RegisterModule<AggregateSourceApprovalAggregateModule>();
 
+            builder.RegisterModule<LoggingModule>();
             builder.RegisterModule<TenantModule>();
             builder.RegisterModule<MassTransitModule>();
             builder.RegisterModule<NEventStoreModule>();
