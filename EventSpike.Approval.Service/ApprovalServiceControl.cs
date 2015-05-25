@@ -1,4 +1,5 @@
 ﻿using EventSpike.Common;
+using Logary;
 using MassTransit;
 using Topshelf;
 
@@ -7,11 +8,13 @@ namespace EventSpike.Approval.Service
     internal class ApprovalServiceControl :
         ServiceControl
     {
+        private readonly LogManager _logManager;
         private readonly IServiceBus _bus;
         private readonly ISystemInitializer _initializer;
 
-        public ApprovalServiceControl(IServiceBus bus, ISystemInitializer initializer)
+        public ApprovalServiceControl(LogManager logManager, IServiceBus bus, ISystemInitializer initializer)
         {
+            _logManager = logManager;
             _bus = bus;
             _initializer = initializer;
         }
@@ -25,6 +28,9 @@ namespace EventSpike.Approval.Service
 
         public bool Stop(HostControl hostControl)
         {
+            _logManager.Dispose();
+            _bus.Dispose();
+
             return true;
         }
     }

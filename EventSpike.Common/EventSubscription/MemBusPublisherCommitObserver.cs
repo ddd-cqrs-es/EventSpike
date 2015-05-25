@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Logary;
 using Magnum.Reflection;
 using MemBus;
 using NEventStore;
@@ -8,6 +9,7 @@ namespace EventSpike.Common.EventSubscription
 {
     public class MemBusPublisherCommitObserver : IObserver<object>
     {
+        private static readonly Logger Logger = Logging.GetCurrentLogger();
         private readonly IBus _bus;
 
         public MemBusPublisherCommitObserver(IBus bus)
@@ -56,12 +58,12 @@ namespace EventSpike.Common.EventSubscription
 
         public void OnError(Exception error)
         {
-            throw new NotImplementedException();
+            Logger.ErrorException(error.Message, error);
         }
 
         public void OnCompleted()
         {
-            throw new NotImplementedException();
+            Logger.Warn("Complete");
         }
     }
 }

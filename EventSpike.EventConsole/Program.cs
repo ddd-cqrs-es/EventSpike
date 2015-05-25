@@ -4,6 +4,7 @@ using Autofac.Extras.Multitenant;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
+using Logary;
 using MassTransit;
 
 namespace EventSpike.EventConsole
@@ -23,6 +24,7 @@ namespace EventSpike.EventConsole
             builder.RegisterModule<BiggyStreamCheckpointModule>();
             builder.RegisterModule<NEventStoreModule>();
             builder.RegisterModule<SqlConectionSettingsModule>();
+            builder.RegisterModule<LoggingModule>();
 
             builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
 
@@ -31,6 +33,8 @@ namespace EventSpike.EventConsole
             var container = builder.Build();
 
             var tenantContainer = container.Resolve<MultitenantContainer>(TypedParameter.From(container));
+
+            tenantContainer.Resolve<LogManager>();
 
             tenantContainer.Resolve<ISystemInitializer>().Initialize();
 

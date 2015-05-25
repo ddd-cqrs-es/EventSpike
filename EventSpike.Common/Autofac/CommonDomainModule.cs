@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
+using Autofac.Extras.Multitenant;
 using CommonDomain;
 using CommonDomain.Core;
 using CommonDomain.Persistence;
@@ -22,7 +23,7 @@ namespace EventSpike.Common.Autofac
 
             builder.RegisterType<MassTransitNotificationPipelineHook>().As<IPipelineHook>();
 
-            builder.RegisterType<EventStoreRepository>().As<IRepository>();
+            builder.RegisterType<EventStoreRepository>().As<IRepository>().InstancePerTenant();
 
             builder.RegisterType<SagaEventStoreRepository>()
                 .WithParameter(ResolvedParameter.ForNamed<IStoreEvents>("Projections"))

@@ -1,5 +1,6 @@
 using System;
 using EventSpike.Common.EventSubscription;
+using Logary;
 using NEventStore;
 using Newtonsoft.Json;
 
@@ -7,6 +8,7 @@ namespace EventSpike.EventConsole
 {
     internal class ConsoleOutputProjectionCommitObserver : IObserver<object>
     {
+        private static readonly Logger Logger = Logging.GetCurrentLogger();
         private readonly ITrackStoreCheckpoints _storeTrackerProvider;
 
         public ConsoleOutputProjectionCommitObserver(ITrackStoreCheckpoints storeTrackerProvider)
@@ -26,12 +28,12 @@ namespace EventSpike.EventConsole
 
         public void OnError(Exception error)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(error));
+            Logger.ErrorException(error.Message, error);
         }
 
         public void OnCompleted()
         {
-            Console.WriteLine("Completed");
+            Logger.Warn("Completed");
         }
     }
 }

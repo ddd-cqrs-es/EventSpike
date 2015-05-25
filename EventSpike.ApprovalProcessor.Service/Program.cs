@@ -1,7 +1,5 @@
 ﻿using Autofac;
 using Autofac.Extras.Multitenant;
-using EventSpike.ApprovalProcessor.CommonDomain;
-using EventSpike.ApprovalProcessor.CommonDomain.Automatonymous;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
 using Topshelf;
@@ -17,6 +15,7 @@ namespace EventSpike.ApprovalProcessor.Service
 
             var builder = new ContainerBuilder();
 
+            builder.RegisterModule<LoggingModule>();
             builder.RegisterModule<TenantModule>();
             builder.RegisterModule<MassTransitModule>();
             builder.RegisterModule<EventSubscriptionModule>();
