@@ -1,5 +1,6 @@
 using System.Linq;
 using EventSpike.Common;
+using MassTransit;
 using NEventStore;
 
 namespace EventSpike.ApprovalProcessor.CommonDomain
@@ -7,10 +8,10 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
     public class MassTransitCommandPublisherPipelineHook :
         PipelineHookBase
     {
-        private readonly IPublishMessages _publisher;
+        private readonly IServiceBus _publisher;
         // This could also be dispatched via a PollingConsumer
 
-        public MassTransitCommandPublisherPipelineHook(IPublishMessages publisher)
+        public MassTransitCommandPublisherPipelineHook(IServiceBus publisher)
         {
             _publisher = publisher;
         }
@@ -31,7 +32,13 @@ namespace EventSpike.ApprovalProcessor.CommonDomain
                     .Where(tuple => tuple.Key != "AggregateType")
                     .Where(tuple => tuple.Key != "SagaType");
 
-                _publisher.Publish(command, headers => headers.CopyFrom(filteredHeaders));
+                _publisher.Publish(command, (IPublishContext context) =>
+                {
+                    foreach (var tuple in filteredHeaders)
+                    {
+                        context.SetHeader(tuple.Key, tuple.Value.ToString());
+                    }
+                });
             }
         }
     }

@@ -117,6 +117,7 @@
     <Compile Include="Autofac\MassTransitInstanceNames.cs" />
     <Compile Include="Autofac\SqlConectionSettingsModule.cs" />
     <Compile Include="Autofac\TenantIdentifierInboundInterceptor.cs" />
+    <Compile Include="Autofac\TenantPropogationOutboundInterceptor.cs" />
     <Compile Include="CommonDomain\AggregateFactory.cs" />
     <Compile Include="ApprovalCommands\InitiateApproval.cs" />
     <Compile Include="ApprovalCommands\MarkApprovalAccepted.cs" />
@@ -134,10 +135,8 @@
     <Compile Include="IHandler.cs" />
     <Compile Include="IListTenants.cs" />
     <Compile Include="InstanceNames.cs" />
-    <Compile Include="IPublishMessages.cs" />
     <Compile Include="INeedInitialization.cs" />
     <Compile Include="ISystemInitializer.cs" />
-    <Compile Include="MassTransit\MassTransitTenantPublisher.cs" />
     <Compile Include="Autofac\BiggyStreamCheckpointModule.cs" />
     <Compile Include="Autofac\CommonDomainModule.cs" />
     <Compile Include="CommonDomain\SagaFactory.cs" />
@@ -145,6 +144,7 @@
     <Compile Include="Envelope.cs" />
     <Compile Include="EventSubscription\MemBusPublisherCommitObserver.cs" />
     <Compile Include="GuidNamespaces.cs" />
+    <Compile Include="MassTransit\InterceptorExtensions.cs" />
     <Compile Include="MessageHeader.cs" />
     <Compile Include="MessageHeaders.cs" />
     <Compile Include="NEventStore\EventSubscriptionFactory.cs" />

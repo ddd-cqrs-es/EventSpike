@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Autofac;
-using Autofac.Core;
 using EventSpike.Common.MassTransit;
 using MassTransit;
 
@@ -10,6 +9,8 @@ namespace EventSpike.Common.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<TenantPropogationOutboundInterceptor>();
+
             builder.RegisterInstance("mt_subscriptions").Named<string>(MassTransitInstanceNames.SubscriptionEndpointName);
 
             builder.Register(context => new ServiceBusConfigurationDelegate(bus =>
@@ -31,7 +32,15 @@ namespace EventSpike.Common.Autofac
 
                 bus.Subscribe(subscribe => subscribe.LoadFrom(scope));
 
-                bus.AddInboundInterceptor(new TenantIdentifierInboundInterceptor());
+                foreach (var interceptor in context.Resolve<IEnumerable<IInboundMessageInterceptor>>())
+                {
+                    bus.AddInboundInterceptor(interceptor);
+                }
+
+                foreach (var interceptor in context.Resolve<IEnumerable<IOutboundMessageInterceptor>>())
+                {
+                    bus.AddOutboundInterceptor(interceptor);
+                }
             }))
             .As<ServiceBusConfigurationDelegate>()
             .SingleInstance();
@@ -49,10 +58,6 @@ namespace EventSpike.Common.Autofac
                 });
             }).As<IServiceBus>()
             .SingleInstance();
-
-            builder.RegisterType<MassTransitTenantPublisher>()
-                .WithParameter(ResolvedParameter.ForNamed<string>(InstanceNames.CurrentTenantId))
-                .As<IPublishMessages>();
         }
     }
 }

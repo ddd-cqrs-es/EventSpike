@@ -4,6 +4,7 @@ using System.Linq;
 using Autofac;
 using Autofac.Extras.Multitenant;
 using Magnum.Extensions;
+using MassTransit;
 
 namespace EventSpike.Common.Autofac
 {
@@ -11,6 +12,9 @@ namespace EventSpike.Common.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<TenantIdentifierInboundInterceptor>().As<IInboundMessageInterceptor>();
+            builder.RegisterType<TenantPropogationOutboundInterceptor>().As<IOutboundMessageInterceptor>();
+
             builder.RegisterType<MultitenantContainer>()
                 .SingleInstance()
                 .As<MultitenantContainer>()

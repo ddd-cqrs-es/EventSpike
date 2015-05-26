@@ -9,6 +9,7 @@ using EventSpike.Common;
 using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.ApprovalEvents;
 using EventSpike.Common.EventSubscription;
+using MassTransit;
 using Paramol.Executors;
 using Paramol.SqlClient;
 using Projac;
@@ -19,7 +20,7 @@ namespace EventSpike.ApprovalProcessor.Projac
         IHandler
     {
         private readonly ConnectionStringSettings _settings;
-        private readonly IPublishMessages _publisher;
+        private readonly IServiceBus _bus;
         private readonly SqlCommandExecutor _queryExecutor;
         private readonly SqlProjection _projection;
 
@@ -28,10 +29,10 @@ namespace EventSpike.ApprovalProcessor.Projac
         private int _isDispatching;
         private bool _isLive;
 
-        public ProjacApprovalProcessorEventHandler(ConnectionStringSettings settings, IPublishMessages publisher)
+        public ProjacApprovalProcessorEventHandler(ConnectionStringSettings settings, IServiceBus bus)
         {
             _settings = settings;
-            _publisher = publisher;
+            _bus = bus;
 
             _queryExecutor = new SqlCommandExecutor(settings);
 
@@ -93,11 +94,11 @@ namespace EventSpike.ApprovalProcessor.Projac
             foreach (var candidate in candidates) {
                 var newCausationId = ApprovalProcessorConstants.DeterministicGuid.Create(candidate.CausationId);
 
-                _publisher.Publish(new MarkApprovalAccepted
+                _bus.Publish(new MarkApprovalAccepted
                 {
                     Id = candidate.Id,
                     ReferenceNumber = GuidEncoder.Encode(candidate.CausationId)
-                }, context => context.Add(Constants.CausationIdKey, newCausationId.ToString()));
+                }, context => context.SetHeader(Constants.CausationIdKey, newCausationId.ToString()));
 
                 _queryExecutor.ExecuteNonQuery(TSql.NonQueryStatement(@"UPDATE [ApprovalProcess] SET [Dispatched] = GETDATE() WHERE [Id] = @P1", new { P1 = TSql.UniqueIdentifier(candidate.Id) }));
             }
