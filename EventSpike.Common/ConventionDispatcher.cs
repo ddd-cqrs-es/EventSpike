@@ -8,7 +8,7 @@ using System.Reflection;
 namespace EventSpike.Common
 {
     /// <summary>
-    /// Helper class redirects events to private Apply(event) method
+    /// Helper class to dispatch to handler instances, adapted from https://gist.github.com/danbarua/8a9387957f8a0d884f41
     /// </summary>
     public class ConventionDispatcher
     {
@@ -18,7 +18,6 @@ namespace EventSpike.Common
             Required
         }
 
-        // Adapted from https://gist.github.com/danbarua/8a9387957f8a0d884f41
         private readonly string _methodName;
 
         private static readonly IDictionary<Type, IDictionary<Type, MethodInfo>> Cache = new ConcurrentDictionary<Type, IDictionary<Type, MethodInfo>>();
