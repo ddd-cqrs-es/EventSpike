@@ -1,8 +1,10 @@
 using AggregateSource;
 using AggregateSource.NEventStore;
 using Autofac;
+using Autofac.Core;
 using EventSpike.Approval.AggregateSource;
 using EventSpike.Approval.AggregateSource.Persistence;
+using EventSpike.Approval.Common;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.EventSubscription;
@@ -15,7 +17,12 @@ namespace EventSpike.Approval.Service
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<MassTransitApprovalCommandConsumer>().AsSelf();
+            builder.RegisterType<ApprovalCommandHandler>()
+                .Named<IHandler>("ApprovalCommandHandler");
+
+            builder.RegisterType<MassTransitApprovalCommandHandlerConnector>()
+                .WithParameter(ResolvedParameter.ForNamed<IHandler>("ApprovalCommandHandler"))
+                .AsSelf();
 
             builder.RegisterType<MassTransitNotificationPipelineHook>().As<IPipelineHook>();
 

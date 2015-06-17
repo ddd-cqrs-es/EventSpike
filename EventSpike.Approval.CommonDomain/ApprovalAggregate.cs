@@ -4,8 +4,7 @@ using EventSpike.Common.ApprovalEvents;
 
 namespace EventSpike.Approval.CommonDomain
 {
-    public class ApprovalAggregate :
-        AggregateBase
+    public class ApprovalAggregate : AggregateBase
     {
         private ApprovalAggregate(Guid id)
         {

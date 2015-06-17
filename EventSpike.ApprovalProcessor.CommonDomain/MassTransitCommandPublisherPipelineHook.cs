@@ -1,5 +1,4 @@
 using System.Linq;
-using EventSpike.Common;
 using MassTransit;
 using NEventStore;
 

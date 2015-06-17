@@ -177,6 +177,7 @@
     <Compile Include="NEventStoreFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventSubscription\EventStreamUpdated.cs" />
+    <Compile Include="ConventionDispatcher.cs" />
     <Compile Include="SystemInitializer.cs" />
   </ItemGroup>
   <ItemGroup>

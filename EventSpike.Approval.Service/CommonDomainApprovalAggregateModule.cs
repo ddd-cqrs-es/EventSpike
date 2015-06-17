@@ -1,5 +1,8 @@
 using Autofac;
+using Autofac.Core;
+using EventSpike.Approval.Common;
 using EventSpike.Approval.CommonDomain;
+using EventSpike.Common;
 using EventSpike.Common.Autofac;
 
 namespace EventSpike.Approval.Service
@@ -11,7 +14,12 @@ namespace EventSpike.Approval.Service
             builder.RegisterModule<CommonDomainModule>();
             builder.RegisterModule<NEventStoreModule>();
 
-            builder.RegisterType<MassTransitApprovalCommandConsumer>().AsSelf();
+            builder.RegisterType<ApprovalCommandHandler>()
+                .Named<IHandler>("ApprovalCommandHandler");
+
+            builder.RegisterType<MassTransitApprovalCommandHandlerConnector>()
+                .WithParameter(ResolvedParameter.ForNamed<IHandler>("ApprovalCommandHandler"))
+                .AsSelf();
         }
     }
 }

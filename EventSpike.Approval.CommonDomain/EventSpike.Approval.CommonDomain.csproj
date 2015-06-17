@@ -58,7 +58,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MassTransitApprovalCommandConsumer.cs" />
+    <Compile Include="ApprovalCommandHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApprovalAggregate.cs" />
   </ItemGroup>
@@ -67,6 +67,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventSpike.Approval.Common\EventSpike.Approval.Common.csproj">
+      <Project>{E20ED1C3-3BA4-4739-A80B-9AC7DDE0E843}</Project>
+      <Name>EventSpike.Approval.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
       <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
       <Name>EventSpike.Common</Name>
