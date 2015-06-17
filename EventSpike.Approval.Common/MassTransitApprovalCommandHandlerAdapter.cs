@@ -4,7 +4,7 @@ using MassTransit;
 
 namespace EventSpike.Approval.Common
 {
-    public class MassTransitApprovalCommandHandlerConnector :
+    public class MassTransitApprovalCommandHandlerAdapter :
         Consumes<InitiateApproval>.Context,
         Consumes<MarkApprovalAccepted>.Context,
         Consumes<MarkApprovalCancelled>.Context,
@@ -14,7 +14,7 @@ namespace EventSpike.Approval.Common
         private readonly ConventionDispatcher _dispatcher;
         private readonly IHandler _handler;
 
-        public MassTransitApprovalCommandHandlerConnector(IHandler handler)
+        public MassTransitApprovalCommandHandlerAdapter(IHandler handler)
         {
             _dispatcher = new ConventionDispatcher("Handle");
             _handler = handler;

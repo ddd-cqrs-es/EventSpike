@@ -17,7 +17,7 @@ namespace EventSpike.Approval.Service
             builder.RegisterType<ApprovalCommandHandler>()
                 .Named<IHandler>("ApprovalCommandHandler");
 
-            builder.RegisterType<MassTransitApprovalCommandHandlerConnector>()
+            builder.RegisterType<MassTransitApprovalCommandHandlerAdapter>()
                 .WithParameter(ResolvedParameter.ForNamed<IHandler>("ApprovalCommandHandler"))
                 .AsSelf();
         }
