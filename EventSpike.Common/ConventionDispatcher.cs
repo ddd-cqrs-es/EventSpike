@@ -7,17 +7,17 @@ using System.Reflection;
 
 namespace EventSpike.Common
 {
-    public enum Delivery
-    {
-        Optional,
-        Required
-    }
-
     /// <summary>
     /// Helper class redirects events to private Apply(event) method
     /// </summary>
     public class ConventionDispatcher
     {
+        public enum Delivery
+        {
+            Optional,
+            Required
+        }
+
         // Adapted from https://gist.github.com/danbarua/8a9387957f8a0d884f41
         private readonly string _methodName;
 
