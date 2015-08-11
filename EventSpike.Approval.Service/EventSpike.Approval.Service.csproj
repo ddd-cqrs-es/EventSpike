@@ -52,8 +52,8 @@
       <HintPath>..\packages\FSharp.Actor-logary.3.1.2\lib\net40\FSharp.Actor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FSharp.Core">
-      <HintPath>..\packages\FSharp.Core.3.1.2.1\lib\net40\FSharp.Core.dll</HintPath>
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.3.1.2.5\lib\net40\FSharp.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Logary">
@@ -69,11 +69,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MassTransit, Version=2.10.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MassTransit.2.10.0\lib\net40\MassTransit.dll</HintPath>
+      <HintPath>..\packages\MassTransit.2.10.1\lib\net40\MassTransit.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MassTransit.AutofacIntegration">
-      <HintPath>..\packages\MassTransit.Autofac.2.10.0\lib\net40\MassTransit.AutofacIntegration.dll</HintPath>
+    <Reference Include="MassTransit.AutofacIntegration, Version=2.10.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\MassTransit.Autofac.2.10.1\lib\net40\MassTransit.AutofacIntegration.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NEventStore, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
