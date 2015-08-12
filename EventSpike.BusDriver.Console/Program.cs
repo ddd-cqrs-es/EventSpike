@@ -9,7 +9,7 @@ using EventSpike.Common.MassTransit;
 using Magnum.Reflection;
 using MassTransit;
 
-namespace EventSpike.BusDriverConsole
+namespace EventSpike.BusDriver.Console
 {
     internal class Program
     {
@@ -42,12 +42,12 @@ namespace EventSpike.BusDriverConsole
                 Id = Guid.NewGuid(),
                 Title = "I need dis",
                 Description = "Pretty plz, with sugar on top",
-            }, Int32.MaxValue);
+            }, int.MaxValue);
 
             foreach (var commandFactory in commands)
             {
-                Console.WriteLine("Press [enter] to send next command...");
-                Console.ReadLine();
+                System.Console.WriteLine("Press [enter] to send next command...");
+                System.Console.ReadLine();
 
                 bus.FastInvoke(x => x.Publish(null, default(Action<IPublishContext>)), commandFactory(), new Action<IPublishContext>(context =>
                 {
@@ -57,8 +57,8 @@ namespace EventSpike.BusDriverConsole
                 }));
             }
 
-            Console.WriteLine("Press [enter] to exit");
-            Console.ReadLine();
+            System.Console.WriteLine("Press [enter] to exit");
+            System.Console.ReadLine();
         }
     }
 }
