@@ -7,8 +7,8 @@
     <ProjectGuid>{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EventSpike.BusDriverConsole</RootNamespace>
-    <AssemblyName>EventSpike.BusDriverConsole</AssemblyName>
+    <RootNamespace>EventSpike.MassTransitBusDriverConsole</RootNamespace>
+    <AssemblyName>EventSpike.MassTransitBusDriverConsole</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

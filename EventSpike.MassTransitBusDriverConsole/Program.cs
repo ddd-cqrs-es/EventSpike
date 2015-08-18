@@ -9,7 +9,7 @@ using EventSpike.Common.MassTransit;
 using Magnum.Reflection;
 using MassTransit;
 
-namespace EventSpike.BusDriverConsole
+namespace EventSpike.MassTransitBusDriverConsole
 {
     internal class Program
     {
