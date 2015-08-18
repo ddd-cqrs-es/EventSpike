@@ -1,7 +1,7 @@
 using Autofac;
 using Autofac.Core;
 using Autofac.Extras.Multitenant;
-using EventSpike.ApprovalProcessor.ProjacIntegration;
+using EventSpike.ApprovalProcessor.ProjacImplementation;
 using EventSpike.Common;
 using EventSpike.Common.EventSubscription;
 

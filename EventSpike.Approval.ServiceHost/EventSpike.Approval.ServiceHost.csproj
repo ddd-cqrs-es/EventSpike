@@ -119,13 +119,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventSpike.Approval.AggregateSourceIntegration\EventSpike.Approval.AggregateSourceIntegration.csproj">
+    <ProjectReference Include="..\EventSpike.Approval.AggregateSourceImplementation\EventSpike.Approval.AggregateSourceImplementation.csproj">
       <Project>{60754543-76bd-4339-a6ab-21aaf478f0de}</Project>
-      <Name>EventSpike.Approval.AggregateSourceIntegration</Name>
+      <Name>EventSpike.Approval.AggregateSourceImplementation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EventSpike.Approval.CommonDomainIntegration\EventSpike.Approval.CommonDomainIntegration.csproj">
+    <ProjectReference Include="..\EventSpike.Approval.CommonDomainImplementation\EventSpike.Approval.CommonDomainImplementation.csproj">
       <Project>{1ce642f2-136e-4958-82d0-f84e80da86ed}</Project>
-      <Name>EventSpike.Approval.CommonDomainIntegration</Name>
+      <Name>EventSpike.Approval.CommonDomainImplementation</Name>
     </ProjectReference>
     <ProjectReference Include="..\EventSpike.Approval.MassTransitIntegration\EventSpike.Approval.MassTransitIntegration.csproj">
       <Project>{e20ed1c3-3ba4-4739-a80b-9ac7dde0e843}</Project>

@@ -1,6 +1,6 @@
 using Autofac;
 using Autofac.Core;
-using EventSpike.Approval.CommonDomainIntegration;
+using EventSpike.Approval.CommonDomainImplementation;
 using EventSpike.Approval.MassTransitIntegration;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;

@@ -23,7 +23,7 @@ namespace EventSpike.ApprovalProcessor.ServiceHost
             builder.RegisterModule<NEventStoreModule>();
             builder.RegisterModule<SqlConectionSettingsModule>();
 
-            builder.RegisterModule<CommonDomainApprovalProcessorModule<CommonDomainIntegration.Automatonymous.ApprovalProcessor>>();
+            builder.RegisterModule<CommonDomainApprovalProcessorModule<CommonDomainImplementation.Automatonymous.ApprovalProcessor>>();
 
             builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
 

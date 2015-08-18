@@ -4,20 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3BFFF49B-FC05-4645-9A30-90DF59C26A0D}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{412F7C1C-AAEA-4BDE-964D-6352BDD07BB6}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EventSpike.ApprovalProcessor.ServiceHost</RootNamespace>
-    <AssemblyName>EventSpike.ApprovalProcessor.ServiceHost</AssemblyName>
+    <RootNamespace>EventSpike.ApprovalProcessor.CommonDomainImplementation</RootNamespace>
+    <AssemblyName>EventSpike.ApprovalProcessor.CommonDomainImplementation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -27,7 +25,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,32 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Autofac.Extras.Multitenant, Version=3.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Extras.Multitenant.3.1.1\lib\net40\Autofac.Extras.Multitenant.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Automatonymous, Version=1.2.74.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\Automatonymous.1.2.10\lib\net40\Automatonymous.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FSharp.Actor, Version=0.0.1.0, Culture=neutral, PublicKeyToken=9adf1a27c1f9599c, processorArchitecture=MSIL">
-      <HintPath>..\packages\FSharp.Actor-logary.3.1.2\lib\net40\FSharp.Actor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FSharp.Core.3.1.2.5\lib\net40\FSharp.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Logary, Version=3.1.2.0, Culture=neutral, PublicKeyToken=9adf1a27c1f9599c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Logary.3.1.2\lib\net40\Logary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Logary.CSharp, Version=3.1.2.0, Culture=neutral, PublicKeyToken=9adf1a27c1f9599c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Logary.CSharp.3.1.2\lib\net40\Logary.CSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Magnum, Version=2.1.3.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
@@ -80,22 +53,8 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json.FSharp, Version=3.2.2.0, Culture=neutral, PublicKeyToken=9adf1a27c1f9599c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.FSharp.3.2.2\lib\net40\Newtonsoft.Json.FSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NodaTime, Version=1.3.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NodaTime.1.3.1\lib\net35-Client\NodaTime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NodaTime.Serialization.JsonNet, Version=1.3.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NodaTime.Serialization.JsonNet.1.3.1\lib\net35-Client\NodaTime.Serialization.JsonNet.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
     <Reference Include="Taskell, Version=0.1.2.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\Taskell.0.1.2\lib\net40\Taskell.dll</HintPath>
       <Private>True</Private>
@@ -106,26 +65,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApprovalProcessorServiceControl.cs" />
-    <Compile Include="CommonDomainApprovalProcessorModule.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ProjacApprovalProcessorModule.cs" />
+    <Compile Include="Automatonymous\ApprovalProcessor.cs" />
+    <Compile Include="Automatonymous\ApprovalProcessorInstance.cs" />
+    <Compile Include="CommonDomainApprovalProcessEventHandler.cs" />
+    <Compile Include="CommonDomainSaga\ApprovalProcessor.cs" />
+    <Compile Include="Automatonymous\EventSourcedAutomatonymousStateMachine.cs" />
+    <Compile Include="MassTransitCommandPublisherPipelineHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventSpike.ApprovalProcessor.CommonDomainImplementation\EventSpike.ApprovalProcessor.CommonDomainImplementation.csproj">
-      <Project>{412f7c1c-aaea-4bde-964d-6352bdd07bb6}</Project>
-      <Name>EventSpike.ApprovalProcessor.CommonDomainImplementation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EventSpike.ApprovalProcessor.ProjacImplementation\EventSpike.ApprovalProcessor.ProjacImplementation.csproj">
-      <Project>{d6a7726f-44d9-48b5-b219-33f02fdb3912}</Project>
-      <Name>EventSpike.ApprovalProcessor.ProjacImplementation</Name>
+    <ProjectReference Include="..\EventSpike.ApprovalProcessor\EventSpike.ApprovalProcessor.csproj">
+      <Project>{27316DE3-99C0-4ADF-95AE-1D150D831A69}</Project>
+      <Name>EventSpike.ApprovalProcessor</Name>
     </ProjectReference>
     <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
       <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>

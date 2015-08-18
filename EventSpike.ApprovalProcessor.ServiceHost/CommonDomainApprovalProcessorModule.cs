@@ -1,6 +1,6 @@
 using Autofac;
 using CommonDomain;
-using EventSpike.ApprovalProcessor.CommonDomainIntegration;
+using EventSpike.ApprovalProcessor.CommonDomainImplementation;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;
 using NEventStore;
