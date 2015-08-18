@@ -27,9 +27,7 @@ namespace EventSpike.MassTransitBusDriverConsole
 
             var bus = container.Resolve<IServiceBus>();
 
-            var task = Task.Run(() => DispatchCommands(bus));
-
-            task.Wait();
+            DispatchCommands(bus);
         }
 
         private static void DispatchCommands(IServiceBus bus)
@@ -47,7 +45,8 @@ namespace EventSpike.MassTransitBusDriverConsole
             foreach (var commandFactory in commands)
             {
                 Console.WriteLine("Press [enter] to send next command...");
-                Console.ReadLine();
+                
+                if (string.Equals(Console.ReadLine(), "quit", StringComparison.OrdinalIgnoreCase)) break;
 
                 bus.FastInvoke(x => x.Publish(null, default(Action<IPublishContext>)), commandFactory(), new Action<IPublishContext>(context =>
                 {
@@ -56,9 +55,6 @@ namespace EventSpike.MassTransitBusDriverConsole
                     context.SetHeader(Constants.UserIdKey, userId);
                 }));
             }
-
-            Console.WriteLine("Press [enter] to exit");
-            Console.ReadLine();
         }
     }
 }
