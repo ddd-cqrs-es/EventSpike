@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalProcesso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.MassTransitBusDriverConsole", "EventSpike.MassTransitBusDriverConsole\EventSpike.MassTransitBusDriverConsole.csproj", "{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.EventStoreIntegration", "EventSpike.EventStoreIntegration\EventSpike.EventStoreIntegration.csproj", "{4625F2CD-F769-4FE7-A925-4FDF75E18B01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DED53BE-F57E-43D1-80EA-35A5BFFF8A9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4625F2CD-F769-4FE7-A925-4FDF75E18B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4625F2CD-F769-4FE7-A925-4FDF75E18B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4625F2CD-F769-4FE7-A925-4FDF75E18B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4625F2CD-F769-4FE7-A925-4FDF75E18B01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
