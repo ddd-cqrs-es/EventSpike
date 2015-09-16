@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using EventSpike.Common;
 using EventStore.ClientAPI;
+using Magnum.Reflection;
 using Newtonsoft.Json;
 
 namespace EventSpike.EventStoreIntegration
@@ -10,13 +13,15 @@ namespace EventSpike.EventStoreIntegration
     {
         private readonly IEventStoreConnection _connection;
         private readonly EventStoreSubscription _subscription;
+        private readonly Type[] _messageTypes;
         private readonly IHandler _handler;
         private readonly ConventionDispatcher _dispatcher;
 
-        public EventStoreCommandHandlerAdapter(IEventStoreConnection connection, EventStoreSubscription subscription, IHandler handler)
+        public EventStoreCommandHandlerAdapter(IEventStoreConnection connection, EventStoreSubscription subscription, Type[] messageTypes, IHandler handler)
         {
             _connection = connection;
             _subscription = subscription;
+            _messageTypes = messageTypes;
             _handler = handler;
             _dispatcher = new ConventionDispatcher("Handle");
         }
@@ -28,13 +33,32 @@ namespace EventSpike.EventStoreIntegration
 
         private void OnEventAppeared(EventStorePersistentSubscriptionBase subscription, ResolvedEvent resolvedEvent)
         {
-            var jsonString = Encoding.UTF8.GetString(resolvedEvent.Event.Data);
+            var eventJson = Encoding.UTF8.GetString(resolvedEvent.Event.Data);
 
-            var eventType = Type.GetType(resolvedEvent.Event.EventType);
+            var eventType = _messageTypes.FirstOrDefault(@type => string.Equals(@type.Name, resolvedEvent.Event.EventType));
 
-            var @event = JsonConvert.DeserializeObject(jsonString, eventType);
+            if (eventType == null)
+            {
+                throw new MessageTypeMissing(resolvedEvent.Event.EventType);
+            }
 
-            _dispatcher.Dispatch(_handler, @event);
+            var @event = JsonConvert.DeserializeObject(eventJson, eventType);
+            
+            var metadataJson = Encoding.UTF8.GetString(resolvedEvent.Event.Metadata);
+            var metadata = (Dictionary<string, string>)JsonConvert.DeserializeObject(metadataJson, typeof (Dictionary<string, string>));
+
+            metadata.ChangeKey("$causationId", Constants.CausationIdKey);
+
+            metadata.Add(Constants.StreamCheckpointTokenKey, resolvedEvent.Event.EventNumber.ToString());
+
+            var envelope = this.FastInvoke(new[] {eventType}, x => x.CreateEnvelope(default(object), default(Dictionary<string, string>)), @event, metadata);
+
+            _dispatcher.Dispatch(_handler, envelope);
+        }
+
+        private Envelope<TEvent> CreateEnvelope<TEvent>(TEvent @event, Dictionary<string, string> metadata)
+        {
+            return new Envelope<TEvent>(@event, metadata.ToMessageHeaders());
         }
     }
 }

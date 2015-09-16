@@ -3,10 +3,10 @@
     public class Constants
     {
         public const string
-            TenantIdKey = "TenantId",
-            CausationIdKey = "CausationId",
-            UserIdKey = "UserId",
-            StreamCheckpointTokenKey = "StreamCheckpoint",
-            DefaultTenantId = "DefaultTenant";
+            TenantIdKey = "tenantId",
+            CausationIdKey = "causationId",
+            UserIdKey = "userId",
+            StreamCheckpointTokenKey = "streamCheckpoint",
+            DefaultTenantId = "defaultTenant";
     }
 }

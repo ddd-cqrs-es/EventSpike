@@ -7,6 +7,7 @@ using EventSpike.Common.ApprovalCommands;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace EventSpike.EventStoreStreamHeadwaterConsole
 {
@@ -59,10 +60,19 @@ namespace EventSpike.EventStoreStreamHeadwaterConsole
                     {Constants.UserIdKey, userId}
                 };
 
-                var commandJson = JsonConvert.SerializeObject(command);
-                var metadataJson = JsonConvert.SerializeObject(metadata);
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
 
-                var eventData = new EventData(Guid.NewGuid(), command.GetType().FullName, true, Encoding.UTF8.GetBytes(commandJson), Encoding.UTF8.GetBytes(metadataJson));
+                metadata.ChangeKey(Constants.CausationIdKey, "$correlationId");
+
+                var commandJson = JsonConvert.SerializeObject(command, settings);
+                var metadataJson = JsonConvert.SerializeObject(metadata, settings);
+
+                var typeName = command.GetType().Name.ToCamelCase();
+
+                var eventData = new EventData(Guid.NewGuid(), typeName, true, Encoding.UTF8.GetBytes(commandJson), Encoding.UTF8.GetBytes(metadataJson));
 
                 connection.AppendToStreamAsync(streamName, ExpectedVersion.Any, eventData);
             }
