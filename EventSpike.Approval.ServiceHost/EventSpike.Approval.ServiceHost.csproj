@@ -108,6 +108,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Internals.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="AggregateSourceApprovalAggregateModule.cs" />
     <Compile Include="ApprovalServiceControl.cs" />
     <Compile Include="CommonDomainApprovalAggregateModule.cs" />

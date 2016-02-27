@@ -1,8 +1,8 @@
 using EventSpike.Common;
 
-namespace EventSpike.ApprovalProcessor
+namespace EventSpike.ApprovalProcessor.CommonDomainImplementation
 {
-    public static class ApprovalProcessorConstants
+    internal static class ApprovalProcessorConstants
     {
         public static readonly DeterministicGuid DeterministicGuid = new DeterministicGuid(GuidNamespaces.ApprovalProcessor);
     }

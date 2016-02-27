@@ -106,6 +106,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Internals.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="ApprovalProcessorServiceControl.cs" />
     <Compile Include="CommonDomainApprovalProcessorModule.cs" />
     <Compile Include="Program.cs" />

@@ -60,6 +60,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Internals.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="ApprovalAggregate.cs" />
     <Compile Include="ApprovalCommandHandler.cs" />

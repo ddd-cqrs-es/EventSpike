@@ -131,6 +131,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Internals.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Autofac\LoggingModule.cs" />
     <Compile Include="Autofac\MassTransitInstanceNames.cs" />
     <Compile Include="Autofac\SqlConectionSettingsModule.cs" />

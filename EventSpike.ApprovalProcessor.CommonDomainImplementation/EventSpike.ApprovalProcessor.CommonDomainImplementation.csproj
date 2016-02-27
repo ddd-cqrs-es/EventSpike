@@ -53,6 +53,14 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Paramol, Version=0.0.123.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Paramol.0.0.123\lib\net45\Paramol.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Projac, Version=0.0.123.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Projac.0.0.123\lib\net45\Projac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Taskell, Version=0.1.2.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
@@ -65,6 +73,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Internals.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApprovalProcessorConstants.cs" />
     <Compile Include="Automatonymous\ApprovalProcessor.cs" />
     <Compile Include="Automatonymous\ApprovalProcessorInstance.cs" />
     <Compile Include="CommonDomainApprovalProcessEventHandler.cs" />
@@ -78,10 +90,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventSpike.ApprovalProcessor\EventSpike.ApprovalProcessor.csproj">
-      <Project>{27316DE3-99C0-4ADF-95AE-1D150D831A69}</Project>
-      <Name>EventSpike.ApprovalProcessor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
       <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
       <Name>EventSpike.Common</Name>
