@@ -1,4 +1,4 @@
-namespace EventSpike.Common.MassTransit
+namespace EventSpike.MassTransitIntegration
 {
     public static class ExtensionsForMassTransitMsmq
     {

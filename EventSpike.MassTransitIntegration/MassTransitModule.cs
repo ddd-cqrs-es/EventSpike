@@ -1,14 +1,17 @@
 using System.Collections.Generic;
 using Autofac;
-using EventSpike.Common.MassTransit;
+using EventSpike.Common;
 using MassTransit;
 
-namespace EventSpike.Common.Autofac
+namespace EventSpike.MassTransitIntegration
 {
     public class MassTransitModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<TenantIdentifierInboundInterceptor>().As<IInboundMessageInterceptor>();
+            builder.RegisterType<TenantPropogationOutboundInterceptor>().As<IOutboundMessageInterceptor>();
+
             builder.RegisterType<TenantPropogationOutboundInterceptor>();
 
             builder.RegisterInstance("mt_subscriptions").Named<string>(MassTransitInstanceNames.SubscriptionEndpointName);

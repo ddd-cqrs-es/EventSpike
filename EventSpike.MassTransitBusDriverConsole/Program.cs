@@ -3,8 +3,7 @@ using System.Linq;
 using Autofac;
 using EventSpike.ApprovalMessages.Commands;
 using EventSpike.Common;
-using EventSpike.Common.Autofac;
-using EventSpike.Common.MassTransit;
+using EventSpike.MassTransitIntegration;
 using Magnum.Reflection;
 using MassTransit;
 

@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.NEventStoreInteg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.NEventStoreMassTransitIntegration", "EventSpike.NEventStoreMassTransitIntegration\EventSpike.NEventStoreMassTransitIntegration.csproj", "{77F0D6A1-BDBE-47D4-91B0-C608F7511D73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.MassTransitIntegration", "EventSpike.MassTransitIntegration\EventSpike.MassTransitIntegration.csproj", "{C605FECB-027F-456B-82CE-DD4815F3D60A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,6 +114,10 @@ Global
 		{77F0D6A1-BDBE-47D4-91B0-C608F7511D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F0D6A1-BDBE-47D4-91B0-C608F7511D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F0D6A1-BDBE-47D4-91B0-C608F7511D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C605FECB-027F-456B-82CE-DD4815F3D60A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C605FECB-027F-456B-82CE-DD4815F3D60A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C605FECB-027F-456B-82CE-DD4815F3D60A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C605FECB-027F-456B-82CE-DD4815F3D60A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-namespace EventSpike.Common.Autofac
+namespace EventSpike.Common
 {
     public static class MassTransitInstanceNames
     {

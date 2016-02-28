@@ -1,7 +1,8 @@
 using System;
+using EventSpike.Common;
 using MassTransit;
 
-namespace EventSpike.Common.Autofac
+namespace EventSpike.MassTransitIntegration
 {
     public class TenantIdentifierInboundInterceptor : IInboundMessageInterceptor
     {

@@ -2,7 +2,7 @@
 using MassTransit.BusConfigurators;
 using MassTransit.Pipeline.Configuration;
 
-namespace EventSpike.Common.MassTransit
+namespace EventSpike.MassTransitIntegration
 {
     public static class InterceptorExtensions
     {

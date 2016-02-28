@@ -131,15 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autofac\LoggingModule.cs" />
-    <Compile Include="Autofac\MassTransitInstanceNames.cs" />
     <Compile Include="Autofac\SqlConectionSettingsModule.cs" />
-    <Compile Include="Autofac\TenantIdentifierInboundInterceptor.cs" />
-    <Compile Include="Autofac\TenantPropogationOutboundInterceptor.cs" />
     <Compile Include="Biggy\BiggyTenantListingProvider.cs" />
     <Compile Include="EventSubscription\IProvideStoreCheckpoints.cs" />
     <Compile Include="EventSubscription\SubscriptionIsLive.cs" />
     <Compile Include="ExtensionsForEnvelope.cs" />
-    <Compile Include="ExtensionsToDictionary.cs" />
+    <Compile Include="ExtensionsForMessageHeaders.cs" />
     <Compile Include="IHandler.cs" />
     <Compile Include="IListTenants.cs" />
     <Compile Include="InstanceNames.cs" />
@@ -148,17 +145,13 @@
     <Compile Include="Autofac\BiggyStreamCheckpointModule.cs" />
     <Compile Include="Envelope.cs" />
     <Compile Include="GuidNamespaces.cs" />
-    <Compile Include="MassTransit\InterceptorExtensions.cs" />
+    <Compile Include="MassTransitInstanceNames.cs" />
     <Compile Include="MessageHeader.cs" />
     <Compile Include="MessageHeaders.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ExplicitThreadStaticTenantIdentificationProvider.cs" />
-    <Compile Include="Autofac\MassTransitModule.cs" />
     <Compile Include="Autofac\MemBusModule.cs" />
     <Compile Include="ConventionTenantSqlConnectionSettingsFactory.cs" />
-    <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
-    <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />
-    <Compile Include="Autofac\ServiceBusConfigurationDelegate.cs" />
     <Compile Include="Autofac\TenantModule.cs" />
     <Compile Include="EventSubscription\NullCheckpointToken.cs" />
     <Compile Include="Biggy\TenantScopedBiggyStoreCheckpointTracker.cs" />

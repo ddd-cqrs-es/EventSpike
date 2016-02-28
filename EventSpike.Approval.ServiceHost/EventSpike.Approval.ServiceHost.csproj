@@ -138,6 +138,10 @@
       <Project>{a295a8f8-054f-4d71-8d1c-9a51193807f4}</Project>
       <Name>EventSpike.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EventSpike.MassTransitIntegration\EventSpike.MassTransitIntegration.csproj">
+      <Project>{C605FECB-027F-456B-82CE-DD4815F3D60A}</Project>
+      <Name>EventSpike.MassTransitIntegration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventSpike.NEventStoreIntegration\EventSpike.NEventStoreIntegration.csproj">
       <Project>{C56BAE16-7B95-48A6-9A0E-3994914C3025}</Project>
       <Name>EventSpike.NEventStoreIntegration</Name>

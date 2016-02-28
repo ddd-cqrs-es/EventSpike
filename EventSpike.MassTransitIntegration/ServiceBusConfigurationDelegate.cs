@@ -1,6 +1,6 @@
 using MassTransit.BusConfigurators;
 
-namespace EventSpike.Common.Autofac
+namespace EventSpike.MassTransitIntegration
 {
     public delegate void ServiceBusConfigurationDelegate(ServiceBusConfigurator configure);
 }

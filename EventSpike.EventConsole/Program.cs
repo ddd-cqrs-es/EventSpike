@@ -3,7 +3,7 @@ using Autofac;
 using Autofac.Extras.Multitenant;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;
-using EventSpike.Common.MassTransit;
+using EventSpike.MassTransitIntegration;
 using EventSpike.NEventStoreIntegration;
 using EventSpike.NEventStoreMassTransitIntegration;
 using Logary;
