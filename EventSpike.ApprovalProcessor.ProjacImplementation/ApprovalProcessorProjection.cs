@@ -1,6 +1,6 @@
-﻿using EventSpike.ApprovalProcessor.ProjacImplementation.DataDefinition;
+﻿using EventSpike.ApprovalMessages.Events;
+using EventSpike.ApprovalProcessor.ProjacImplementation.DataDefinition;
 using EventSpike.Common;
-using EventSpike.Common.ApprovalEvents;
 using Paramol.SqlClient;
 using Projac;
 

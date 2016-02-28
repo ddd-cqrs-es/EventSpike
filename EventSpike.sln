@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B866D6F7-16F1-48DA-BC8D-FB608D1D3422}"
 	ProjectSection(SolutionItems) = preProject
@@ -35,6 +35,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.EventStoreStreamHeadwaterConsole", "EventSpike.EventStoreStreamHeadwaterConsole\EventSpike.EventStoreStreamHeadwaterConsole.csproj", "{65090BFA-7397-4422-85AB-A8921398ECDF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.CompositionRootExperiments", "EventSpike.CompositionRootExperiments\EventSpike.CompositionRootExperiments.csproj", "{E28F852D-5D6A-48D5-BD7E-E529CF45F52E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.ApprovalMessages", "EventSpike.ApprovalMessages\EventSpike.ApprovalMessages.csproj", "{096649C7-244E-49FE-B535-973A82B6D132}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +96,10 @@ Global
 		{E28F852D-5D6A-48D5-BD7E-E529CF45F52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E28F852D-5D6A-48D5-BD7E-E529CF45F52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E28F852D-5D6A-48D5-BD7E-E529CF45F52E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{096649C7-244E-49FE-B535-973A82B6D132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{096649C7-244E-49FE-B535-973A82B6D132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{096649C7-244E-49FE-B535-973A82B6D132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{096649C7-244E-49FE-B535-973A82B6D132}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

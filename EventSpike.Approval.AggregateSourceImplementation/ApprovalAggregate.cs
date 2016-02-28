@@ -1,6 +1,6 @@
 ﻿using System;
 using EventSpike.Approval.AggregateSourceIntegration;
-using EventSpike.Common.ApprovalEvents;
+using EventSpike.ApprovalMessages.Events;
 
 namespace EventSpike.Approval.AggregateSourceImplementation
 {

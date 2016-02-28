@@ -140,18 +140,10 @@
     <Compile Include="Autofac\TenantIdentifierInboundInterceptor.cs" />
     <Compile Include="Autofac\TenantPropogationOutboundInterceptor.cs" />
     <Compile Include="CommonDomain\AggregateFactory.cs" />
-    <Compile Include="ApprovalCommands\InitiateApproval.cs" />
-    <Compile Include="ApprovalCommands\MarkApprovalAccepted.cs" />
-    <Compile Include="ApprovalCommands\MarkApprovalCancelled.cs" />
-    <Compile Include="ApprovalCommands\MarkApprovalDenied.cs" />
-    <Compile Include="ApprovalCommands\MarkApprovalPartiallyAccepted.cs" />
     <Compile Include="Biggy\BiggyTenantListingProvider.cs" />
-    <Compile Include="DisposeCallback.cs" />
     <Compile Include="EventSubscription\IProvideStoreCheckpoints.cs" />
     <Compile Include="EventSubscription\SubscriptionIsLive.cs" />
     <Compile Include="ExtensionsForEnvelope.cs" />
-    <Compile Include="ExtensionsToString.cs" />
-    <Compile Include="ExtensionsToDeterministicGuid.cs" />
     <Compile Include="ExtensionsToDictionary.cs" />
     <Compile Include="IHandler.cs" />
     <Compile Include="IListTenants.cs" />
@@ -161,7 +153,6 @@
     <Compile Include="Autofac\BiggyStreamCheckpointModule.cs" />
     <Compile Include="Autofac\CommonDomainModule.cs" />
     <Compile Include="CommonDomain\SagaFactory.cs" />
-    <Compile Include="DeterministicGuid.cs" />
     <Compile Include="Envelope.cs" />
     <Compile Include="EventSubscription\MemBusPublisherCommitObserver.cs" />
     <Compile Include="GuidNamespaces.cs" />
@@ -176,7 +167,6 @@
     <Compile Include="Autofac\MemBusModule.cs" />
     <Compile Include="Autofac\NEventStoreModule.cs" />
     <Compile Include="ConventionTenantSqlConnectionSettingsFactory.cs" />
-    <Compile Include="GuidEncoder.cs" />
     <Compile Include="MassTransit\ExtensionsForConventionNames.cs" />
     <Compile Include="MassTransit\ExtensionsForMassTransitMsmq.cs" />
     <Compile Include="EventSubscription\EventSubscriptionMassTransitConsumer.cs" />
@@ -186,19 +176,12 @@
     <Compile Include="Biggy\TenantScopedBiggyStoreCheckpointTracker.cs" />
     <Compile Include="EventSubscription\EventSubscriptionInitializer.cs" />
     <Compile Include="Biggy\StreamCheckpointTokenBiggyListFactory.cs" />
-    <Compile Include="ApprovalEvents\ApprovalAccepted.cs" />
-    <Compile Include="ApprovalEvents\ApprovalCancelled.cs" />
-    <Compile Include="ApprovalEvents\ApprovalInitiated.cs" />
-    <Compile Include="ApprovalEvents\ApprovalDenied.cs" />
-    <Compile Include="ApprovalEvents\ApprovalDescriptionRevised.cs" />
-    <Compile Include="ApprovalEvents\ApprovalPartiallyAccepted.cs" />
     <Compile Include="EventSubscription\ITrackStoreCheckpoints.cs" />
     <Compile Include="Biggy\TenantCheckpointTokenDocument.cs" />
     <Compile Include="EventSubscription\MassTransitNotificationPipelineHook.cs" />
     <Compile Include="NEventStoreFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventSubscription\EventStreamUpdated.cs" />
-    <Compile Include="ConventionDispatcher.cs" />
     <Compile Include="SystemInitializer.cs" />
   </ItemGroup>
   <ItemGroup>

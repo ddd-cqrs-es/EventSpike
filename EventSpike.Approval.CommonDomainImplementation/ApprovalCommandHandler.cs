@@ -1,6 +1,6 @@
 ﻿using CommonDomain.Persistence;
+using EventSpike.ApprovalMessages.Commands;
 using EventSpike.Common;
-using EventSpike.Common.ApprovalCommands;
 
 namespace EventSpike.Approval.CommonDomainImplementation
 {

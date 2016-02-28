@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace EventSpike.Common.ApprovalCommands
+namespace EventSpike.ApprovalMessages.Events
 {
-    public class MarkApprovalPartiallyAccepted
+    public class ApprovalAccepted
     {
         public Guid Id { get; set; }
         public string ReferenceNumber { get; set; }

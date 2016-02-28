@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventSpike.Common.ApprovalCommands
+namespace EventSpike.ApprovalMessages.Commands
 {
     public class MarkApprovalDenied
     {

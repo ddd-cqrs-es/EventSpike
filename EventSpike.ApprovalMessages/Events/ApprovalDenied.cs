@@ -1,6 +1,6 @@
 using System;
 
-namespace EventSpike.Common.ApprovalEvents
+namespace EventSpike.ApprovalMessages.Events
 {
     public class ApprovalDenied
     {

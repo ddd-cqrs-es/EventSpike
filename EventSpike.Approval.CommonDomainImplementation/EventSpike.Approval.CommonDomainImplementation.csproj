@@ -79,6 +79,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventSpike.ApprovalMessages\EventSpike.ApprovalMessages.csproj">
+      <Project>{096649C7-244E-49FE-B535-973A82B6D132}</Project>
+      <Name>EventSpike.ApprovalMessages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
       <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
       <Name>EventSpike.Common</Name>

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EventSpike.ApprovalMessages.Commands;
 using EventSpike.Common;
-using EventSpike.Common.ApprovalCommands;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
 using Newtonsoft.Json;

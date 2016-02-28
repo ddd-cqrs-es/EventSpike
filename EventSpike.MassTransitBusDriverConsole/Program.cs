@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
+using EventSpike.ApprovalMessages.Commands;
 using EventSpike.Common;
-using EventSpike.Common.ApprovalCommands;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
 using Magnum.Reflection;

@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -7,7 +12,7 @@ namespace EventSpike
 {
     internal class HandlerNotFoundException : Exception
     {
-        public HandlerNotFoundException(Type eventType) : base($"No handler found for {eventType.Name}")
+        public HandlerNotFoundException(Type eventType) : base(string.Format("No handler found for {0}", eventType.Name))
         {
         }
     }
@@ -97,6 +102,49 @@ namespace EventSpike
         }
     }
 
+    internal class DisposeCallback : IDisposable
+    {
+        readonly Action _disposeCallback;
+
+        public DisposeCallback(Action disposeCallback)
+        {
+            if (disposeCallback == null) throw new ArgumentNullException("disposeCallback");
+
+            _disposeCallback = disposeCallback;
+        }
+
+        public void Dispose()
+        {
+            _disposeCallback();
+        }
+    }
+
+    // http://madskristensen.net/post/a-shorter-and-url-friendly-guid
+    internal static class GuidEncoder
+    {
+        public static string Encode(string guidText)
+        {
+            var guid = new Guid(guidText);
+            return Encode(guid);
+        }
+
+        public static string Encode(Guid guid)
+        {
+            var enc = Convert.ToBase64String(guid.ToByteArray());
+            enc = enc.Replace("/", "_");
+            enc = enc.Replace("+", "-");
+            return enc.Substring(0, 22);
+        }
+
+        public static Guid Decode(string encoded)
+        {
+            encoded = encoded.Replace("_", "/");
+            encoded = encoded.Replace("-", "+");
+            var buffer = Convert.FromBase64String(encoded + "==");
+            return new Guid(buffer);
+        }
+    }
+
     internal class DeterministicGuid
     {
         public Guid NameSpace;
@@ -162,6 +210,98 @@ namespace EventSpike
             return source.Create(BitConverter.GetBytes(input));
         }
     }
+    
+    /// <summary>
+    /// Helper class to dispatch to handler instances, adapted from https://gist.github.com/danbarua/8a9387957f8a0d884f41
+    /// </summary>
+    internal class ConventionDispatcher
+    {
+        public enum Delivery
+        {
+            Optional,
+            Required
+        }
 
+        private readonly string _methodName;
 
+        private static readonly IDictionary<Type, IDictionary<Type, MethodInfo>> Cache = new ConcurrentDictionary<Type, IDictionary<Type, MethodInfo>>();
+
+        private static readonly MethodInfo InternalPreserveStackTraceMethod = typeof(Exception).GetMethod("InternalPreserveStackTrace", BindingFlags.Instance | BindingFlags.NonPublic);
+
+        public ConventionDispatcher(string methodName)
+        {
+            _methodName = methodName;
+        }
+
+        [DebuggerNonUserCode]
+        public void Dispatch(object instance, object @event, Delivery delivery = Delivery.Required)
+        {
+            var instanceType = instance.GetType();
+
+            MethodInfo info;
+            IDictionary<Type, MethodInfo> lookup;
+            if (!Cache.TryGetValue(instanceType, out lookup))
+            {
+                lookup = instanceType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                    .Where(m => m.Name == _methodName)
+                    .Where(m => m.GetParameters().Length == 1)
+                    .ToDictionary(m => m.GetParameters().First().ParameterType, m => m);
+
+                Cache[instanceType] = lookup;
+            }
+
+            var eventType = @event.GetType();
+            if (!lookup.TryGetValue(eventType, out info))
+            {
+                if (delivery == Delivery.Optional) return;
+
+                var exceptionMessage = string.Format("Failed to locate {0}.{1}({2})", instanceType.Name, _methodName, eventType.Name);
+                throw new InvalidOperationException(exceptionMessage);
+            }
+
+            try
+            {
+                info.Invoke(instance, new[] { @event });
+            }
+            catch (TargetInvocationException ex)
+            {
+                if (null != InternalPreserveStackTraceMethod)
+                {
+                    InternalPreserveStackTraceMethod.Invoke(ex.InnerException, new object[0]);
+                }
+
+                throw ex.InnerException;
+            }
+        }
+    }
+
+    internal static class ExtensionsToString
+    {
+        public static Guid ToGuid(this string source)
+        {
+            return Guid.Parse(source);
+        }
+
+        public static string ToCamelCase(this string input)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+            if (!char.IsUpper(input[0])) return input;
+
+            var chars = input.ToCharArray();
+
+            for (var i = 0; i < chars.Length; i++)
+            {
+                var hasNext = (i + 1 < chars.Length);
+                if (i > 0 && hasNext && !char.IsUpper(chars[i + 1])) break;
+
+#if !(DOTNET || PORTABLE)
+                chars[i] = char.ToLower(chars[i], CultureInfo.InvariantCulture);
+#else
+                chars[i] = char.ToLowerInvariant(chars[i]);
+#endif
+            }
+
+            return new string(chars);
+        }
+    }
 }

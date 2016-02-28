@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace EventSpike.Common.ApprovalEvents
+namespace EventSpike.ApprovalMessages.Commands
 {
-    public class ApprovalInitiated
+    public class InitiateApproval
     {
         public Guid Id { get; set; }
         public string Title { get; set; }

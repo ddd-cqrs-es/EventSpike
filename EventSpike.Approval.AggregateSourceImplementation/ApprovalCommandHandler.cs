@@ -1,7 +1,7 @@
 ﻿using AggregateSource.NEventStore;
 using EventSpike.Approval.AggregateSourceImplementation.Persistence;
+using EventSpike.ApprovalMessages.Commands;
 using EventSpike.Common;
-using EventSpike.Common.ApprovalCommands;
 
 namespace EventSpike.Approval.AggregateSourceImplementation
 {

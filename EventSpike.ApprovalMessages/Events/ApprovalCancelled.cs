@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace EventSpike.Common.ApprovalCommands
+namespace EventSpike.ApprovalMessages.Events
 {
-    public class MarkApprovalCancelled
+    public class ApprovalCancelled
     {
         public Guid Id { get; set; }
         public string CancellationReason { get; set; }

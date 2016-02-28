@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using CommonDomain;
 using CommonDomain.Persistence;
+using EventSpike.ApprovalMessages.Events;
 using EventSpike.Common;
-using EventSpike.Common.ApprovalEvents;
 
 namespace EventSpike.ApprovalProcessor.CommonDomainImplementation
 {
