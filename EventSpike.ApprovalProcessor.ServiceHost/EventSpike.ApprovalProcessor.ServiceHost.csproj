@@ -134,6 +134,14 @@
       <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
       <Name>EventSpike.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EventSpike.NEventStoreIntegration\EventSpike.NEventStoreIntegration.csproj">
+      <Project>{C56BAE16-7B95-48A6-9A0E-3994914C3025}</Project>
+      <Name>EventSpike.NEventStoreIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.NEventStoreMassTransitIntegration\EventSpike.NEventStoreMassTransitIntegration.csproj">
+      <Project>{77F0D6A1-BDBE-47D4-91B0-C608F7511D73}</Project>
+      <Name>EventSpike.NEventStoreMassTransitIntegration</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

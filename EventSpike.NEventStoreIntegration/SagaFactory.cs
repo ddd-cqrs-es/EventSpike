@@ -3,7 +3,7 @@ using System.Reflection;
 using CommonDomain;
 using CommonDomain.Persistence;
 
-namespace EventSpike.Common.CommonDomain
+namespace EventSpike.NEventStoreIntegration
 {
     public class SagaFactory : IConstructSagas
     {

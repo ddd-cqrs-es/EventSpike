@@ -5,7 +5,7 @@ using EventSpike.Common.EventSubscription;
 using NEventStore;
 using NEventStore.Client;
 
-namespace EventSpike.Common.NEventStore
+namespace EventSpike.NEventStoreIntegration
 {
     public class EventSubscriptionFactory
     {

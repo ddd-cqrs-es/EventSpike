@@ -4,7 +4,7 @@ using NEventStore;
 using NEventStore.Persistence.Sql;
 using NEventStore.Persistence.Sql.SqlDialects;
 
-namespace EventSpike.Common
+namespace EventSpike.NEventStoreIntegration
 {
     public class NEventStoreFactory
     {

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using EventSpike.Common;
 using NEventStore.Client;
 
-namespace EventSpike.Common.EventSubscription
+namespace EventSpike.NEventStoreIntegration
 {
     public class EventSubscriptionInitializer :
         INeedInitialization

@@ -1,7 +1,8 @@
-﻿using MassTransit;
+﻿using EventSpike.Common.EventSubscription;
+using MassTransit;
 using NEventStore.Client;
 
-namespace EventSpike.Common.EventSubscription
+namespace EventSpike.NEventStoreMassTransitIntegration
 {
     public class EventSubscriptionMassTransitConsumer :
         Consumes<EventStreamUpdated>.Context

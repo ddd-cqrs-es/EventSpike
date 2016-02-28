@@ -3,6 +3,7 @@ using CommonDomain;
 using EventSpike.ApprovalProcessor.CommonDomainImplementation;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;
+using EventSpike.NEventStoreMassTransitIntegration;
 using NEventStore;
 
 namespace EventSpike.ApprovalProcessor.ServiceHost

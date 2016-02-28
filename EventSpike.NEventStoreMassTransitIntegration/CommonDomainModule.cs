@@ -7,11 +7,10 @@ using CommonDomain;
 using CommonDomain.Core;
 using CommonDomain.Persistence;
 using CommonDomain.Persistence.EventStore;
-using EventSpike.Common.CommonDomain;
-using EventSpike.Common.EventSubscription;
+using EventSpike.NEventStoreIntegration;
 using NEventStore;
 
-namespace EventSpike.Common.Autofac
+namespace EventSpike.NEventStoreMassTransitIntegration
 {
     public class CommonDomainModule : Module
     {

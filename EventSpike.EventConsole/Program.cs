@@ -4,6 +4,8 @@ using Autofac.Extras.Multitenant;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
+using EventSpike.NEventStoreIntegration;
+using EventSpike.NEventStoreMassTransitIntegration;
 using Logary;
 using MassTransit;
 
@@ -18,11 +20,11 @@ namespace EventSpike.EventConsole
             var builder = new ContainerBuilder();
 
             builder.RegisterModule<TenantModule>();
+            builder.RegisterModule<NEventStoreModule>();
             builder.RegisterModule<EventSubscriptionModule>();
             builder.RegisterModule<MemBusModule>();
             builder.RegisterModule<MassTransitModule>();
             builder.RegisterModule<BiggyStreamCheckpointModule>();
-            builder.RegisterModule<NEventStoreModule>();
             builder.RegisterModule<SqlConectionSettingsModule>();
             builder.RegisterModule<LoggingModule>();
 

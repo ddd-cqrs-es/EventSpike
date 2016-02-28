@@ -3,8 +3,9 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Extras.Multitenant;
 using NEventStore;
+using NEventStore.Client;
 
-namespace EventSpike.Common.Autofac
+namespace EventSpike.NEventStoreIntegration
 {
     public class NEventStoreModule : Module
     {
@@ -21,6 +22,12 @@ namespace EventSpike.Common.Autofac
             builder.Register(context => context.ResolveNamed<NEventStoreFactory>("Projections").Create())
                 .Named<IStoreEvents>("Projections")
                 .InstancePerTenant();
+
+            builder.Register(context => context.Resolve<EventSubscriptionFactory>().Construct())
+                .As<IObserveCommits>()
+                .InstancePerTenant();
+            
+            builder.RegisterType<EventSubscriptionFactory>().AsSelf();
         }
     }
 }

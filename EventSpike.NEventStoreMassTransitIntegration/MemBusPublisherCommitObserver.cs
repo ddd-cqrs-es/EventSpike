@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
+using EventSpike.Common;
 using Logary;
 using Magnum.Reflection;
 using MemBus;
 using NEventStore;
 
-namespace EventSpike.Common.EventSubscription
+namespace EventSpike.NEventStoreMassTransitIntegration
 {
     public class MemBusPublisherCommitObserver : IObserver<object>
     {

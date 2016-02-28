@@ -1,11 +1,10 @@
 using System;
 using Autofac;
 using Autofac.Extras.Multitenant;
-using EventSpike.Common.EventSubscription;
-using EventSpike.Common.NEventStore;
-using NEventStore.Client;
+using EventSpike.Common;
+using EventSpike.NEventStoreIntegration;
 
-namespace EventSpike.Common.Autofac
+namespace EventSpike.NEventStoreMassTransitIntegration
 {
     public class EventSubscriptionModule : Module
     {
@@ -21,12 +20,6 @@ namespace EventSpike.Common.Autofac
 
             builder.RegisterType<MemBusPublisherCommitObserver>()
                 .As<IObserver<object>>()
-                .InstancePerTenant();
-
-            builder.RegisterType<EventSubscriptionFactory>().AsSelf();
-
-            builder.Register(context => context.Resolve<EventSubscriptionFactory>().Construct())
-                .As<IObserveCommits>()
                 .InstancePerTenant();
         }
     }

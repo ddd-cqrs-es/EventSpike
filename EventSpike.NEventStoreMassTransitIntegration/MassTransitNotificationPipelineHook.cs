@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using EventSpike.Common;
+using EventSpike.Common.EventSubscription;
 using MassTransit;
 using NEventStore;
 
-namespace EventSpike.Common.EventSubscription
+namespace EventSpike.NEventStoreMassTransitIntegration
 {
     public class MassTransitNotificationPipelineHook :
         PipelineHookBase

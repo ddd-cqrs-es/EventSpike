@@ -2,6 +2,7 @@
 using Autofac.Extras.Multitenant;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
+using EventSpike.NEventStoreIntegration;
 using Topshelf;
 
 namespace EventSpike.Approval.ServiceHost

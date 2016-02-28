@@ -7,7 +7,7 @@ using EventSpike.Approval.AggregateSourceImplementation.Persistence;
 using EventSpike.Approval.MassTransitIntegration;
 using EventSpike.Common;
 using EventSpike.Common.Autofac;
-using EventSpike.Common.EventSubscription;
+using EventSpike.NEventStoreMassTransitIntegration;
 using MassTransit;
 using NEventStore;
 

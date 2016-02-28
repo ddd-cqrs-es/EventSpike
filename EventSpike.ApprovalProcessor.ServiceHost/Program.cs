@@ -2,6 +2,8 @@
 using Autofac.Extras.Multitenant;
 using EventSpike.Common.Autofac;
 using EventSpike.Common.MassTransit;
+using EventSpike.NEventStoreIntegration;
+using EventSpike.NEventStoreMassTransitIntegration;
 using Topshelf;
 
 namespace EventSpike.ApprovalProcessor.ServiceHost
