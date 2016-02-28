@@ -54,6 +54,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.Experiments.Comp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSpike.Logging.Logary", "EventSpike.Logging.Logary\EventSpike.Logging.Logary.csproj", "{B6F13BDB-77D5-4C4D-BDE1-91886308DCB7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{FDC37B22-F155-4A89-90A3-980FB2896019}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
