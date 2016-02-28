@@ -9,7 +9,7 @@ using NEventStore.Client;
 
 namespace EventSpike.NEventStoreIntegration
 {
-    public class EventSubscriptionFactory
+    internal class EventSubscriptionFactory
     {
         private readonly IProvideStoreCheckpoints _checkpointTracker;
         private readonly IEnumerable<IObserver<object>> _commitObservers;

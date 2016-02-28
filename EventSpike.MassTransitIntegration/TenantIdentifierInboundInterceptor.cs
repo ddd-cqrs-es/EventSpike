@@ -4,7 +4,7 @@ using MassTransit;
 
 namespace EventSpike.MassTransitIntegration
 {
-    public class TenantIdentifierInboundInterceptor : IInboundMessageInterceptor
+    internal class TenantIdentifierInboundInterceptor : IInboundMessageInterceptor
     {
         public void PreDispatch(IConsumeContext context)
         {

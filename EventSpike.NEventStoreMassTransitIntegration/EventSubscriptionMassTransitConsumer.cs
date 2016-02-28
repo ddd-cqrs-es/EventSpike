@@ -4,7 +4,7 @@ using NEventStore.Client;
 
 namespace EventSpike.NEventStoreMassTransitIntegration
 {
-    public class EventSubscriptionMassTransitConsumer :
+    internal class EventSubscriptionMassTransitConsumer :
         Consumes<EventStreamUpdated>.Context
     {
         private readonly IObserveCommits _commitObserver;

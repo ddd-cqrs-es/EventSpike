@@ -4,7 +4,7 @@ using MassTransit.Pipeline.Configuration;
 
 namespace EventSpike.MassTransitIntegration
 {
-    public static class InterceptorExtensions
+    internal static class InterceptorExtensions
     {
         public static void AddOutboundInterceptor(this ServiceBusConfigurator configurator, IOutboundMessageInterceptor interceptor)
         {

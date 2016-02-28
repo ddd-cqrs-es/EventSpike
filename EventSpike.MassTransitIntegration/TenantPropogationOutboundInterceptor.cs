@@ -3,7 +3,7 @@ using MassTransit;
 
 namespace EventSpike.MassTransitIntegration
 {
-    public class TenantPropogationOutboundInterceptor : IOutboundMessageInterceptor
+    internal class TenantPropogationOutboundInterceptor : IOutboundMessageInterceptor
     {
         private readonly ITenantIdentificationStrategy _identificationStrategy;
 

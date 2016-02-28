@@ -6,7 +6,7 @@ using NEventStore.Persistence.Sql.SqlDialects;
 
 namespace EventSpike.NEventStoreIntegration
 {
-    public class NEventStoreFactory
+    internal class NEventStoreFactory
     {
         private readonly ConnectionStringSettings _settings;
         private readonly IEnumerable<IPipelineHook> _pipelineHooks;
