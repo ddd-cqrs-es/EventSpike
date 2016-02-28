@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,7 @@ using Newtonsoft.Json.Linq;
 using Paramol;
 using Paramol.SqlClient;
 
-namespace EventSpike.CompositionRootExperiments
+namespace EventSpike.Experiments.CompositionRoot
 {
     [TestClass]
     public class MultitenantCompositionRootExperiments
