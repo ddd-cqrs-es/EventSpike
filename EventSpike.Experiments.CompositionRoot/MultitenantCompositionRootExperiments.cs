@@ -18,6 +18,11 @@ namespace EventSpike.Experiments.CompositionRoot
 
         // http://blog.ploeh.dk/2014/06/03/compile-time-lifetime-matching/
 
+        // http://blog.ploeh.dk/2015/01/06/composition-root-reuse/
+        // > A Composition Root is application-specific. It makes no sense to reuse it across code bases.
+        // > A Composition Root is application-specific; it's what defines a single application.
+        // > After having written nice, decoupled code throughout your code base, the Composition Root is where you finally couple everything, from data access to (user) interfaces.
+
         internal class ApplicationCompositionRoot
         {
             private readonly ConcurrentDictionary<string, TenantCompositionRoot> _tenantRoots = new ConcurrentDictionary<string, TenantCompositionRoot>();
