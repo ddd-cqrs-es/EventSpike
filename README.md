@@ -1,5 +1,8 @@
 # EventSpike
 
+It's unlikely that this is a working system. The purpose of this project at this point is to serve as a playground for structuring large systems, as well as a place to try out various libraries and frameworks.
+Some of the implementations provided here are fundamentally incorrect.
+
 Reference:
 
 [Polling Client](https://github.com/NEventStore/NEventStore/issues/360)
