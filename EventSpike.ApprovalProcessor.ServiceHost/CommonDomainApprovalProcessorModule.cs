@@ -1,9 +1,10 @@
 using Autofac;
 using CommonDomain;
 using EventSpike.ApprovalProcessor.CommonDomainImplementation;
-using EventSpike.Common;
-using EventSpike.Common.Autofac;
+using EventSpike.Checkpointing.Biggy;
+using EventSpike.Messaging;
 using EventSpike.NEventStoreMassTransitIntegration;
+using EventSpike.SqlIntegration;
 using NEventStore;
 
 namespace EventSpike.ApprovalProcessor.ServiceHost

@@ -1,5 +1,6 @@
-﻿using EventSpike.ApprovalMessages.Commands;
-using EventSpike.Common;
+﻿using EventSpike.Approval.Messages.Commands;
+using EventSpike.MassTransitIntegration;
+using EventSpike.Messaging;
 using MassTransit;
 
 namespace EventSpike.Approval.MassTransitIntegration

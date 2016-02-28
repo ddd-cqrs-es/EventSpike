@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Autofac;
-using EventSpike.Common;
 using MassTransit;
 
 namespace EventSpike.MassTransitIntegration
@@ -14,24 +13,24 @@ namespace EventSpike.MassTransitIntegration
 
             builder.RegisterType<TenantPropogationOutboundInterceptor>();
 
-            builder.RegisterInstance("mt_subscriptions").Named<string>(MassTransitInstanceNames.SubscriptionEndpointName);
+            builder.RegisterInstance("mt_subscriptions").Named<string>(InstanceNames.SubscriptionEndpointName);
 
             builder.Register(context => new ServiceBusConfigurationDelegate(bus =>
             {
-                var dataEndpointUri = context.ResolveNamed<string>(MassTransitInstanceNames.DataEndpointName).AsEndpointUri();
+                var dataEndpointUri = context.ResolveNamed<string>(InstanceNames.DataEndpointName).AsEndpointUri();
 
                 bus.ReceiveFrom(dataEndpointUri);
 
                 bus.UseMsmq(msmq =>
                 {
-                    var subscriptionEndpointUri = context.ResolveNamed<string>(MassTransitInstanceNames.SubscriptionEndpointName).AsEndpointUri();
+                    var subscriptionEndpointUri = context.ResolveNamed<string>(InstanceNames.SubscriptionEndpointName).AsEndpointUri();
 
                     msmq.UseSubscriptionService(subscriptionEndpointUri);
                 });
 
                 bus.UseControlBus();
 
-                var scope = context.ResolveOptionalNamed<ILifetimeScope>(MassTransitInstanceNames.LifetimeScope) ?? context.Resolve<ILifetimeScope>();
+                var scope = context.ResolveOptionalNamed<ILifetimeScope>(InstanceNames.LifetimeScope) ?? context.Resolve<ILifetimeScope>();
 
                 bus.Subscribe(subscribe => subscribe.LoadFrom(scope));
 

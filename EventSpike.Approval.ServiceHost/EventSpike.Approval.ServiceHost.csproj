@@ -108,7 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Internals.cs" />
+    <Compile Include="..\Internals\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AggregateSourceApprovalAggregateModule.cs" />
@@ -134,13 +134,17 @@
       <Project>{e20ed1c3-3ba4-4739-a80b-9ac7dde0e843}</Project>
       <Name>EventSpike.Approval.MassTransitIntegration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
-      <Project>{a295a8f8-054f-4d71-8d1c-9a51193807f4}</Project>
-      <Name>EventSpike.Common</Name>
+    <ProjectReference Include="..\EventSpike.Logging.Logary\EventSpike.Logging.Logary.csproj">
+      <Project>{B6F13BDB-77D5-4C4D-BDE1-91886308DCB7}</Project>
+      <Name>EventSpike.Logging.Logary</Name>
     </ProjectReference>
     <ProjectReference Include="..\EventSpike.MassTransitIntegration\EventSpike.MassTransitIntegration.csproj">
       <Project>{C605FECB-027F-456B-82CE-DD4815F3D60A}</Project>
       <Name>EventSpike.MassTransitIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Messaging\EventSpike.Messaging.csproj">
+      <Project>{B09BEEBA-104E-4C0C-9C2E-7BF606973148}</Project>
+      <Name>EventSpike.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\EventSpike.NEventStoreIntegration\EventSpike.NEventStoreIntegration.csproj">
       <Project>{C56BAE16-7B95-48A6-9A0E-3994914C3025}</Project>
@@ -149,6 +153,14 @@
     <ProjectReference Include="..\EventSpike.NEventStoreMassTransitIntegration\EventSpike.NEventStoreMassTransitIntegration.csproj">
       <Project>{77F0D6A1-BDBE-47D4-91B0-C608F7511D73}</Project>
       <Name>EventSpike.NEventStoreMassTransitIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Runtime\EventSpike.Runtime.csproj">
+      <Project>{2C3FB598-E8A1-437A-9752-792D328CB1E0}</Project>
+      <Name>EventSpike.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.SqlIntegration\EventSpike.SqlIntegration.csproj">
+      <Project>{89F28A92-4C0A-4F46-8A5C-CFE98E2B76A9}</Project>
+      <Name>EventSpike.SqlIntegration</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

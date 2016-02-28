@@ -1,5 +1,3 @@
-using EventSpike.Common;
-
 namespace EventSpike.ApprovalProcessor.CommonDomainImplementation
 {
     internal static class ApprovalProcessorConstants

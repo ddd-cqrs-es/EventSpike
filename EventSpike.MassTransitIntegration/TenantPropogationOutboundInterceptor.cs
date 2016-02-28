@@ -1,5 +1,4 @@
 using Autofac.Extras.Multitenant;
-using EventSpike.Common;
 using MassTransit;
 
 namespace EventSpike.MassTransitIntegration

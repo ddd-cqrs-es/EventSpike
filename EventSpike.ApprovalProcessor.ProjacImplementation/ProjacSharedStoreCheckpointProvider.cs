@@ -1,5 +1,5 @@
 using System.Configuration;
-using EventSpike.Common.EventSubscription;
+using EventSpike.Checkpointing;
 using Paramol.Executors;
 using Paramol.SqlClient;
 

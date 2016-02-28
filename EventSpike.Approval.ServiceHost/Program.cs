@@ -1,9 +1,10 @@
 ﻿using Autofac;
 using Autofac.Extras.Multitenant;
-using EventSpike.Common;
-using EventSpike.Common.Autofac;
+using EventSpike.Logging.Logary;
 using EventSpike.MassTransitIntegration;
 using EventSpike.NEventStoreIntegration;
+using EventSpike.Runtime;
+using EventSpike.SqlIntegration;
 using Topshelf;
 
 namespace EventSpike.Approval.ServiceHost
@@ -25,7 +26,7 @@ namespace EventSpike.Approval.ServiceHost
             builder.RegisterModule<NEventStoreModule>();
             builder.RegisterModule<SqlConectionSettingsModule>();
 
-            builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
+            builder.RegisterInstance(endpointName).Named<string>(InstanceNames.DataEndpointName);
 
             builder.RegisterType<ApprovalServiceControl>().AsSelf();
 

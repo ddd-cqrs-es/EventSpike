@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
-using EventSpike.Common.EventSubscription;
+using EventSpike.Checkpointing;
+using EventSpike.Messaging;
+using EventSpike.Messaging.Messages;
 using NEventStore;
 using NEventStore.Client;
 

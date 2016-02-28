@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using EventSpike.Common;
+using EventSpike.Messaging;
 using Logary;
 using Magnum.Reflection;
 using MemBus;

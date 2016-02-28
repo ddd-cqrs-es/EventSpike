@@ -106,7 +106,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Internals.cs" />
+    <Compile Include="..\Internals\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApprovalProcessorServiceControl.cs" />
@@ -130,13 +130,25 @@
       <Project>{d6a7726f-44d9-48b5-b219-33f02fdb3912}</Project>
       <Name>EventSpike.ApprovalProcessor.ProjacImplementation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
-      <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
-      <Name>EventSpike.Common</Name>
+    <ProjectReference Include="..\EventSpike.Checkpointing.Biggy\EventSpike.Checkpointing.Biggy.csproj">
+      <Project>{AC41F72A-91F8-4209-A9D1-4D6A688B1A17}</Project>
+      <Name>EventSpike.Checkpointing.Biggy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Checkpointing\EventSpike.Checkpointing.csproj">
+      <Project>{2CA9D257-9D7A-4B48-87F4-456AC9A41889}</Project>
+      <Name>EventSpike.Checkpointing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Logging.Logary\EventSpike.Logging.Logary.csproj">
+      <Project>{B6F13BDB-77D5-4C4D-BDE1-91886308DCB7}</Project>
+      <Name>EventSpike.Logging.Logary</Name>
     </ProjectReference>
     <ProjectReference Include="..\EventSpike.MassTransitIntegration\EventSpike.MassTransitIntegration.csproj">
       <Project>{C605FECB-027F-456B-82CE-DD4815F3D60A}</Project>
       <Name>EventSpike.MassTransitIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Messaging\EventSpike.Messaging.csproj">
+      <Project>{B09BEEBA-104E-4C0C-9C2E-7BF606973148}</Project>
+      <Name>EventSpike.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\EventSpike.NEventStoreIntegration\EventSpike.NEventStoreIntegration.csproj">
       <Project>{C56BAE16-7B95-48A6-9A0E-3994914C3025}</Project>
@@ -145,6 +157,14 @@
     <ProjectReference Include="..\EventSpike.NEventStoreMassTransitIntegration\EventSpike.NEventStoreMassTransitIntegration.csproj">
       <Project>{77F0D6A1-BDBE-47D4-91B0-C608F7511D73}</Project>
       <Name>EventSpike.NEventStoreMassTransitIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Runtime\EventSpike.Runtime.csproj">
+      <Project>{2C3FB598-E8A1-437A-9752-792D328CB1E0}</Project>
+      <Name>EventSpike.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.SqlIntegration\EventSpike.SqlIntegration.csproj">
+      <Project>{89F28A92-4C0A-4F46-8A5C-CFE98E2B76A9}</Project>
+      <Name>EventSpike.SqlIntegration</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

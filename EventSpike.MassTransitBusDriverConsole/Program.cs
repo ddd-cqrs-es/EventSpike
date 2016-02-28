@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
-using EventSpike.ApprovalMessages.Commands;
-using EventSpike.Common;
+using EventSpike.Approval.Messages.Commands;
 using EventSpike.MassTransitIntegration;
 using Magnum.Reflection;
 using MassTransit;
@@ -19,7 +18,7 @@ namespace EventSpike.MassTransitBusDriverConsole
 
             builder.RegisterModule<MassTransitModule>();
 
-            builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
+            builder.RegisterInstance(endpointName).Named<string>(InstanceNames.DataEndpointName);
 
             var container = builder.Build();
 

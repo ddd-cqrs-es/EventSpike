@@ -1,5 +1,5 @@
 using System;
-using EventSpike.Common;
+using EventSpike.Runtime;
 using MassTransit;
 
 namespace EventSpike.MassTransitIntegration

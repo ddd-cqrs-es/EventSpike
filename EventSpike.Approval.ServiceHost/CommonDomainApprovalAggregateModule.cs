@@ -2,7 +2,7 @@ using Autofac;
 using Autofac.Core;
 using EventSpike.Approval.CommonDomainImplementation;
 using EventSpike.Approval.MassTransitIntegration;
-using EventSpike.Common;
+using EventSpike.Messaging;
 using EventSpike.NEventStoreIntegration;
 using EventSpike.NEventStoreMassTransitIntegration;
 

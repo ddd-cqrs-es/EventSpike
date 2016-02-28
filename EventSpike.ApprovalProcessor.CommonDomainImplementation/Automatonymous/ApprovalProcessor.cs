@@ -1,7 +1,7 @@
 using System;
 using Automatonymous;
-using EventSpike.ApprovalMessages.Commands;
-using EventSpike.ApprovalMessages.Events;
+using EventSpike.Approval.Messages.Commands;
+using EventSpike.Approval.Messages.Events;
 
 namespace EventSpike.ApprovalProcessor.CommonDomainImplementation.Automatonymous
 {

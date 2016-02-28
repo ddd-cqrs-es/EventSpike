@@ -1,4 +1,4 @@
-﻿using EventSpike.Common;
+﻿using EventSpike.Runtime;
 using Logary;
 using MassTransit;
 using Topshelf;

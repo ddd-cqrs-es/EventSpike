@@ -1,4 +1,3 @@
-using EventSpike.Common;
 
 namespace EventSpike.ApprovalProcessor.ProjacImplementation
 {

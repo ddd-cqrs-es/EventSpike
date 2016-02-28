@@ -2,8 +2,9 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Extras.Multitenant;
 using EventSpike.ApprovalProcessor.ProjacImplementation;
-using EventSpike.Common;
-using EventSpike.Common.EventSubscription;
+using EventSpike.Checkpointing;
+using EventSpike.Messaging;
+using EventSpike.Runtime;
 
 namespace EventSpike.ApprovalProcessor.ServiceHost
 {

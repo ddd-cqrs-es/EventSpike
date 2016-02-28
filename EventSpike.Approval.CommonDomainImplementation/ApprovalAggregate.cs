@@ -1,6 +1,6 @@
 ﻿using System;
 using CommonDomain.Core;
-using EventSpike.ApprovalMessages.Events;
+using EventSpike.Approval.Messages.Events;
 
 namespace EventSpike.Approval.CommonDomainImplementation
 {

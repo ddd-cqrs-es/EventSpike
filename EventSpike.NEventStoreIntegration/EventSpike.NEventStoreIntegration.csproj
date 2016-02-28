@@ -76,9 +76,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
-      <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
-      <Name>EventSpike.Common</Name>
+    <ProjectReference Include="..\EventSpike.Checkpointing\EventSpike.Checkpointing.csproj">
+      <Project>{2CA9D257-9D7A-4B48-87F4-456AC9A41889}</Project>
+      <Name>EventSpike.Checkpointing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Messaging\EventSpike.Messaging.csproj">
+      <Project>{B09BEEBA-104E-4C0C-9C2E-7BF606973148}</Project>
+      <Name>EventSpike.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Runtime\EventSpike.Runtime.csproj">
+      <Project>{2C3FB598-E8A1-437A-9752-792D328CB1E0}</Project>
+      <Name>EventSpike.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,11 +1,13 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extras.Multitenant;
-using EventSpike.Common;
-using EventSpike.Common.Autofac;
+using EventSpike.Checkpointing.Biggy;
+using EventSpike.Logging.Logary;
 using EventSpike.MassTransitIntegration;
 using EventSpike.NEventStoreIntegration;
 using EventSpike.NEventStoreMassTransitIntegration;
+using EventSpike.Runtime;
+using EventSpike.SqlIntegration;
 using Logary;
 using MassTransit;
 
@@ -28,7 +30,7 @@ namespace EventSpike.EventConsole
             builder.RegisterModule<SqlConectionSettingsModule>();
             builder.RegisterModule<LoggingModule>();
 
-            builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
+            builder.RegisterInstance(endpointName).Named<string>(InstanceNames.DataEndpointName);
 
             builder.RegisterType<ConsoleOutputProjectionCommitObserver>().As<IObserver<object>>().InstancePerTenant();
 

@@ -1,4 +1,4 @@
-﻿using EventSpike.Common.EventSubscription;
+﻿using EventSpike.Messaging.Messages;
 using MassTransit;
 using NEventStore.Client;
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EventSpike.Common;
+using EventSpike.Runtime;
 using NEventStore.Client;
 
 namespace EventSpike.NEventStoreIntegration

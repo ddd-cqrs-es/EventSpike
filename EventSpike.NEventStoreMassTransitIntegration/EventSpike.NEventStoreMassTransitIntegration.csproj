@@ -86,13 +86,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Internals.cs" />
+    <Compile Include="..\Internals\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDomainModule.cs" />
     <Compile Include="EventSubscriptionMassTransitConsumer.cs" />
     <Compile Include="EventSubscriptionModule.cs" />
     <Compile Include="MassTransitNotificationPipelineHook.cs" />
+    <Compile Include="MemBusModule.cs" />
     <Compile Include="MemBusPublisherCommitObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -101,13 +102,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventSpike.Common\EventSpike.Common.csproj">
-      <Project>{A295A8F8-054F-4D71-8D1C-9A51193807F4}</Project>
-      <Name>EventSpike.Common</Name>
+    <ProjectReference Include="..\EventSpike.Messaging\EventSpike.Messaging.csproj">
+      <Project>{B09BEEBA-104E-4C0C-9C2E-7BF606973148}</Project>
+      <Name>EventSpike.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\EventSpike.NEventStoreIntegration\EventSpike.NEventStoreIntegration.csproj">
       <Project>{C56BAE16-7B95-48A6-9A0E-3994914C3025}</Project>
       <Name>EventSpike.NEventStoreIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventSpike.Runtime\EventSpike.Runtime.csproj">
+      <Project>{2C3FB598-E8A1-437A-9752-792D328CB1E0}</Project>
+      <Name>EventSpike.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

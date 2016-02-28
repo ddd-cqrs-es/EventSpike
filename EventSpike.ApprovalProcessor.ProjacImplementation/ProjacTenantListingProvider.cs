@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Configuration;
-using EventSpike.Common;
+using EventSpike.Runtime;
 using Paramol.Executors;
 using Paramol.SqlClient;
 

@@ -1,8 +1,8 @@
 using System;
 using Autofac;
 using Autofac.Extras.Multitenant;
-using EventSpike.Common;
 using EventSpike.NEventStoreIntegration;
+using EventSpike.Runtime;
 
 namespace EventSpike.NEventStoreMassTransitIntegration
 {

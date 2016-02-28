@@ -1,10 +1,11 @@
 ﻿using Autofac;
 using Autofac.Extras.Multitenant;
-using EventSpike.Common;
-using EventSpike.Common.Autofac;
+using EventSpike.Logging.Logary;
 using EventSpike.MassTransitIntegration;
 using EventSpike.NEventStoreIntegration;
 using EventSpike.NEventStoreMassTransitIntegration;
+using EventSpike.Runtime;
+using EventSpike.SqlIntegration;
 using Topshelf;
 
 namespace EventSpike.ApprovalProcessor.ServiceHost
@@ -28,7 +29,7 @@ namespace EventSpike.ApprovalProcessor.ServiceHost
 
             builder.RegisterModule<CommonDomainApprovalProcessorModule<CommonDomainImplementation.Automatonymous.ApprovalProcessor>>();
 
-            builder.RegisterInstance(endpointName).Named<string>(MassTransitInstanceNames.DataEndpointName);
+            builder.RegisterInstance(endpointName).Named<string>(InstanceNames.DataEndpointName);
 
             builder.RegisterType<ApprovalProcessorServiceControl>().AsSelf();
 
